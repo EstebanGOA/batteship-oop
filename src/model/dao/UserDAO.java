@@ -6,4 +6,5 @@ public interface UserDAO {
 
     void addUser(User user);
     void deleteUser(String code);
+    String getPassword(String string);
 }

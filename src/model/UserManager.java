@@ -15,4 +15,6 @@ public class UserManager {
     public void deleteUser(String code) {
         userDao.deleteUser(code);
     }
+
+    public String getPassword(String string) { return userDao.getPassword(string); }
 }
