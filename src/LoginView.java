@@ -27,7 +27,7 @@ public class LoginView extends JFrame {
         buttonPanel.setPreferredSize(new Dimension(200,100));
         buttonPanel.setOpaque(false);
 
-        JImagePanel button = new JImagePanel("sprites/btn.png");
+        JImagePanel button = new JImagePanel("sprites/login_button.png");
         button.setPreferredSize(new Dimension(100,100));
         button.setOpaque(false);
 
