@@ -4,9 +4,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class LoginView extends JFrame {
+public class RegisterView extends JFrame {
 
-    public LoginView() {
+    public RegisterView() {
 
         initializeWindow();
 
