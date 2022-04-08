@@ -10,27 +10,45 @@ public class LogoutAndDeletionAccountView extends JFrame {
 
         Font font = initializeFont();
 
+        JLabel jLabel = new JLabel();
+        jLabel.setText("Settings");
+        jLabel.setFont(font);
+        jLabel.setForeground(Color.white);
+        jLabel.setOpaque(false);
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JImagePanel deleteAccountButton = new JImagePanel("sprites/deleteaccount_button.png");
+        deleteAccountButton.setPreferredSize(new Dimension(250,75));
+        deleteAccountButton.setOpaque(false);
+
+        JImagePanel logoutButton = new JImagePanel("sprites/logout_button.png");
+        logoutButton.setPreferredSize(new Dimension(250,75));
+        logoutButton.setOpaque(false);
+
         // ------------------------ Background Image ------------------------ //
 
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setBackground(new Color(39,152,213));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.VERTICAL;
 
         // ------------------------ Display Objects ------------------------ //
 
         gbc.gridx = 0; gbc.gridy = 0;
+        backgroundPanel.add(jLabel, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1;
         backgroundPanel.add(addSeparator(0,200), gbc);
 
-        //gbc.gridx = 0; gbc.gridy = 1;
-        //backgroundPanel.add(emailPanel, gbc);
-
         gbc.gridx = 0; gbc.gridy = 2;
+        backgroundPanel.add(deleteAccountButton, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 3;
         backgroundPanel.add(addSeparator(0,50), gbc);
 
-        //gbc.gridx = 0; gbc.gridy = 3;
-        //backgroundPanel.add(passwordPanel, gbc);
+        gbc.gridx = 0; gbc.gridy = 4;
+        backgroundPanel.add(logoutButton, gbc);
 
         add(backgroundPanel);
 
@@ -49,7 +67,7 @@ public class LogoutAndDeletionAccountView extends JFrame {
         Font font = null;
 
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Poppins-Bold.ttf")).deriveFont(20f);
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Poppins-Bold.ttf")).deriveFont(30f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Poppins-Bold.ttf")));
         } catch (FontFormatException | IOException e) {
