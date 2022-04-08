@@ -25,9 +25,9 @@ public class LoginView extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.setPreferredSize(new Dimension(200,100));
-        buttonPanel.setBackground(Color.red);
+        buttonPanel.setOpaque(false);
 
-        JImagePanel button = new JImagePanel("sprites/login_button.png");
+        JImagePanel button = new JImagePanel("sprites/btn.png");
         button.setPreferredSize(new Dimension(100,100));
         button.setOpaque(false);
 
@@ -37,7 +37,7 @@ public class LoginView extends JFrame {
 
         JPanel emailPanel = new JPanel();
         emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.X_AXIS));
-        emailPanel.setPreferredSize(new Dimension(350, 25));
+        emailPanel.setPreferredSize(new Dimension(350, 35));
         emailPanel.setOpaque(false);
 
         JImagePanel emailIco = new JImagePanel("sprites/email_ico.png");
@@ -70,7 +70,7 @@ public class LoginView extends JFrame {
         passwordIco.setOpaque(false);
         passwordIco.setPreferredSize(new Dimension(35,0));
 
-        JTextField passwordInput = new JTextField();
+        JPasswordField passwordInput = new JPasswordField();
         passwordInput.setOpaque(false);
         passwordInput.setFont(font);
         passwordInput.setForeground(new Color(255,255,255));
