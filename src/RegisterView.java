@@ -27,7 +27,7 @@ public class RegisterView extends JFrame {
         buttonPanel.setPreferredSize(new Dimension(200,100));
         buttonPanel.setOpaque(false);
 
-        JImagePanel button = new JImagePanel("sprites/btn.png");
+        JImagePanel button = new JImagePanel("sprites/register_button.png");
         button.setPreferredSize(new Dimension(100,100));
         button.setOpaque(false);
 
@@ -59,8 +59,38 @@ public class RegisterView extends JFrame {
         emailPanel.add(addSeparator(20,0));
         emailPanel.add(emailInput);
 
-        // ------------------------ Password Box Layout ------------------------ //
+        // ------------------------ Display Objects ------------------------ //
 
+        gbc.gridx = 0; gbc.gridy = 0;
+        backgroundPanel.add(addSeparator(0,125), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1;
+        backgroundPanel.add(emailPanel, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2;
+        backgroundPanel.add(addSeparator(0,50), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 3;
+        backgroundPanel.add(passwordPanel(font), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 4;
+        backgroundPanel.add(addSeparator(0,50), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 5;
+        backgroundPanel.add(passwordPanel(font), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 6;
+        backgroundPanel.add(addSeparator(0,75), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 7;
+        backgroundPanel.add(buttonPanel, gbc);
+
+        add(backgroundPanel);
+
+        setVisible(true);
+    }
+
+    public JPanel passwordPanel (Font font) {
         JPanel passwordPanel = new JPanel();
         passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.X_AXIS));
         passwordPanel.setPreferredSize(new Dimension(350, 35));
@@ -85,35 +115,13 @@ public class RegisterView extends JFrame {
         passwordPanel.add(addSeparator(20,0));
         passwordPanel.add(passwordInput);
 
-        // ------------------------ Display Objects ------------------------ //
-
-        gbc.gridx = 0; gbc.gridy = 0;
-        backgroundPanel.add(addSeparator(0,200), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 1;
-        backgroundPanel.add(emailPanel, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 2;
-        backgroundPanel.add(addSeparator(0,50), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 3;
-        backgroundPanel.add(passwordPanel, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 4;
-        backgroundPanel.add(addSeparator(0,100), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 5;
-        backgroundPanel.add(buttonPanel, gbc);
-
-        add(backgroundPanel);
-
-        setVisible(true);
+        return passwordPanel;
     }
 
     public void initializeWindow () {
         setSize(1280, 720);
 
-        setTitle("Battleship v1.0.0");
+        setTitle("Battleship v1.0.1");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
