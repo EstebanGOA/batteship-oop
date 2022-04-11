@@ -1,14 +1,18 @@
+package presentation.views;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MainMenuView extends JFrame {
+public class MenuView extends JPanel {
 
-    public MainMenuView() {
+    private final MainView mainView;
 
-        initializeWindow();
+    public MenuView(MainView mainView) {
+
+        this.mainView = mainView;
 
         Font font = initializeFont();
 
@@ -16,6 +20,7 @@ public class MainMenuView extends JFrame {
         // ---------- Grid layout to divide the window in 3 columns --------- //
 
         JImagePanel backgroundPanel = new JImagePanel("sprites/background_main_menu.png");
+            backgroundPanel.setPreferredSize(new Dimension(1280, 720));
             backgroundPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -143,15 +148,11 @@ public class MainMenuView extends JFrame {
 
         add(backgroundPanel);
 
-        setVisible(true);
+        //setVisible(true);
     }
 
     public void initializeWindow () {
         setSize(1280, 720);
-
-        setTitle("Battleship v1.0.0");
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public Font initializeFont () {
