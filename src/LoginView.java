@@ -85,10 +85,17 @@ public class LoginView extends JFrame {
         passwordPanel.add(addSeparator(20,0));
         passwordPanel.add(passwordInput);
 
+        // ----------------- Label to create a new account ----------------- //
+
+        JLabel registerAccount = new JLabel();
+        registerAccount.setText("Not registered? Create an account");
+        registerAccount.setFont(font);
+        registerAccount.setForeground(new Color(200,200,200));
+
         // ------------------------ Display Objects ------------------------ //
 
         gbc.gridx = 0; gbc.gridy = 0;
-        backgroundPanel.add(addSeparator(0,200), gbc);
+        backgroundPanel.add(addSeparator(0,150), gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
         backgroundPanel.add(emailPanel, gbc);
@@ -100,10 +107,16 @@ public class LoginView extends JFrame {
         backgroundPanel.add(passwordPanel, gbc);
 
         gbc.gridx = 0; gbc.gridy = 4;
-        backgroundPanel.add(addSeparator(0,100), gbc);
+        backgroundPanel.add(addSeparator(0,75), gbc);
 
         gbc.gridx = 0; gbc.gridy = 5;
         backgroundPanel.add(buttonPanel, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 6;
+        backgroundPanel.add(addSeparator(0,50), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 7;
+        backgroundPanel.add(registerAccount, gbc);
 
         add(backgroundPanel);
 
