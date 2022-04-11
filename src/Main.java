@@ -5,5 +5,6 @@ public class Main {
         System.out.println("Hello World");
         UserManager u = new UserManager();
         System.out.println(u.getPassword("Kevin"));
+        new LoginView();
     }
 }
