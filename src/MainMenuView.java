@@ -32,9 +32,10 @@ public class MainMenuView extends JFrame {
                 nameBackgroundPanel.setLayout(new BorderLayout());
                 nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
 
-                JLabel usernameLabel = new JLabel("Tomas");
+                JLabel usernameLabel = new JLabel("Username: Tomas");
                     usernameLabel.setFont(font);
                     usernameLabel.setForeground(Color.white);
+                    usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
 
             nameBackgroundPanel.add(usernameLabel);
 
@@ -79,6 +80,8 @@ public class MainMenuView extends JFrame {
 
         GridBagConstraints gbcRightColumn = new GridBagConstraints();
 
+        // Trophies Panel
+
         JImagePanel trophiesBackground = new JImagePanel("sprites/trophies_background.png");
             trophiesBackground.setOpaque(false);
             trophiesBackground.setLayout(new BorderLayout());
@@ -87,18 +90,45 @@ public class MainMenuView extends JFrame {
             JLabel trophiesLabel = new JLabel("0");
                 trophiesLabel.setFont(font);
                 trophiesLabel.setForeground(Color.white);
+                trophiesLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
 
              trophiesBackground.add(trophiesLabel);
 
+        // Settings Button
+
+        JImagePanel settingsButton = new JImagePanel("sprites/settings_button.png");
+            settingsButton.setPreferredSize(new Dimension(75,75));
+            settingsButton.setOpaque(false);
+
+        // Statistics Button
+
+        JImagePanel statisticsButton = new JImagePanel("sprites/statistics_button.png");
+            statisticsButton.setPreferredSize(new Dimension(75,75));
+            statisticsButton.setOpaque(false);
+
         gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 0;
-        rightColumn.add(addSeparator(250,0), gbcRightColumn);
+        rightColumn.add(addSeparator(200,0), gbcRightColumn);
 
         gbcRightColumn.gridx = 1; gbcRightColumn.gridy = 0;
         gbcRightColumn.anchor = GridBagConstraints.FIRST_LINE_START;
         rightColumn.add(trophiesBackground, gbcRightColumn);
 
         gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 1;
-        rightColumn.add(addSeparator(0, 650));
+        rightColumn.add(addSeparator(0,15), gbcRightColumn);
+
+        gbcRightColumn.gridx = 1; gbcRightColumn.gridy = 2;
+        gbcRightColumn.anchor = GridBagConstraints.FIRST_LINE_END;
+        rightColumn.add(settingsButton, gbcRightColumn);
+
+        gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 3;
+        rightColumn.add(addSeparator(0,15), gbcRightColumn);
+
+        gbcRightColumn.gridx = 1; gbcRightColumn.gridy = 4;
+        gbcRightColumn.anchor = GridBagConstraints.FIRST_LINE_END;
+        rightColumn.add(statisticsButton, gbcRightColumn);
+
+        gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 5;
+        rightColumn.add(addSeparator(0, 375), gbcRightColumn);
 
         // ------------------------ Display Objects ------------------------ //
 
