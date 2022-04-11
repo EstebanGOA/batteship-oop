@@ -1,9 +1,11 @@
+package presentation.views;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class LogoutAndDeletionAccountView extends JFrame {
+public class SettingsView extends JFrame {
 
     // Images Paths
 
@@ -19,7 +21,7 @@ public class LogoutAndDeletionAccountView extends JFrame {
 
     private final String FONT = "fonts/Poppins-Bold.ttf";
 
-    public LogoutAndDeletionAccountView () {
+    public SettingsView() {
         initializeWindow();
 
         Font font = initializeFont();
