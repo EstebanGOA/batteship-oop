@@ -1,3 +1,5 @@
+package presentation.views;
+
 import javax.swing.*;
 
 public class JPopup {
