@@ -17,8 +17,9 @@ public class RegisterController implements MouseListener {
     private final UserManager userManager;
     private RegisterView registerView;
 
-    public RegisterController(UserManager userManager) {
+    public RegisterController(UserManager userManager, RegisterView registerView) {
         this.userManager = userManager;
+        this.registerView = registerView;
     }
 
     /**

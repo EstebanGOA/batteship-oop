@@ -11,23 +11,20 @@ public class Main {
 
         UserManager userManager = new UserManager();
 
-        RegisterController registerController = new RegisterController(userManager);
 
         LoginView loginView = new LoginView(mainView);
         RegisterView registerView = new RegisterView(mainView);
         MenuView menuView = new MenuView(mainView);
 
+        RegisterController registerController = new RegisterController(userManager, registerView);
+
         mainView.asigneViews(loginView, registerView, menuView);
 
-        /* Asignamos las vistas al MainView */
+        /* Asignamos los listeners de las vistas a la vista principal */
         loginView.registerMasterView(mainView);
         registerView.registerMasterView(mainView);
         menuView.registerMasterView(mainView);
         registerView.registerController(registerController);
-
-        /* Asignamos las vistas a los controladores */
-        registerController.asigneView(registerView);
-
 
         mainView.run();
     }
