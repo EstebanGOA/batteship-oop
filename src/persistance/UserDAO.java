@@ -4,7 +4,10 @@ import business.entities.User;
 
 public interface UserDAO {
 
-    void addUser(User user);
-    void deleteUser(String code);
+
+    boolean addUser(User user);
+
+    boolean deleteUser(String code);
+
     String getPassword(String string);
 }

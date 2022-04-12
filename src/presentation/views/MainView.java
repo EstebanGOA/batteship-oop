@@ -12,10 +12,10 @@ import java.awt.event.MouseListener;
  */
 public class MainView extends JFrame implements MouseListener {
 
-    private final LoginView loginView;
-    private final RegisterView registerView;
-    private final MenuView menuView;
-    private final JPanel rootPanel;
+    private LoginView loginView;
+    private RegisterView registerView;
+    private MenuView menuView;
+    private JPanel rootPanel;
     private CardLayout cardLayout;
 
     /**
@@ -29,12 +29,15 @@ public class MainView extends JFrame implements MouseListener {
      * Constructor de MainView.
      */
     public MainView() {
-        this.loginView = new LoginView(this);
-        this.registerView = new RegisterView(this);
-        this.menuView = new MenuView(this);
         this.cardLayout = new CardLayout();
         this.rootPanel = new JPanel();
         initializeWindow();
+    }
+
+    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView) {
+        this.loginView = loginView;
+        this.registerView = registerView;
+        this.menuView = menuView;
     }
 
     /**

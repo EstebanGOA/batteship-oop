@@ -17,6 +17,11 @@ public class LoginView extends JPanel {
      */
     private final MainView mainView;
 
+    private final JImagePanel jLoginButton;
+    private final JTextField jEmailInput;
+    private final JPasswordField jPasswordInput;
+    private final JLabel jRegisterAccount;
+
     public LoginView(MainView mainView) {
 
         this.mainView = mainView;
@@ -39,14 +44,13 @@ public class LoginView extends JPanel {
         buttonPanel.setPreferredSize(new Dimension(200,100));
         buttonPanel.setOpaque(false);
 
-        JImagePanel button = new JImagePanel("sprites/login_button.png");
-        button.setPreferredSize(new Dimension(100,100));
-        button.setOpaque(false);
+        jLoginButton = new JImagePanel("sprites/login_button.png");
+        jLoginButton.setPreferredSize(new Dimension(100,100));
+        jLoginButton.setOpaque(false);
         // TODO: Primero deberíamos hacer la petición al servidor, comprobar los datos y cuando todo sea correcto cambiar ventana.
-        button.setName("login");
-        button.addMouseListener(mainView);
+        jLoginButton.setName("login");
 
-        buttonPanel.add(button);
+        buttonPanel.add(jLoginButton);
 
         // ------------------------ Email Box Layout ------------------------ //
 
@@ -59,20 +63,20 @@ public class LoginView extends JPanel {
         emailIco.setOpaque(false);
         emailIco.setPreferredSize(new Dimension(35,0));
 
-        JTextField emailInput = new JTextField(10);
-        emailInput.setOpaque(false);
-        emailInput.setFont(font);
-        emailInput.setForeground(new Color(255,255,255));
-        emailInput.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 20));
+        jEmailInput = new JTextField(10);
+        jEmailInput.setOpaque(false);
+        jEmailInput.setFont(font);
+        jEmailInput.setForeground(new Color(255,255,255));
+        jEmailInput.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 20));
 
-        Border oldBorder = emailInput.getBorder();
+        Border oldBorder = jEmailInput.getBorder();
         Border whiteBorder = BorderFactory.createMatteBorder(0, 0, 3, 0, Color.WHITE);
         Border newBorder = BorderFactory.createCompoundBorder(whiteBorder, oldBorder);
-        emailInput.setBorder(newBorder);
+        jEmailInput.setBorder(newBorder);
 
         emailPanel.add(emailIco);
         emailPanel.add(addSeparator(20,0));
-        emailPanel.add(emailInput);
+        emailPanel.add(jEmailInput);
 
         // ------------------------ Password Box Layout ------------------------ //
 
@@ -85,29 +89,28 @@ public class LoginView extends JPanel {
         passwordIco.setOpaque(false);
         passwordIco.setPreferredSize(new Dimension(35,0));
 
-        JPasswordField passwordInput = new JPasswordField();
-        passwordInput.setOpaque(false);
-        passwordInput.setFont(font);
-        passwordInput.setForeground(new Color(255,255,255));
-        passwordInput.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 20));
+        jPasswordInput = new JPasswordField();
+        jPasswordInput.setOpaque(false);
+        jPasswordInput.setFont(font);
+        jPasswordInput.setForeground(new Color(255,255,255));
+        jPasswordInput.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 20));
 
-        Border oldBorder2 = passwordInput.getBorder();
+        Border oldBorder2 = jPasswordInput.getBorder();
         Border whiteBorder2 = BorderFactory.createMatteBorder(0, 0, 3, 0, Color.WHITE);
         Border newBorder2 = BorderFactory.createCompoundBorder(whiteBorder2, oldBorder2);
-        passwordInput.setBorder(newBorder2);
+        jPasswordInput.setBorder(newBorder2);
 
         passwordPanel.add(passwordIco);
         passwordPanel.add(addSeparator(20,0));
-        passwordPanel.add(passwordInput);
+        passwordPanel.add(jPasswordInput);
 
         // ----------------- Label to create a new account ----------------- //
 
-        JLabel registerAccount = new JLabel();
-        registerAccount.setText("Not registered? Create an account");
-        registerAccount.setFont(font);
-        registerAccount.setForeground(new Color(200,200,200));
-        registerAccount.setName("create_account");
-        registerAccount.addMouseListener(mainView);
+        jRegisterAccount = new JLabel();
+        jRegisterAccount.setText("Not registered? Create an account");
+        jRegisterAccount.setFont(font);
+        jRegisterAccount.setForeground(new Color(200,200,200));
+        jRegisterAccount.setName("create_account");
 
         // ------------------------ Display Objects ------------------------ //
 
@@ -133,7 +136,7 @@ public class LoginView extends JPanel {
         backgroundPanel.add(addSeparator(0,50), gbc);
 
         gbc.gridx = 0; gbc.gridy = 7;
-        backgroundPanel.add(registerAccount, gbc);
+        backgroundPanel.add(jRegisterAccount, gbc);
 
         this.add(backgroundPanel);
         //setVisible(true);
@@ -167,4 +170,10 @@ public class LoginView extends JPanel {
     private void registerView() {
         mainView.switchPanel("register");
     }
+
+    public void registerMasterView(MainView mainView) {
+        jLoginButton.addMouseListener(mainView);
+        jRegisterAccount.addMouseListener(mainView);
+    }
+
 }

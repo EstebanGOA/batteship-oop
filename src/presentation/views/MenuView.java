@@ -179,4 +179,9 @@ public class MenuView extends JPanel {
 
         return space;
     }
+
+    public void registerMasterView(MainView mainView) {
+
+    }
+
 }
