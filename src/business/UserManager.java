@@ -21,8 +21,8 @@ public class UserManager {
         userDao.deleteUser(code);
     }
 
-    public String getPassword(String string) {
-        return userDao.getPassword(string);
+    public boolean checkLogin(String login, String password) {
+        return password.equals(userDao.getPassword(login));
     }
 
 }

@@ -110,7 +110,8 @@ public class LoginView extends JPanel {
         jRegisterAccount.setText("Not registered? Create an account");
         jRegisterAccount.setFont(font);
         jRegisterAccount.setForeground(new Color(200,200,200));
-        jRegisterAccount.setName("create_account");
+        jRegisterAccount.setName("register");
+
 
         // ------------------------ Display Objects ------------------------ //
 
@@ -167,13 +168,26 @@ public class LoginView extends JPanel {
         return space;
     }
 
-    private void registerView() {
+    public void registerView() {
         mainView.switchPanel("register");
     }
 
-    public void registerMasterView(MainView mainView) {
-        jLoginButton.addMouseListener(mainView);
-        jRegisterAccount.addMouseListener(mainView);
+    public void menuView() {
+        mainView.switchPanel("login");
+    }
+
+
+
+    public void registerMasterView(MouseListener mouseListener) {
+        jLoginButton.addMouseListener(mouseListener);
+        jRegisterAccount.addMouseListener(mouseListener);
+    }
+
+    public String getLogin() {
+        return jEmailInput.getText();
+    }
+    public String getPassword() {
+        return new String(jPasswordInput.getPassword());
     }
 
 }
