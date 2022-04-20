@@ -15,7 +15,6 @@ public class LoginController implements MouseListener {
     public LoginController(LoginView loginView, UserManager userManager) {
         this.loginView = loginView;
         this.userManager = userManager;
-        loginView.registerMasterView(this);
     }
 
     @Override
