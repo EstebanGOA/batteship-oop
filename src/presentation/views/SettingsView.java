@@ -2,10 +2,13 @@ package presentation.views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
 public class SettingsView extends JFrame {
+
+    private MainView mainView;
 
     // Images Paths
 
@@ -21,7 +24,12 @@ public class SettingsView extends JFrame {
 
     private final String FONT = "fonts/Poppins-Bold.ttf";
 
-    public SettingsView() {
+    JImagePanel logoutButton;
+
+    public SettingsView(MainView mainView) {
+
+        this.mainView = mainView;
+
         initializeWindow();
 
         Font font = initializeFont();
@@ -69,9 +77,10 @@ public class SettingsView extends JFrame {
             deleteAccountButton.setPreferredSize(new Dimension(250,75));
             deleteAccountButton.setOpaque(false);
 
-        JImagePanel logoutButton = new JImagePanel(LOGOUT_BUTTON);
+            logoutButton = new JImagePanel(LOGOUT_BUTTON);
             logoutButton.setPreferredSize(new Dimension(250,75));
             logoutButton.setOpaque(false);
+            logoutButton.setName("logout");
 
         // ------------------------ Background Image ------------------------ //
 
@@ -136,5 +145,11 @@ public class SettingsView extends JFrame {
         space.add(rigidArea);
 
         return space;
+    }
+    public void viewLogin() {
+        mainView.switchPanel("return_login");
+    }
+    public void settingsController(MouseListener mouseListener) {
+        logoutButton.addMouseListener(mouseListener);
     }
 }
