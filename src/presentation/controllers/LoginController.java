@@ -24,6 +24,7 @@ public class LoginController implements MouseListener {
                 String login = loginView.getLogin();
                 String password = loginView.getPassword();
                 if (userManager.checkLogin(login, password)) {
+
                     loginView.menuView();
                 } else {
                     new JPopup("Login or password incorrect");

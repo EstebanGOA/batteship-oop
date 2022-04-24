@@ -19,7 +19,7 @@ public class MenuView extends JPanel {
         // ------------------------ Background Image ------------------------ //
         // ---------- Grid layout to divide the window in 3 columns --------- //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/background_main_menu.png");
+        JPanel backgroundPanel = new JPanel();
             backgroundPanel.setPreferredSize(new Dimension(1280, 720));
             backgroundPanel.setLayout(new GridBagLayout());
 
@@ -32,7 +32,7 @@ public class MenuView extends JPanel {
 
         GridBagConstraints gbcLeftColumn = new GridBagConstraints();
 
-            JImagePanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
+            JPanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
                 nameBackgroundPanel.setOpaque(false);
                 nameBackgroundPanel.setLayout(new BorderLayout());
                 nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
