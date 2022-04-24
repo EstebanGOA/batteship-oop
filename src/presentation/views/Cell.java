@@ -13,6 +13,6 @@ public class Cell extends JPanel {
         this.y = y;
         this.img = img;
 
-        new JImagePanel(img);
+        add(new JImagePanel(img));
     }
 }

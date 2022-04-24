@@ -21,17 +21,57 @@ public class SetupStageView extends JFrame {
     private final String FONT_BLACK = "fonts/Poppins-Black.ttf";
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";
 
+    private final Font fontStartAttack = initializeFont (FONT_BLACK, 20F);
+    private final Font fontPanelTitle  = initializeFont (FONT_BOLD, 18F);
+
     public SetupStageView () {
         initializeWindow();
-
-        Font fontStartAttack = initializeFont (FONT_BLACK, 20F);
-        Font fontPanelTitle  = initializeFont (FONT_BOLD, 18F);
 
         // ------------------------ Background Image ------------------------ //
 
         JPanel backgroundPanel = new JPanel();
             backgroundPanel.setBackground(BACKGROUND_COLOR);
             backgroundPanel.setLayout(new GridBagLayout());
+
+        // Display all the panels in the background.
+
+        GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+
+            gbc.gridx = 0; gbc.gridy = 0;
+            backgroundPanel.add(leftPanel(), gbc);
+
+            gbc.gridx = 1; gbc.gridy = 0;
+            backgroundPanel.add(addSeparator(10,0));
+
+            gbc.gridx = 2; gbc.gridy = 0;
+            backgroundPanel.add(table(), gbc);
+
+            gbc.gridx = 3; gbc.gridy = 0;
+            backgroundPanel.add(addSeparator(10,0));
+
+            gbc.gridx = 4; gbc.gridy = 0;
+            backgroundPanel.add(rightPanel(), gbc);
+
+        add(backgroundPanel);
+
+        setVisible(true);
+    }
+
+    /**
+     *
+     * Method to create the left panel that has:
+     *
+     *      1. The title of the panel.
+     *      2. We instantiate a custom class (ShipPanel) that has:
+     *          2.1 The name of the ship
+     *          2.2 The path of the image of the ship.
+     *
+     * @return The JPanel with all inside the left panel.
+     *
+     */
+
+    public JPanel leftPanel () {
 
         // --------------------------- Left Panel -------------------------- //
 
@@ -40,11 +80,15 @@ public class SetupStageView extends JFrame {
             leftPanel.setPreferredSize(new Dimension (300, 670));
             leftPanel.setOpaque(false);
 
+            // Label with the title of the panel
+
             JLabel yourShipsText = new JLabel();
                 yourShipsText.setText("Your Ships");
                 yourShipsText.setForeground(Color.white);
                 yourShipsText.setBorder(BorderFactory.createEmptyBorder(0,0,30,0));
                 yourShipsText.setFont(fontPanelTitle);
+
+            // All the ships buttons to locate the ships in the table
 
             ShipPanel boatPanel       = new ShipPanel ("Boat"       , "sprites/boat.png");
             ShipPanel submarinePanel1 = new ShipPanel ("Submarine 1", "sprites/boat.png");
@@ -53,6 +97,8 @@ public class SetupStageView extends JFrame {
             ShipPanel destructorPanel = new ShipPanel ("Destructor" , "sprites/boat.png");
 
             // TODO COMO HACEMOS PARA ROTAR UNA IMAGEN?
+
+        // Display all the things inside the left panel.
 
         GridBagConstraints gbc_left = new GridBagConstraints();
             gbc_left.gridx = 0; gbc_left.gridy = 0;
@@ -76,19 +122,288 @@ public class SetupStageView extends JFrame {
             gbc_left.gridx = 0; gbc_left.gridy = 6;
             leftPanel.add(addSeparator(0, 15), gbc_left);
 
-        // ----------------------------- Table ---------------------------- //
+        return leftPanel;
+    }
 
+    /**
+     *
+     * Method to create the grid table (15x15) to locate the ships.
+     *
+     *      Is a loop for where we instantiate the cell class.
+     *      The Cell class has the x and y position and the path of the image we want to load.
+     *
+     * @return The JPanel with all the grid created.
+     *
+     */
+
+    public JPanel table () {
         JPanel tableGrid = new JPanel();
             tableGrid.setLayout(new GridLayout(15,15));
             tableGrid.setPreferredSize(new Dimension(650,650));
 
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
-                tableGrid.add(new JImagePanel(SPRITE_WATER));
+            for (int i = 0; i < 15; i++) {
+                for (int j = 0; j < 15; j++) {
+                    tableGrid.add(new JImagePanel(SPRITE_WATER));
+                    // TODO The method below doens't work, no se muestra como deberia.
+                    //tableGrid.add(new Cell(j, i, SPRITE_WATER));
+                }
             }
-        }
 
-        GridBagConstraints gbc_table = new GridBagConstraints();
+        return tableGrid;
+    }
+
+    /**
+     *
+     * Method to create the preview panel with:
+     *
+     *      1. The title of the panel (text).
+     *      2. The preview rotation of the ship (image).
+     *      3. The button to rotate the ship (text + icon).
+     *
+     * @return the JPanel with the preview panel.
+     *
+     */
+
+    public JPanel previewPanel () {
+
+        // --------------------------- Preview Panel --------------------------- //
+
+        JImagePanel shipPreviewPanel = new JImagePanel("sprites/bg2_panel.png");
+            shipPreviewPanel.setPreferredSize(new Dimension (270, 280));
+            shipPreviewPanel.setLayout(new GridBagLayout());
+            shipPreviewPanel.setOpaque(false);
+
+            // Label with the title of the panel.
+
+            JLabel shipPreviewText = new JLabel();
+                shipPreviewText.setText("Ship Preview");
+                shipPreviewText.setForeground(Color.white);
+                shipPreviewText.setBorder(BorderFactory.createEmptyBorder(10,35,35,0));
+                shipPreviewText.setFont(fontPanelTitle);
+
+            // Image of the ship that is selected.
+
+            JImagePanel shipImage = new JImagePanel ("sprites/boat.png");
+                shipImage.setPreferredSize(new Dimension(40,80));
+                shipImage.setOpaque(false);
+
+            // Button to rotate the selected ship.
+
+            JImagePanel rotateButton = new JImagePanel("sprites/bg_rotate_btn.png");
+                rotateButton.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
+                rotateButton.setPreferredSize(new Dimension(200,45));
+                rotateButton.setOpaque(false);
+
+                // Label with the text of the button rotate.
+
+                JLabel rotateButtonText = new JLabel();
+                    rotateButtonText.setText("ROTATE");
+                    rotateButtonText.setForeground(Color.white);
+                    rotateButtonText.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
+                    rotateButtonText.setFont(fontPanelTitle);
+
+                // Icon of the rotation button.
+
+                JImagePanel rotateIcon = new JImagePanel("sprites/rotated_arrow.png");
+                    rotateIcon.setPreferredSize(new Dimension(25,25));
+                    rotateIcon.setOpaque(false);
+
+            // Display the text and the icon of the rotation button.
+
+            GridBagConstraints gbc_rotateBtn = new GridBagConstraints();
+                gbc_rotateBtn.fill = GridBagConstraints.HORIZONTAL;
+
+                gbc_rotateBtn.gridx = 0; gbc_rotateBtn.gridy = 0;
+                gbc_rotateBtn.gridwidth = 3;
+                rotateButton.add(rotateButtonText, gbc_rotateBtn);
+
+                gbc_rotateBtn.gridx = 3; gbc_rotateBtn.gridy = 0;
+                gbc_rotateBtn.gridwidth = 1;
+                rotateButton.add(rotateIcon, gbc_rotateBtn);
+
+        // Display all the preview panel.
+
+        GridBagConstraints gbc_shipPreview = new GridBagConstraints();
+            gbc_shipPreview.fill = GridBagConstraints.HORIZONTAL;
+
+            gbc_shipPreview.gridx = 0; gbc_shipPreview.gridy = 0;
+            gbc_shipPreview.gridwidth = 3;
+            shipPreviewPanel.add(shipPreviewText, gbc_shipPreview);
+
+            gbc_shipPreview.gridx = 0; gbc_shipPreview.gridy = 1;
+            gbc_shipPreview.gridwidth = 1;
+            shipPreviewPanel.add(addSeparator(75, 0), gbc_shipPreview);
+
+            gbc_shipPreview.gridx = 1; gbc_shipPreview.gridy = 1;
+            gbc_shipPreview.gridwidth = 1;
+            shipPreviewPanel.add(shipImage, gbc_shipPreview);
+
+            gbc_shipPreview.gridx = 0; gbc_shipPreview.gridy = 2;
+            gbc_shipPreview.gridwidth = 3;
+            shipPreviewPanel.add(addSeparator(0, 20), gbc_shipPreview);
+
+            gbc_shipPreview.gridx = 0; gbc_shipPreview.gridy = 3;
+            gbc_shipPreview.gridwidth = 3;
+            shipPreviewPanel.add(rotateButton, gbc_shipPreview);
+
+        return shipPreviewPanel;
+    }
+
+    /**
+     *
+     * Method to create the number of enemies panel that has:
+     *
+     *      1. The title of the panel.
+     *      2. 4 enemies icons, to select the number of enemies.
+     *
+     * @return the JPanel with all inside the numberOfEnemiesPanel.
+     *
+     */
+
+    public JPanel numberOfEnemiesPanel () {
+
+        // --------------------------- Number Of Enemies Panel --------------------------- //
+
+        JImagePanel numberOfEnemiesPanel = new JImagePanel("sprites/bg2_panel.png");
+            numberOfEnemiesPanel.setPreferredSize(new Dimension (270, 280));
+            numberOfEnemiesPanel.setLayout(new GridBagLayout());
+            numberOfEnemiesPanel.setOpaque(false);
+
+            // Text with the title of the panel.
+
+            JLabel numberOfEnemiesText = new JLabel();
+                numberOfEnemiesText.setText("Number of Enemies");
+                numberOfEnemiesText.setForeground(Color.white);
+                numberOfEnemiesText.setBorder(BorderFactory.createEmptyBorder(0,0,80,0));
+                numberOfEnemiesText.setFont(fontPanelTitle);
+
+            // GridBagLayout with all the enemies icons.
+
+            JPanel numberOfEnemiesGrid = new JPanel();
+                numberOfEnemiesGrid.setLayout(new GridBagLayout());
+                numberOfEnemiesGrid.setOpaque(false);
+
+                // Enemy icon number 1. (Is always selected because the minimum number of enemies is 1).
+
+                JImagePanel enemy1 = new JImagePanel("sprites/full_user.png");
+                    enemy1.setPreferredSize(new Dimension(30,30));
+                    enemy1.setOpaque(false);
+
+                // Enemy icon number 2. (Is empty, can be selected).
+
+                JImagePanel enemy2 = new JImagePanel("sprites/empty_user.png");
+                    enemy2.setPreferredSize(new Dimension(30,30));
+                    enemy2.setOpaque(false);
+
+                // Enemy icon number 3. (Is empty, can be selected).
+
+                JImagePanel enemy3 = new JImagePanel("sprites/empty_user.png");
+                    enemy3.setPreferredSize(new Dimension(30,30));
+                    enemy3.setOpaque(false);
+
+                // Enemy icon number 4. (Is empty, can be selected).
+
+                JImagePanel enemy4 = new JImagePanel("sprites/empty_user.png");
+                    enemy4.setPreferredSize(new Dimension(30,30));
+                    enemy4.setOpaque(false);
+
+            // Display all the enemies icons with separators panels between them.
+
+            GridBagConstraints gbc_numberOfEnemiesGrid = new GridBagConstraints();
+                gbc_numberOfEnemiesGrid.gridx = 0; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(enemy1, gbc_numberOfEnemiesGrid);
+
+                gbc_numberOfEnemiesGrid.gridx = 1; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
+
+                gbc_numberOfEnemiesGrid.gridx = 2; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(enemy2, gbc_numberOfEnemiesGrid);
+
+                gbc_numberOfEnemiesGrid.gridx = 3; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
+
+                gbc_numberOfEnemiesGrid.gridx = 4; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(enemy3, gbc_numberOfEnemiesGrid);
+
+                gbc_numberOfEnemiesGrid.gridx = 5; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
+
+                gbc_numberOfEnemiesGrid.gridx = 6; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(enemy4, gbc_numberOfEnemiesGrid);
+
+        // Display all the things inside the number of enemies panel.
+
+        GridBagConstraints gbc_numberOfEnemiesPanel = new GridBagConstraints();
+            gbc_numberOfEnemiesPanel.gridx = 0; gbc_numberOfEnemiesPanel.gridy = 0;
+            numberOfEnemiesPanel.add(numberOfEnemiesText, gbc_numberOfEnemiesPanel);
+
+            gbc_numberOfEnemiesPanel.gridx = 0; gbc_numberOfEnemiesPanel.gridy = 1;
+            numberOfEnemiesPanel.add(numberOfEnemiesGrid, gbc_numberOfEnemiesPanel);
+
+            gbc_numberOfEnemiesPanel.gridx = 0; gbc_numberOfEnemiesPanel.gridy = 2;
+            numberOfEnemiesPanel.add(addSeparator(0,70), gbc_numberOfEnemiesPanel);
+
+        return numberOfEnemiesPanel;
+    }
+
+    /**
+     *
+     * Method to create the button to start the attack. Has:
+     *
+     *      1. Label that is inside the button.
+     *      2. Battle icon to make the button visualization better.
+     *
+     * @return the JPanel with the attack button.
+     *
+     */
+
+    public JPanel startAttackButton () {
+
+        // --------------------------- Start Attack Button -------------------------- //
+
+        JImagePanel startAttackButton = new JImagePanel("sprites/start_attack_bg.png");
+            startAttackButton.setPreferredSize(new Dimension (270, 100));
+            startAttackButton.setLayout(new GridBagLayout());
+            startAttackButton.setOpaque(false);
+
+            JLabel startAttackText = new JLabel();
+                startAttackText.setText("START ATTACK");
+                startAttackText.setForeground(Color.white);
+                startAttackText.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
+                startAttackText.setFont(fontStartAttack);
+
+            JImagePanel iconAttack = new JImagePanel("sprites/attack_icon.png");
+                iconAttack.setPreferredSize(new Dimension(35,35));
+                iconAttack.setOpaque(false);
+
+        GridBagConstraints gbc_attackBtn = new GridBagConstraints();
+            gbc_attackBtn.fill = GridBagConstraints.HORIZONTAL;
+
+            gbc_attackBtn.gridx = 0; gbc_attackBtn.gridy = 0;
+            gbc_attackBtn.gridwidth = 3;
+            startAttackButton.add(startAttackText, gbc_attackBtn);
+
+            gbc_attackBtn.gridx = 3; gbc_attackBtn.gridy = 0;
+            gbc_attackBtn.gridwidth = 1;
+            startAttackButton.add(iconAttack, gbc_attackBtn);
+
+        return startAttackButton;
+    }
+
+    /**
+     *
+     * Method that create the right panel of the setup stage view
+     * calling method declared before. It has:
+     *
+     *      1. The preview panel of the ship. (To see in which position is rotated).
+     *      2. The number of enemies panel. (To select the number of enemies in game).
+     *      3. The button to start the game.
+     *
+     * @return the JPanel with all the panels inside it.
+     *
+     */
+
+    public JPanel rightPanel () {
 
         // --------------------------- Right Panel -------------------------- //
 
@@ -96,194 +411,21 @@ public class SetupStageView extends JFrame {
             rightPanel.setLayout(new GridBagLayout());
             rightPanel.setOpaque(false);
 
-            JImagePanel shipPreviewPanel = new JImagePanel("sprites/bg2_panel.png");
-                shipPreviewPanel.setPreferredSize(new Dimension (270, 280));
-                shipPreviewPanel.setLayout(new GridBagLayout());
-                shipPreviewPanel.setOpaque(false);
-
-                JLabel shipPreviewText = new JLabel();
-                    shipPreviewText.setText("Ship Preview");
-                    shipPreviewText.setForeground(Color.white);
-                    shipPreviewText.setBorder(BorderFactory.createEmptyBorder(10,35,35,0));
-                    shipPreviewText.setFont(fontPanelTitle);
-
-                JImagePanel shipImage = new JImagePanel ("sprites/boat.png");
-                    shipImage.setPreferredSize(new Dimension(40,80));
-                    shipImage.setOpaque(false);
-
-                JImagePanel rotateButton = new JImagePanel("sprites/bg_rotate_btn.png");
-                    rotateButton.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
-                    rotateButton.setPreferredSize(new Dimension(200,45));
-                    rotateButton.setOpaque(false);
-
-                    JLabel rotateButtonText = new JLabel();
-                        rotateButtonText.setText("ROTATE");
-                        rotateButtonText.setForeground(Color.white);
-                        rotateButtonText.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
-                        rotateButtonText.setFont(fontPanelTitle);
-
-                    JImagePanel rotateIcon = new JImagePanel("sprites/rotated_arrow.png");
-                        rotateIcon.setPreferredSize(new Dimension(25,25));
-                        rotateIcon.setOpaque(false);
-
-                    GridBagConstraints gbc_rotateBtn = new GridBagConstraints();
-                        gbc_rotateBtn.fill = GridBagConstraints.HORIZONTAL;
-
-                        gbc_rotateBtn.gridx = 0; gbc_rotateBtn.gridy = 0;
-                        gbc_rotateBtn.gridwidth = 3;
-                        rotateButton.add(rotateButtonText, gbc_rotateBtn);
-
-                        gbc_rotateBtn.gridx = 3; gbc_rotateBtn.gridy = 0;
-                        gbc_rotateBtn.gridwidth = 1;
-                        rotateButton.add(rotateIcon, gbc_rotateBtn);
-
-                GridBagConstraints gbc_shipPreview = new GridBagConstraints();
-                    gbc_shipPreview.fill = GridBagConstraints.HORIZONTAL;
-
-                    gbc_shipPreview.gridx = 0; gbc_shipPreview.gridy = 0;
-                    gbc_shipPreview.gridwidth = 3;
-                    shipPreviewPanel.add(shipPreviewText, gbc_shipPreview);
-
-                    gbc_shipPreview.gridx = 0; gbc_shipPreview.gridy = 1;
-                    gbc_shipPreview.gridwidth = 1;
-                    shipPreviewPanel.add(addSeparator(75, 0), gbc_shipPreview);
-
-                    gbc_shipPreview.gridx = 1; gbc_shipPreview.gridy = 1;
-                    gbc_shipPreview.gridwidth = 1;
-                    shipPreviewPanel.add(shipImage, gbc_shipPreview);
-
-                    gbc_shipPreview.gridx = 0; gbc_shipPreview.gridy = 2;
-                    gbc_shipPreview.gridwidth = 3;
-                    shipPreviewPanel.add(addSeparator(0, 20), gbc_shipPreview);
-
-                    gbc_shipPreview.gridx = 0; gbc_shipPreview.gridy = 3;
-                    gbc_shipPreview.gridwidth = 3;
-                    shipPreviewPanel.add(rotateButton, gbc_shipPreview);
-
-            // --------------------------- Number of Enemies Panel -------------------------- //
-
-            JImagePanel numberOfEnemiesPanel = new JImagePanel("sprites/bg2_panel.png");
-                numberOfEnemiesPanel.setPreferredSize(new Dimension (270, 280));
-                numberOfEnemiesPanel.setLayout(new GridBagLayout());
-                numberOfEnemiesPanel.setOpaque(false);
-
-                JLabel numberOfEnemiesText = new JLabel();
-                    numberOfEnemiesText.setText("Number of Enemies");
-                    numberOfEnemiesText.setForeground(Color.white);
-                    numberOfEnemiesText.setBorder(BorderFactory.createEmptyBorder(0,0,80,0));
-                    numberOfEnemiesText.setFont(fontPanelTitle);
-
-                JPanel numberOfEnemiesGrid = new JPanel();
-                    numberOfEnemiesGrid.setLayout(new GridBagLayout());
-                    numberOfEnemiesGrid.setOpaque(false);
-
-                    JImagePanel enemy1 = new JImagePanel("sprites/full_user.png");
-                        enemy1.setPreferredSize(new Dimension(30,30));
-                        enemy1.setOpaque(false);
-                    JImagePanel enemy2 = new JImagePanel("sprites/empty_user.png");
-                        enemy2.setPreferredSize(new Dimension(30,30));
-                        enemy2.setOpaque(false);
-                    JImagePanel enemy3 = new JImagePanel("sprites/empty_user.png");
-                        enemy3.setPreferredSize(new Dimension(30,30));
-                        enemy3.setOpaque(false);
-                    JImagePanel enemy4 = new JImagePanel("sprites/empty_user.png");
-                        enemy4.setPreferredSize(new Dimension(30,30));
-                        enemy4.setOpaque(false);
-
-                GridBagConstraints gbc_numberOfEnemiesGrid = new GridBagConstraints();
-                    gbc_numberOfEnemiesGrid.gridx = 0; gbc_numberOfEnemiesGrid.gridy = 0;
-                    numberOfEnemiesGrid.add(enemy1, gbc_numberOfEnemiesGrid);
-
-                    gbc_numberOfEnemiesGrid.gridx = 1; gbc_numberOfEnemiesGrid.gridy = 0;
-                    numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
-
-                    gbc_numberOfEnemiesGrid.gridx = 2; gbc_numberOfEnemiesGrid.gridy = 0;
-                    numberOfEnemiesGrid.add(enemy2, gbc_numberOfEnemiesGrid);
-
-                    gbc_numberOfEnemiesGrid.gridx = 3; gbc_numberOfEnemiesGrid.gridy = 0;
-                    numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
-
-                    gbc_numberOfEnemiesGrid.gridx = 4; gbc_numberOfEnemiesGrid.gridy = 0;
-                    numberOfEnemiesGrid.add(enemy3, gbc_numberOfEnemiesGrid);
-
-                    gbc_numberOfEnemiesGrid.gridx = 5; gbc_numberOfEnemiesGrid.gridy = 0;
-                    numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
-
-                    gbc_numberOfEnemiesGrid.gridx = 6; gbc_numberOfEnemiesGrid.gridy = 0;
-                    numberOfEnemiesGrid.add(enemy4, gbc_numberOfEnemiesGrid);
-
-
-            GridBagConstraints gbc_numberOfEnemiesPanel = new GridBagConstraints();
-                gbc_numberOfEnemiesPanel.gridx = 0; gbc_numberOfEnemiesPanel.gridy = 0;
-                numberOfEnemiesPanel.add(numberOfEnemiesText, gbc_numberOfEnemiesPanel);
-
-                gbc_numberOfEnemiesPanel.gridx = 0; gbc_numberOfEnemiesPanel.gridy = 1;
-                numberOfEnemiesPanel.add(numberOfEnemiesGrid, gbc_numberOfEnemiesPanel);
-
-                gbc_numberOfEnemiesPanel.gridx = 0; gbc_numberOfEnemiesPanel.gridy = 2;
-                numberOfEnemiesPanel.add(addSeparator(0,70), gbc_numberOfEnemiesPanel);
-
-            // --------------------------- Start Attack Button -------------------------- //
-
-            JImagePanel startAttackButton = new JImagePanel("sprites/start_attack_bg.png");
-                startAttackButton.setPreferredSize(new Dimension (270, 100));
-                startAttackButton.setLayout(new GridBagLayout());
-                startAttackButton.setOpaque(false);
-
-                JLabel startAttackText = new JLabel();
-                    startAttackText.setText("START ATTACK");
-                    startAttackText.setForeground(Color.white);
-                    startAttackText.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
-                    startAttackText.setFont(fontStartAttack);
-
-                JImagePanel iconAttack = new JImagePanel("sprites/attack_icon.png");
-                    iconAttack.setOpaque(false);
-                    iconAttack.setPreferredSize(new Dimension(35,35));
-
-                GridBagConstraints gbc_attackBtn = new GridBagConstraints();
-                    gbc_attackBtn.fill = GridBagConstraints.HORIZONTAL;
-
-                    gbc_attackBtn.gridx = 0; gbc_attackBtn.gridy = 0;
-                    gbc_attackBtn.gridwidth = 3;
-                    startAttackButton.add(startAttackText, gbc_attackBtn);
-
-                    gbc_attackBtn.gridx = 3; gbc_attackBtn.gridy = 0;
-                    gbc_attackBtn.gridwidth = 1;
-                    startAttackButton.add(iconAttack, gbc_attackBtn);
+        // Display all the panels inside the right panel.
 
         GridBagConstraints gbc_right = new GridBagConstraints();
             gbc_right.fill = GridBagConstraints.HORIZONTAL;
 
             gbc_right.gridx = 0; gbc_right.gridy = 0;
-            rightPanel.add(shipPreviewPanel, gbc_right);
+            rightPanel.add(previewPanel(), gbc_right);
 
             gbc_right.gridx = 0; gbc_right.gridy = 1;
-            rightPanel.add(numberOfEnemiesPanel, gbc_right);
+            rightPanel.add(numberOfEnemiesPanel(), gbc_right);
 
             gbc_right.gridx = 0; gbc_right.gridy = 2;
-            rightPanel.add(startAttackButton, gbc_right);
+            rightPanel.add(startAttackButton(), gbc_right);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-
-            gbc.gridx = 0; gbc.gridy = 0;
-            backgroundPanel.add(leftPanel, gbc);
-
-            gbc.gridx = 1; gbc.gridy = 0;
-            backgroundPanel.add(addSeparator(10,0));
-
-            gbc.gridx = 2; gbc.gridy = 0;
-            backgroundPanel.add(tableGrid, gbc);
-
-            gbc.gridx = 3; gbc.gridy = 0;
-            backgroundPanel.add(addSeparator(10,0));
-
-            gbc.gridx = 4; gbc.gridy = 0;
-            backgroundPanel.add(rightPanel, gbc);
-
-        add(backgroundPanel);
-
-        setVisible(true);
+        return rightPanel;
     }
 
     public void initializeWindow () {
@@ -310,11 +452,11 @@ public class SetupStageView extends JFrame {
 
     public JPanel addSeparator (int width, int height) {
         JPanel space = new JPanel();
-        space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
-        space.setOpaque(false);
+            space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
+            space.setOpaque(false);
 
         Component rigidArea = Box. createRigidArea(new Dimension(width, height));
-        space.add(rigidArea);
+            space.add(rigidArea);
 
         return space;
     }
