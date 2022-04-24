@@ -8,6 +8,8 @@ public class UserManager {
 
     private final UserDAO userDao;
 
+    private String username;
+
     public UserManager() {
         userDao = new SQLUserDAO();
     }
@@ -22,7 +24,13 @@ public class UserManager {
     }
 
     public boolean checkLogin(String login, String password) {
-        return password.equals(userDao.getPassword(login));
+        if (password.equals(userDao.getPassword(login))) {
+         username = login;
+         return true;
+        }
+        return false;
     }
+
+
 
 }
