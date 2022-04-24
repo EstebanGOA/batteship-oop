@@ -1,4 +1,5 @@
 import business.UserManager;
+import presentation.controllers.MenuController;
 import presentation.controllers.RegisterController;
 import presentation.controllers.SettingsController;
 import presentation.views.*;
@@ -18,14 +19,18 @@ public class Main {
 
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
-        mainView.asigneViews(loginView, registerView, menuView);
+        MenuController menuController = new MenuController(userManager, menuView);
+
+        mainView.asigneViews(loginView, registerView, menuView, settingsView);
 
         /* Asignamos los listeners de las vistas a la vista principal */
         loginView.registerMasterView(mainView);
         registerView.registerMasterView(mainView);
-        menuView.registerMasterView(mainView);
+        menuView.menuController(menuController);
         registerView.registerController(registerController);
         settingsView.settingsController(settingsController);
+
+
 
         mainView.run();
     }

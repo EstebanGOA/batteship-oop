@@ -30,7 +30,7 @@ public class LoginView extends JPanel {
 
         // ------------------------ Background Image ------------------------ //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/login_background.png");
+        JPanel backgroundPanel = new JPanel();
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setLayout(new GridBagLayout());
 
