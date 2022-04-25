@@ -1,20 +1,49 @@
 package presentation.views;
 
+import business.entities.Submarine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SetupStageView extends JFrame {
 
     // Image Path
 
-    private final String SPRITE_WATER = "sprites/water.png";
+    private final String SPRITE_WATER         = "sprites/GameViews/water.png";
+
+    private final String SPRITE_YOUR_SHIPS_BG = "sprites/GameViews/your_ships_panel.png";
+
+    private final String SPRITE_ROTATION_SHIP = "sprites/GameViews/boat.png";
+
+    private final String SPRITE_BOAT       = "sprites/GameViews/SetupStageView/rotated_boat.png";
+    private final String SPRITE_SUBMARINE  = "sprites/GameViews/SetupStageView/rotated_submarine.png";
+    private final String SPRITE_AIRCRAFT   = "sprites/GameViews/SetupStageView/rotated_aircraft.png";
+    private final String SPRITE_DESTRUCTOR = "sprites/GameViews/SetupStageView/rotated_destructor.png";
+
+    private final String SPRITE_BG2        = "sprites/GameViews/SetupStageView/bg2_panel.png";
+
+    private final String SPRITE_ROTATE_BTN_BG    = "sprites/GameViews/SetupStageView/bg_rotate_btn.png";
+    private final String SPRITE_ROTATE_ARROW_ICO = "sprites/GameViews/SetupStageView/rotated_arrow.png";
+
+    private final String SPRITE_FULL_USER  = "sprites/GameViews/SetupStageView/full_user.png";
+    private final String SPRITE_EMPTY_USER = "sprites/GameViews/SetupStageView/empty_user.png";
+
+    private final String SPRITE_ATTACK_BTN_BG = "sprites/GameViews/SetupStageView/start_attack_bg.png";
+    private final String SPRITE_ATTACK_ICO    = "sprites/GameViews/SetupStageView/attack_icon.png";
+
+    // Strings
+
+    private final String LABEL_SHIP_PREVIEW   = "Ship Preview";
+    private final String LABEL_ROTATE_BTN     = "ROTATE";
+    private final String LABEL_NUMBER_ENEMIES = "Number of Enemies";
+    private final String LABEL_ATTACK_BTN     = "START ATTACK";
 
     // Background Color
 
     private final Color BACKGROUND_COLOR = new Color(39,152,213);
-    private final Color PANEL_COLOR = new Color(33,135,201);
 
     // Font Path
 
@@ -23,6 +52,8 @@ public class SetupStageView extends JFrame {
 
     private final Font fontStartAttack = initializeFont (FONT_BLACK, 20F);
     private final Font fontPanelTitle  = initializeFont (FONT_BOLD, 18F);
+
+    private Cell[][] table = new Cell[15][15];
 
     public SetupStageView () {
         initializeWindow();
@@ -75,7 +106,7 @@ public class SetupStageView extends JFrame {
 
         // --------------------------- Left Panel -------------------------- //
 
-        JImagePanel leftPanel = new JImagePanel("sprites/your_ships_panel.png");
+        JImagePanel leftPanel = new JImagePanel(SPRITE_YOUR_SHIPS_BG);
             leftPanel.setLayout(new GridBagLayout());
             leftPanel.setPreferredSize(new Dimension (300, 670));
             leftPanel.setOpaque(false);
@@ -90,13 +121,11 @@ public class SetupStageView extends JFrame {
 
             // All the ships buttons to locate the ships in the table
 
-            ShipPanel boatPanel       = new ShipPanel ("Boat"       , "sprites/boat.png");
-            ShipPanel submarinePanel1 = new ShipPanel ("Submarine 1", "sprites/boat.png");
-            ShipPanel submarinePanel2 = new ShipPanel ("Submarine 2", "sprites/boat.png");
-            ShipPanel aircraftPanel   = new ShipPanel ("Aircraft"   , "sprites/boat.png");
-            ShipPanel destructorPanel = new ShipPanel ("Destructor" , "sprites/boat.png");
-
-            // TODO COMO HACEMOS PARA ROTAR UNA IMAGEN?
+            ShipPanel boatPanel       = new ShipPanel ("Boat"       , SPRITE_BOAT,      60,25);
+            ShipPanel submarinePanel1 = new ShipPanel ("Submarine 1", SPRITE_SUBMARINE, 80,25);
+            ShipPanel submarinePanel2 = new ShipPanel ("Submarine 2", SPRITE_SUBMARINE, 80,25);
+            ShipPanel destructorPanel = new ShipPanel ("Destructor" , SPRITE_DESTRUCTOR,100,25);
+            ShipPanel aircraftPanel   = new ShipPanel ("Aircraft"   , SPRITE_AIRCRAFT,  120,25);
 
         // Display all the things inside the left panel.
 
@@ -114,10 +143,10 @@ public class SetupStageView extends JFrame {
             leftPanel.add(submarinePanel2, gbc_left);
 
             gbc_left.gridx = 0; gbc_left.gridy = 4;
-            leftPanel.add(aircraftPanel, gbc_left);
+            leftPanel.add(destructorPanel, gbc_left);
 
             gbc_left.gridx = 0; gbc_left.gridy = 5;
-            leftPanel.add(destructorPanel, gbc_left);
+            leftPanel.add(aircraftPanel, gbc_left);
 
             gbc_left.gridx = 0; gbc_left.gridy = 6;
             leftPanel.add(addSeparator(0, 15), gbc_left);
@@ -143,9 +172,8 @@ public class SetupStageView extends JFrame {
 
             for (int i = 0; i < 15; i++) {
                 for (int j = 0; j < 15; j++) {
-                    tableGrid.add(new JImagePanel(SPRITE_WATER));
-                    // TODO The method below doens't work, no se muestra como deberia.
-                    //tableGrid.add(new Cell(j, i, SPRITE_WATER));
+                    table[i][j] = new Cell(j, i, SPRITE_WATER);
+                    tableGrid.add(table[i][j]);
                 }
             }
 
@@ -168,7 +196,7 @@ public class SetupStageView extends JFrame {
 
         // --------------------------- Preview Panel --------------------------- //
 
-        JImagePanel shipPreviewPanel = new JImagePanel("sprites/bg2_panel.png");
+        JImagePanel shipPreviewPanel = new JImagePanel(SPRITE_BG2);
             shipPreviewPanel.setPreferredSize(new Dimension (270, 280));
             shipPreviewPanel.setLayout(new GridBagLayout());
             shipPreviewPanel.setOpaque(false);
@@ -176,20 +204,20 @@ public class SetupStageView extends JFrame {
             // Label with the title of the panel.
 
             JLabel shipPreviewText = new JLabel();
-                shipPreviewText.setText("Ship Preview");
+                shipPreviewText.setText(LABEL_SHIP_PREVIEW);
                 shipPreviewText.setForeground(Color.white);
                 shipPreviewText.setBorder(BorderFactory.createEmptyBorder(10,35,35,0));
                 shipPreviewText.setFont(fontPanelTitle);
 
             // Image of the ship that is selected.
 
-            JImagePanel shipImage = new JImagePanel ("sprites/boat.png");
+            JImagePanel shipImage = new JImagePanel (SPRITE_ROTATION_SHIP);
                 shipImage.setPreferredSize(new Dimension(40,80));
                 shipImage.setOpaque(false);
 
             // Button to rotate the selected ship.
 
-            JImagePanel rotateButton = new JImagePanel("sprites/bg_rotate_btn.png");
+            JImagePanel rotateButton = new JImagePanel(SPRITE_ROTATE_BTN_BG);
                 rotateButton.setBorder(BorderFactory.createEmptyBorder(5,0,0,0));
                 rotateButton.setPreferredSize(new Dimension(200,45));
                 rotateButton.setOpaque(false);
@@ -197,14 +225,14 @@ public class SetupStageView extends JFrame {
                 // Label with the text of the button rotate.
 
                 JLabel rotateButtonText = new JLabel();
-                    rotateButtonText.setText("ROTATE");
+                    rotateButtonText.setText(LABEL_ROTATE_BTN);
                     rotateButtonText.setForeground(Color.white);
                     rotateButtonText.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
                     rotateButtonText.setFont(fontPanelTitle);
 
                 // Icon of the rotation button.
 
-                JImagePanel rotateIcon = new JImagePanel("sprites/rotated_arrow.png");
+                JImagePanel rotateIcon = new JImagePanel(SPRITE_ROTATE_ARROW_ICO);
                     rotateIcon.setPreferredSize(new Dimension(25,25));
                     rotateIcon.setOpaque(false);
 
@@ -264,7 +292,7 @@ public class SetupStageView extends JFrame {
 
         // --------------------------- Number Of Enemies Panel --------------------------- //
 
-        JImagePanel numberOfEnemiesPanel = new JImagePanel("sprites/bg2_panel.png");
+        JImagePanel numberOfEnemiesPanel = new JImagePanel(SPRITE_BG2);
             numberOfEnemiesPanel.setPreferredSize(new Dimension (270, 280));
             numberOfEnemiesPanel.setLayout(new GridBagLayout());
             numberOfEnemiesPanel.setOpaque(false);
@@ -272,7 +300,7 @@ public class SetupStageView extends JFrame {
             // Text with the title of the panel.
 
             JLabel numberOfEnemiesText = new JLabel();
-                numberOfEnemiesText.setText("Number of Enemies");
+                numberOfEnemiesText.setText(LABEL_NUMBER_ENEMIES);
                 numberOfEnemiesText.setForeground(Color.white);
                 numberOfEnemiesText.setBorder(BorderFactory.createEmptyBorder(0,0,80,0));
                 numberOfEnemiesText.setFont(fontPanelTitle);
@@ -285,25 +313,25 @@ public class SetupStageView extends JFrame {
 
                 // Enemy icon number 1. (Is always selected because the minimum number of enemies is 1).
 
-                JImagePanel enemy1 = new JImagePanel("sprites/full_user.png");
+                JImagePanel enemy1 = new JImagePanel(SPRITE_FULL_USER);
                     enemy1.setPreferredSize(new Dimension(30,30));
                     enemy1.setOpaque(false);
 
                 // Enemy icon number 2. (Is empty, can be selected).
 
-                JImagePanel enemy2 = new JImagePanel("sprites/empty_user.png");
+                JImagePanel enemy2 = new JImagePanel(SPRITE_EMPTY_USER);
                     enemy2.setPreferredSize(new Dimension(30,30));
                     enemy2.setOpaque(false);
 
                 // Enemy icon number 3. (Is empty, can be selected).
 
-                JImagePanel enemy3 = new JImagePanel("sprites/empty_user.png");
+                JImagePanel enemy3 = new JImagePanel(SPRITE_EMPTY_USER);
                     enemy3.setPreferredSize(new Dimension(30,30));
                     enemy3.setOpaque(false);
 
                 // Enemy icon number 4. (Is empty, can be selected).
 
-                JImagePanel enemy4 = new JImagePanel("sprites/empty_user.png");
+                JImagePanel enemy4 = new JImagePanel(SPRITE_EMPTY_USER);
                     enemy4.setPreferredSize(new Dimension(30,30));
                     enemy4.setOpaque(false);
 
@@ -361,18 +389,18 @@ public class SetupStageView extends JFrame {
 
         // --------------------------- Start Attack Button -------------------------- //
 
-        JImagePanel startAttackButton = new JImagePanel("sprites/start_attack_bg.png");
+        JImagePanel startAttackButton = new JImagePanel(SPRITE_ATTACK_BTN_BG);
             startAttackButton.setPreferredSize(new Dimension (270, 100));
             startAttackButton.setLayout(new GridBagLayout());
             startAttackButton.setOpaque(false);
 
             JLabel startAttackText = new JLabel();
-                startAttackText.setText("START ATTACK");
+                startAttackText.setText(LABEL_ATTACK_BTN);
                 startAttackText.setForeground(Color.white);
                 startAttackText.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
                 startAttackText.setFont(fontStartAttack);
 
-            JImagePanel iconAttack = new JImagePanel("sprites/attack_icon.png");
+            JImagePanel iconAttack = new JImagePanel(SPRITE_ATTACK_ICO);
                 iconAttack.setPreferredSize(new Dimension(35,35));
                 iconAttack.setOpaque(false);
 

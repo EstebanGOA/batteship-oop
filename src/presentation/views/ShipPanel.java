@@ -9,7 +9,7 @@ public class ShipPanel extends JPanel {
 
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";
 
-    public ShipPanel (String shipName, String shipPath) {
+    public ShipPanel (String shipName, String shipPath, int imageWidth, int imageHeight) {
         Font font = initializeFont (FONT_BOLD, 15F);
 
         JImagePanel shipPanel = new JImagePanel("sprites/ship_panel.png");
@@ -24,7 +24,7 @@ public class ShipPanel extends JPanel {
                 shipNameText.setFont(font);
 
             JImagePanel yourShipImage = new JImagePanel (shipPath);
-                yourShipImage.setPreferredSize(new Dimension(80,35));
+                yourShipImage.setPreferredSize(new Dimension(imageWidth,imageHeight));
                 yourShipImage.setOpaque(false);
 
         GridBagConstraints gbc_yourShips = new GridBagConstraints();
