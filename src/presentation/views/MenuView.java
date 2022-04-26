@@ -10,6 +10,8 @@ public class MenuView extends JPanel {
 
     private final MainView mainView;
 
+    private String username = "";
+
     public MenuView(MainView mainView) {
 
         this.mainView = mainView;
@@ -37,7 +39,7 @@ public class MenuView extends JPanel {
                 nameBackgroundPanel.setLayout(new BorderLayout());
                 nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
 
-                JLabel usernameLabel = new JLabel("Username: Tomas");
+                    JLabel usernameLabel = new JLabel(username);
                     usernameLabel.setFont(font);
                     usernameLabel.setForeground(Color.white);
                     usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
@@ -184,4 +186,7 @@ public class MenuView extends JPanel {
 
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

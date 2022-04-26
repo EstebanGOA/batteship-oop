@@ -26,11 +26,13 @@ public class UserManager {
     public boolean checkLogin(String login, String password) {
         if (password.equals(userDao.getPassword(login))) {
          username = login;
+
          return true;
         }
         return false;
     }
 
-
-
+    public String getUsername() {
+        return username;
+    }
 }
