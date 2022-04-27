@@ -6,17 +6,23 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class RegisterView extends JFrame {
+public class RegisterView extends JPanel {
 
-    public RegisterView() {
+    /**
+     * Guardamos la referencia del parent para cambiar las ventanas al realizar ciertas interacciones en la ventana actual.
+     */
+    private final MainView mainView;
 
-        initializeWindow();
+    public RegisterView(MainView mainView) {
+
+        this.mainView = mainView;
 
         Font font = initializeFont();
 
         // ------------------------ Background Image ------------------------ //
 
         JImagePanel backgroundPanel = new JImagePanel("sprites/login_background.png");
+        backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -25,7 +31,7 @@ public class RegisterView extends JFrame {
         displayObjects(backgroundPanel, gbc, font);
         add(backgroundPanel);
 
-        setVisible(true);
+        // setVisible(true);
     }
 
     // ------------------------ Display Objects ------------------------ //
@@ -79,6 +85,8 @@ public class RegisterView extends JFrame {
             JImagePanel button = new JImagePanel("sprites/register_button.png");
                 button.setPreferredSize(new Dimension(100,100));
                 button.setOpaque(false);
+                button.setName("register");
+                button.addMouseListener(mainView);
 
         buttonPanel.add(button);
 
@@ -92,6 +100,8 @@ public class RegisterView extends JFrame {
             loginLabel.setFont(font);
             loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
             loginLabel.setForeground(new Color(200,200,200));
+            loginLabel.setName("return_login");
+            loginLabel.addMouseListener(mainView);
 
         return loginLabel;
     }
@@ -175,14 +185,6 @@ public class RegisterView extends JFrame {
         Border oldBorder = text.getBorder();
         Border whiteBorder = BorderFactory.createMatteBorder(0, 0, 3, 0, Color.WHITE);
         return BorderFactory.createCompoundBorder(whiteBorder, oldBorder);
-    }
-
-    public void initializeWindow () {
-        setSize(1280, 720);
-
-        setTitle("Battleship v1.0.1");
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public Font initializeFont () {

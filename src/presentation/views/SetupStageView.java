@@ -8,10 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SetupStageView extends JFrame {
+public class SetupStageView extends JPanel {
+
+    private final MainView mainView;
 
     // Image Path
-
     private final String SPRITE_WATER         = "sprites/GameViews/water.png";
 
     private final String SPRITE_YOUR_SHIPS_BG = "sprites/GameViews/your_ships_panel.png";
@@ -55,14 +56,16 @@ public class SetupStageView extends JFrame {
 
     private Cell[][] table = new Cell[15][15];
 
-    public SetupStageView () {
-        initializeWindow();
+    public SetupStageView (MainView mainView) {
+
+        this.mainView = mainView;
 
         // ------------------------ Background Image ------------------------ //
 
         JPanel backgroundPanel = new JPanel();
-            backgroundPanel.setBackground(BACKGROUND_COLOR);
-            backgroundPanel.setLayout(new GridBagLayout());
+        backgroundPanel.setPreferredSize(new Dimension(1280, 720));
+        backgroundPanel.setBackground(BACKGROUND_COLOR);
+        backgroundPanel.setLayout(new GridBagLayout());
 
         // Display all the panels in the background.
 
@@ -86,7 +89,6 @@ public class SetupStageView extends JFrame {
 
         add(backgroundPanel);
 
-        setVisible(true);
     }
 
     /**
@@ -454,14 +456,6 @@ public class SetupStageView extends JFrame {
             rightPanel.add(startAttackButton(), gbc_right);
 
         return rightPanel;
-    }
-
-    public void initializeWindow () {
-        setSize(1280, 720);
-
-        setTitle("Battleship v1.0.0");
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public Font initializeFont (String fontPath, float fontSize) {
