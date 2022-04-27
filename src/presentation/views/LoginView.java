@@ -3,20 +3,30 @@ package presentation.views;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
-public class LoginView extends JFrame {
+public class LoginView extends JPanel {
 
-    public LoginView() {
+    /**
+     * Guardamos la referencia del parent para cambiar las ventanas al realizar ciertas interacciones en la ventana actual.
+     */
+    private final MainView mainView;
 
-        initializeWindow();
+    public LoginView(MainView mainView) {
+
+        this.mainView = mainView;
 
         Font font = initializeFont();
 
         // ------------------------ Background Image ------------------------ //
 
         JImagePanel backgroundPanel = new JImagePanel("sprites/login_background.png");
+        backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -32,6 +42,9 @@ public class LoginView extends JFrame {
         JImagePanel button = new JImagePanel("sprites/login_button.png");
         button.setPreferredSize(new Dimension(100,100));
         button.setOpaque(false);
+        // TODO: Primero deberíamos hacer la petición al servidor, comprobar los datos y cuando todo sea correcto cambiar ventana.
+        button.setName("login");
+        button.addMouseListener(mainView);
 
         buttonPanel.add(button);
 
@@ -93,6 +106,8 @@ public class LoginView extends JFrame {
         registerAccount.setText("Not registered? Create an account");
         registerAccount.setFont(font);
         registerAccount.setForeground(new Color(200,200,200));
+        registerAccount.setName("create_account");
+        registerAccount.addMouseListener(mainView);
 
         // ------------------------ Display Objects ------------------------ //
 
@@ -120,17 +135,8 @@ public class LoginView extends JFrame {
         gbc.gridx = 0; gbc.gridy = 7;
         backgroundPanel.add(registerAccount, gbc);
 
-        add(backgroundPanel);
-
-        setVisible(true);
-    }
-
-    public void initializeWindow () {
-        setSize(1280, 720);
-
-        setTitle("Battleship v1.0.0");
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.add(backgroundPanel);
+        //setVisible(true);
     }
 
     public Font initializeFont () {
@@ -156,5 +162,9 @@ public class LoginView extends JFrame {
         space.add(rigidArea);
 
         return space;
+    }
+
+    private void registerView() {
+        mainView.switchPanel("register");
     }
 }
