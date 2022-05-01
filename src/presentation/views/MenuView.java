@@ -3,12 +3,15 @@ package presentation.views;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
 public class MenuView extends JPanel {
 
     private final MainView mainView;
+
+    private JImagePanel settingsButton;
 
     public MenuView(MainView mainView) {
 
@@ -19,7 +22,7 @@ public class MenuView extends JPanel {
         // ------------------------ Background Image ------------------------ //
         // ---------- Grid layout to divide the window in 3 columns --------- //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/background_main_menu.png");
+        JPanel backgroundPanel = new JPanel();
             backgroundPanel.setPreferredSize(new Dimension(1280, 720));
             backgroundPanel.setLayout(new GridBagLayout());
 
@@ -101,9 +104,10 @@ public class MenuView extends JPanel {
 
         // Settings Button
 
-        JImagePanel settingsButton = new JImagePanel("sprites/settings_button.png");
+            settingsButton = new JImagePanel("sprites/settings_button.png");
             settingsButton.setPreferredSize(new Dimension(75,75));
             settingsButton.setOpaque(false);
+            settingsButton.setName("settings");
 
         // Statistics Button
 
@@ -179,4 +183,13 @@ public class MenuView extends JPanel {
 
         return space;
     }
+
+    public void menuController(MouseListener mouseListener) {
+        settingsButton.addMouseListener(mouseListener);
+    }
+    public void settingsView() {
+        mainView.switchPanel("settings");
+    }
+
+
 }

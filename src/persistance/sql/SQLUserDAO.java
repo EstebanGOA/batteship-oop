@@ -9,21 +9,20 @@ import java.sql.SQLException;
 public class SQLUserDAO implements UserDAO {
 
     @Override
-    public void addUser(User user) {
-        String query = "INSERT INTO User(id, name, email, password) VALUES ('" +
-                user.getId() + "', '" +
+    public boolean addUser(User user) {
+        String query = "INSERT INTO User(name, email, password) VALUES ('" +
                 user.getName() + "', '" +
                 user.getEmail() + "', '" +
                 user.getPassword() +
                 "');";
 
-        SQLConnector.getInstance().insertQuery(query);
+        return SQLConnector.getInstance().insertQuery(query);
     }
 
     @Override
-    public void deleteUser(String code) {
+    public boolean deleteUser(String code) {
         String query = "DELETE FROM User WHERE name = '" + code + "';";
-        SQLConnector.getInstance().deleteQuery(query);
+        return SQLConnector.getInstance().deleteQuery(query);
     }
 
     public String getPassword(String string) {

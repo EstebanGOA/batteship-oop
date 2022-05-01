@@ -7,13 +7,15 @@ import persistance.sql.SQLUserDAO;
 public class UserManager {
 
     private final UserDAO userDao;
+    private User user;
 
     public UserManager() {
         userDao = new SQLUserDAO();
     }
 
-    public void addUser(User user) {
-        userDao.addUser(user);
+    public boolean addUser(String username, String email, String password) {
+        this.user = new User(username, email, password);
+        return userDao.addUser(user);
     }
 
     public void deleteUser(String code) {
@@ -22,6 +24,9 @@ public class UserManager {
 
     public String getPassword(String string) {
         return userDao.getPassword(string);
+    }
+    public void logoutUser() {
+        user = null;
     }
 
 }

@@ -1,26 +1,35 @@
 package presentation.controllers;
 
 import business.UserManager;
-import presentation.views.MenuView;
+import business.entities.User;
+import presentation.views.JPopup;
+import presentation.views.SettingsView;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MenuController implements MouseListener {
 
+public class SettingsController implements MouseListener {
     private UserManager userManager;
-    private MenuView menuView;
+    private SettingsView settingsView;
 
-    public MenuController(UserManager userManager, MenuView menuView) {
+
+    public SettingsController(UserManager userManager, SettingsView settingsView) {
         this.userManager = userManager;
-        this.menuView = menuView;
+        this.settingsView = settingsView;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         switch (((JComponent) e.getSource()).getName()) {
-            case "settings" -> menuView.settingsView();
+            case "logout" ->  {
+                settingsView.viewLogin();
+                userManager.logoutUser();
+                new JPopup("Logout successfully");
+
+            }
+
         }
     }
 
