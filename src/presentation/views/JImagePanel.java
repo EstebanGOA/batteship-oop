@@ -19,6 +19,7 @@ public class JImagePanel extends JPanel {
 
     // Constructor with parameters
     public JImagePanel(String path) {
+
         try {
             image = ImageIO.read(new File(path));
         } catch (IOException e) {
@@ -54,5 +55,9 @@ public class JImagePanel extends JPanel {
             //g2d.rotate(Math.toRadians(angle));
             g2d.drawImage(image, at, null);
         }
+
+        super.paintComponent(g);
+
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 }

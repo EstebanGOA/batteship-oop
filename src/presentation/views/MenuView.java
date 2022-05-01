@@ -3,12 +3,17 @@ package presentation.views;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
 public class MenuView extends JPanel {
 
     private final MainView mainView;
+
+    private String username = "";
+
+    private JImagePanel settingsButton;
 
     public MenuView(MainView mainView) {
 
@@ -19,7 +24,7 @@ public class MenuView extends JPanel {
         // ------------------------ Background Image ------------------------ //
         // ---------- Grid layout to divide the window in 3 columns --------- //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/background_main_menu.png");
+        JPanel backgroundPanel = new JPanel();
             backgroundPanel.setPreferredSize(new Dimension(1280, 720));
             backgroundPanel.setLayout(new GridBagLayout());
 
@@ -32,12 +37,12 @@ public class MenuView extends JPanel {
 
         GridBagConstraints gbcLeftColumn = new GridBagConstraints();
 
-            JImagePanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
+            JPanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
                 nameBackgroundPanel.setOpaque(false);
                 nameBackgroundPanel.setLayout(new BorderLayout());
                 nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
 
-                JLabel usernameLabel = new JLabel("Username: Tomas");
+                    JLabel usernameLabel = new JLabel(username);
                     usernameLabel.setFont(font);
                     usernameLabel.setForeground(Color.white);
                     usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
@@ -103,9 +108,10 @@ public class MenuView extends JPanel {
 
         // Settings Button
 
-        JImagePanel settingsButton = new JImagePanel("sprites/settings_button.png");
+            settingsButton = new JImagePanel("sprites/settings_button.png");
             settingsButton.setPreferredSize(new Dimension(75,75));
             settingsButton.setOpaque(false);
+            settingsButton.setName("settings");
 
         // Statistics Button
 
@@ -180,5 +186,17 @@ public class MenuView extends JPanel {
         space.add(rigidArea);
 
         return space;
+    }
+
+    public void menuController(MouseListener mouseListener) {
+        settingsButton.addMouseListener(mouseListener);
+    }
+    public void settingsView() {
+        mainView.switchPanel("settings");
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

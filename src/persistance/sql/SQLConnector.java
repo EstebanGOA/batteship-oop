@@ -1,19 +1,12 @@
 package persistance.sql;
 
+import persistance.DatabaseConfigDAO;
+
 import java.sql.*;
 
 public class SQLConnector {
 
     private static persistance.sql.SQLConnector instance = null;
-
-    public static persistance.sql.SQLConnector getInstance() {
-        if (instance == null) {
-            // NOT a good practice to hardcode connection data! Be aware of this for your project delivery ;)
-            instance = new persistance.sql.SQLConnector("root", "", "localhost", 3306, "battleship");
-            instance.connect();
-        }
-        return instance;
-    }
 
     // Attributes to connect to the database.
     private final String username;
@@ -21,12 +14,21 @@ public class SQLConnector {
     private final String url;
     private Connection conn;
 
+    public static persistance.sql.SQLConnector getInstance() {
+        if (instance == null) {
+            instance = new persistance.sql.SQLConnector(DatabaseConfigDAO.getUsername(), DatabaseConfigDAO.getPassword(), DatabaseConfigDAO.getIp(), DatabaseConfigDAO.getPort(), DatabaseConfigDAO.getDatabaseName());
+            instance.connect();
+        }
+        return instance;
+    }
+
     // Parametrized constructor
     public SQLConnector(String username, String password, String ip, int port, String database) {
         this.username = username;
         this.password = password;
         this.url = "jdbc:mysql://" + ip + ":" + port + "/" + database;
     }
+
 
     /**
      * Method that starts the inner connection to the database. Ideally, users would disconnect after
@@ -45,13 +47,15 @@ public class SQLConnector {
      *
      * @param query String representation of the query to execute.
      */
-    public void insertQuery(String query) {
+    public boolean insertQuery(String query) {
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);
+            return true;
         } catch (SQLException e) {
             System.err.println(query);
             System.err.println("Problem when inserting --> " + e.getSQLState() + " (" + e.getMessage() + ")");
+            return false;
         }
     }
 
@@ -75,15 +79,16 @@ public class SQLConnector {
      *
      * @param query String representation of the query to execute.
      */
-    public void deleteQuery(String query) {
+    public boolean deleteQuery(String query) {
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);
+            return true;
         } catch (SQLException e) {
             System.err.println(query);
             System.err.println("Problem when deleting --> " + e.getSQLState() + " (" + e.getMessage() + ")");
+            return false;
         }
-
     }
 
     /**

@@ -12,11 +12,12 @@ import java.awt.event.MouseListener;
  */
 public class MainView extends JFrame implements MouseListener {
 
-    private final LoginView loginView;
-    private final RegisterView registerView;
-    private final MenuView menuView;
-    private final SetupStageView setupStageView;
-    private final JPanel rootPanel;
+    private LoginView loginView;
+    private RegisterView registerView;
+    private MenuView menuView;
+    private SettingsView settingsView;
+    private SetupStageView setupStageView;
+    private JPanel rootPanel;
     private CardLayout cardLayout;
 
     /**
@@ -26,18 +27,23 @@ public class MainView extends JFrame implements MouseListener {
     private final String REGISTER_WINDOW = "register";
     private final String MENU_WINDOW = "menu";
     private final String SETUP_STAGE_WINDOW = "setup";
+    private final String SETTINGS_WINDOW = "settings";
 
     /**
      * Constructor de MainView.
      */
     public MainView() {
-        this.loginView = new LoginView(this);
-        this.registerView = new RegisterView(this);
-        this.menuView = new MenuView(this);
-        this.setupStageView = new SetupStageView(this);
         this.cardLayout = new CardLayout();
         this.rootPanel = new JPanel();
         initializeWindow();
+    }
+
+    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, SetupStageView setupStageView) {
+        this.loginView = loginView;
+        this.registerView = registerView;
+        this.menuView = menuView;
+        this.settingsView = settingsView;
+        this.setupStageView = setupStageView;
     }
 
     /**
@@ -53,6 +59,7 @@ public class MainView extends JFrame implements MouseListener {
         rootPanel.add(registerView, REGISTER_WINDOW);
         rootPanel.add(menuView, MENU_WINDOW);
         rootPanel.add(setupStageView, SETUP_STAGE_WINDOW);
+        rootPanel.add(settingsView, SETTINGS_WINDOW);
 
         this.add(rootPanel);
         pack();
@@ -72,7 +79,6 @@ public class MainView extends JFrame implements MouseListener {
         setLocationRelativeTo(null);
         setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
     }
 
     @Override
