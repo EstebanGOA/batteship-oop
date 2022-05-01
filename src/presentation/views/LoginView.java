@@ -1,5 +1,7 @@
 package presentation.views;
 
+import presentation.controllers.LoginController;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -110,7 +112,7 @@ public class LoginView extends JPanel {
         jRegisterAccount.setText("Not registered? Create an account");
         jRegisterAccount.setFont(font);
         jRegisterAccount.setForeground(new Color(200,200,200));
-        jRegisterAccount.setName("register");
+        jRegisterAccount.setName("create_account");
 
 
         // ------------------------ Display Objects ------------------------ //
@@ -176,16 +178,18 @@ public class LoginView extends JPanel {
         mainView.switchPanel("menu");
     }
 
-
-
     public void registerMasterView(MouseListener mouseListener) {
-        jLoginButton.addMouseListener(mouseListener);
         jRegisterAccount.addMouseListener(mouseListener);
+    }
+
+    public void registerController(MouseListener mouseListener) {
+        jLoginButton.addMouseListener(mouseListener);
     }
 
     public String getLogin() {
         return jEmailInput.getText();
     }
+
     public String getPassword() {
         return new String(jPasswordInput.getPassword());
     }

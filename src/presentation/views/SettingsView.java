@@ -2,10 +2,13 @@ package presentation.views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
-public class SettingsView extends JFrame {
+public class SettingsView extends JPanel {
+
+    private MainView mainView;
 
     // Images Paths
 
@@ -21,12 +24,18 @@ public class SettingsView extends JFrame {
 
     private final String FONT = "fonts/Poppins-Bold.ttf";
 
-    public SettingsView() {
+    JImagePanel logoutButton;
+
+    public SettingsView(MainView mainView) {
+
+        this.mainView = mainView;
+
         initializeWindow();
 
         Font font = initializeFont();
 
         // Top Panel include the space, the back button and the title of the window.
+
 
         JPanel topPanel = new JPanel();
             topPanel.setLayout(new BorderLayout());
@@ -69,15 +78,17 @@ public class SettingsView extends JFrame {
             deleteAccountButton.setPreferredSize(new Dimension(250,75));
             deleteAccountButton.setOpaque(false);
 
-        JImagePanel logoutButton = new JImagePanel(LOGOUT_BUTTON);
+            logoutButton = new JImagePanel(LOGOUT_BUTTON);
             logoutButton.setPreferredSize(new Dimension(250,75));
             logoutButton.setOpaque(false);
+            logoutButton.setName("logout");
 
         // ------------------------ Background Image ------------------------ //
 
         JPanel backgroundPanel = new JPanel();
             backgroundPanel.setBackground(BACKGROUND_COLOR);
             backgroundPanel.setLayout(new BorderLayout());
+            backgroundPanel.setPreferredSize(new Dimension(1280, 720));
 
         // ------------------------ Display Objects ------------------------ //
 
@@ -107,10 +118,6 @@ public class SettingsView extends JFrame {
 
     public void initializeWindow () {
         setSize(1280, 720);
-
-        setTitle("Battleship v1.0.0");
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public Font initializeFont () {
@@ -136,5 +143,11 @@ public class SettingsView extends JFrame {
         space.add(rigidArea);
 
         return space;
+    }
+    public void viewLogin() {
+        mainView.switchPanel("login");
+    }
+    public void settingsController(MouseListener mouseListener) {
+        logoutButton.addMouseListener(mouseListener);
     }
 }

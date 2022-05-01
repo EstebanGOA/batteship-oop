@@ -7,6 +7,7 @@ import persistance.sql.SQLUserDAO;
 public class UserManager {
 
     private final UserDAO userDao;
+    private User user;
 
     private String username;
 
@@ -15,7 +16,7 @@ public class UserManager {
     }
 
     public boolean addUser(String username, String email, String password) {
-        User user = new User(username, email, password);
+        this.user = new User(username, email, password);
         return userDao.addUser(user);
     }
 
@@ -30,6 +31,9 @@ public class UserManager {
          return true;
         }
         return false;
+    }
+    public void logoutUser() {
+        user = null;
     }
 
     public String getUsername() {
