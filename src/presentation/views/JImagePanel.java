@@ -15,6 +15,7 @@ public class JImagePanel extends JPanel {
 
     // Constructor with parameters
     public JImagePanel(String path) {
+
         try {
             image = ImageIO.read(new File(path));
         } catch (IOException e) {
@@ -41,7 +42,9 @@ public class JImagePanel extends JPanel {
     // Paint the image in the background, with the size the layout assigns to the panel
     @Override
     protected void paintComponent(Graphics g) {
+
         super.paintComponent(g);
+
         g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
 }

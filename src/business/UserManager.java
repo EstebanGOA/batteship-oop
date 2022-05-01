@@ -9,6 +9,8 @@ public class UserManager {
     private final UserDAO userDao;
     private User user;
 
+    private String username;
+
     public UserManager() {
         userDao = new SQLUserDAO();
     }
@@ -22,11 +24,19 @@ public class UserManager {
         userDao.deleteUser(code);
     }
 
-    public String getPassword(String string) {
-        return userDao.getPassword(string);
+    public boolean checkLogin(String login, String password) {
+        if (password.equals(userDao.getPassword(login))) {
+         username = login;
+
+         return true;
+        }
+        return false;
     }
     public void logoutUser() {
         user = null;
     }
 
+    public String getUsername() {
+        return username;
+    }
 }

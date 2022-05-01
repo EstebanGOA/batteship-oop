@@ -1,4 +1,5 @@
 import business.UserManager;
+import presentation.controllers.LoginController;
 import presentation.controllers.MenuController;
 import presentation.controllers.RegisterController;
 import presentation.controllers.SettingsController;
@@ -16,7 +17,7 @@ public class Main {
         MenuView menuView = new MenuView(mainView);
         SettingsView settingsView = new SettingsView(mainView);
 
-
+        LoginController loginController = new LoginController(loginView, userManager);
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
         MenuController menuController = new MenuController(userManager, menuView);
@@ -29,8 +30,7 @@ public class Main {
         menuView.menuController(menuController);
         registerView.registerController(registerController);
         settingsView.settingsController(settingsController);
-
-
+        loginView.registerController(loginController);
 
         mainView.run();
     }
