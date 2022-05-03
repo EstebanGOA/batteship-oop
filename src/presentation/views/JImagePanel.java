@@ -17,6 +17,16 @@ public class JImagePanel extends JPanel {
     private BufferedImage image;
     private float angle;
 
+
+    public void switchImage(String path) {
+        try {
+            image = ImageIO.read(new File(path));
+            repaint();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Constructor with parameters
     public JImagePanel(String path) {
 
