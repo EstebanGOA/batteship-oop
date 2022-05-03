@@ -20,16 +20,20 @@ public class SetupStageView extends JPanel implements MouseListener {
     private ShipPanel destructorPanel;
     private ShipPanel aircraftPanel;
 
+    private JImagePanel rotateButton;
     private JImagePanel shipImage;
 
     // Image Path
+
     private final String SPRITE_WATER = "sprites/GameViews/water.png";
     private final String SPRITE_YOUR_SHIPS_BG = "sprites/GameViews/your_ships_panel.png";
     private final String SPRITE_ROTATION_SHIP = "sprites/GameViews/boat.png";
+
     private final String SPRITE_BOAT = "sprites/GameViews/SetupStageView/rotated_boat.png";
     private final String SPRITE_SUBMARINE = "sprites/GameViews/SetupStageView/rotated_submarine.png";
     private final String SPRITE_AIRCRAFT = "sprites/GameViews/SetupStageView/rotated_aircraft.png";
     private final String SPRITE_DESTRUCTOR = "sprites/GameViews/SetupStageView/rotated_destructor.png";
+
     private final String SPRITE_BG2 = "sprites/GameViews/SetupStageView/bg2_panel.png";
     private final String SPRITE_ROTATE_BTN_BG = "sprites/GameViews/SetupStageView/bg_rotate_btn.png";
     private final String SPRITE_ROTATE_ARROW_ICO = "sprites/GameViews/SetupStageView/rotated_arrow.png";
@@ -106,6 +110,7 @@ public class SetupStageView extends JPanel implements MouseListener {
         submarinePanel2.addMouseListener(this);
         destructorPanel.addMouseListener(this);
         aircraftPanel.addMouseListener(this);
+        rotateButton.addMouseListener(this);
     }
 
     /**
@@ -241,10 +246,11 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         // Button to rotate the selected ship.
 
-        JImagePanel rotateButton = new JImagePanel(SPRITE_ROTATE_BTN_BG);
+        rotateButton = new JImagePanel(SPRITE_ROTATE_BTN_BG);
         rotateButton.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
         rotateButton.setPreferredSize(new Dimension(200, 45));
         rotateButton.setOpaque(false);
+        rotateButton.setName("rotate");
 
         // Label with the text of the button rotate.
 
@@ -527,7 +533,6 @@ public class SetupStageView extends JPanel implements MouseListener {
         switch (event) {
             case "boat":
                 shipImage.switchImage(SPRITE_BOAT);
-                shipImage.setPreferredSize(new Dimension());
                 break;
             case "submarine":
                 shipImage.switchImage(SPRITE_SUBMARINE);
@@ -537,6 +542,9 @@ public class SetupStageView extends JPanel implements MouseListener {
                 break;
             case "aircraft":
                 shipImage.switchImage(SPRITE_AIRCRAFT);
+                break;
+            case "rotate":
+                shipImage.rotateImage();
                 break;
         }
     }

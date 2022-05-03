@@ -32,6 +32,7 @@ public class JImagePanel extends JPanel {
 
         try {
             image = ImageIO.read(new File(path));
+            this.angle = 0;
         } catch (IOException e) {
             // Not properly managed, sorry!
             e.printStackTrace();
@@ -41,33 +42,45 @@ public class JImagePanel extends JPanel {
     public JImagePanel(String path, float angle) {
         try {
             image = ImageIO.read(new File(path));
+            this.angle = angle;
         } catch (IOException e) {
             // Not properly managed, sorry!
             e.printStackTrace();
         }
 
-        this.angle = angle;
+    }
+
+    public void rotateImage() {
+        if (angle != 0)
+            angle = 0;
+        else
+            angle = 90;
+
+        repaint();
     }
 
     // Paint the image in the background, with the size the layout assigns to the panel
+
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         if (angle == 0) {
-            super.paintComponent(g);
+
             g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+
         } else {
-            System.out.println("ROTATING");
 
-            AffineTransform at = AffineTransform.getTranslateInstance(100,100);
+            AffineTransform at = new AffineTransform();
+            at.translate(getWidth() / 2, getHeight() / 2);
             at.rotate(Math.toRadians(angle));
+            at.scale(0.2, 0.2);
 
+            at.translate(-image.getWidth() / 2, -image.getHeight() / 2);
             Graphics2D g2d = (Graphics2D) g;
-            //g2d.rotate(Math.toRadians(angle));
             g2d.drawImage(image, at, null);
+
         }
 
-        super.paintComponent(g);
-
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
     }
+
 }
