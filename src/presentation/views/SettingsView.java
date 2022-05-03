@@ -24,7 +24,8 @@ public class SettingsView extends JPanel {
 
     private final String FONT = "fonts/Poppins-Bold.ttf";
 
-    JImagePanel logoutButton;
+    private JImagePanel logoutButton;
+    private JImagePanel deleteAccountButton;
 
     public SettingsView(MainView mainView) {
 
@@ -74,9 +75,10 @@ public class SettingsView extends JPanel {
 
         // ------------------------ Initializing Buttons ------------------------ //
 
-        JImagePanel deleteAccountButton = new JImagePanel(DELETE_ACCOUNT_IMAGE);
+            deleteAccountButton = new JImagePanel(DELETE_ACCOUNT_IMAGE);
             deleteAccountButton.setPreferredSize(new Dimension(250,75));
             deleteAccountButton.setOpaque(false);
+            deleteAccountButton.setName("delete");
 
             logoutButton = new JImagePanel(LOGOUT_BUTTON);
             logoutButton.setPreferredSize(new Dimension(250,75));
@@ -144,10 +146,13 @@ public class SettingsView extends JPanel {
 
         return space;
     }
+
     public void viewLogin() {
         mainView.switchPanel("login");
     }
+
     public void settingsController(MouseListener mouseListener) {
         logoutButton.addMouseListener(mouseListener);
+        deleteAccountButton.addMouseListener(mouseListener);
     }
 }

@@ -20,8 +20,8 @@ public class UserManager {
         return userDao.addUser(user);
     }
 
-    public void deleteUser(String code) {
-        userDao.deleteUser(code);
+    public void deleteUser() {
+        userDao.deleteUser(username);
     }
 
     public boolean checkLogin(String login, String password) {
