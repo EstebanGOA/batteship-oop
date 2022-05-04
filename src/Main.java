@@ -1,9 +1,6 @@
 import business.UserManager;
+import presentation.controllers.*;
 import presentation.views.*;
-import presentation.controllers.LoginController;
-import presentation.controllers.MenuController;
-import presentation.controllers.RegisterController;
-import presentation.controllers.SettingsController;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,6 +19,7 @@ public class Main {
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
         MenuController menuController = new MenuController(userManager, menuView);
+        SetupStageController setupStageController = new SetupStageController(setupStageView);
 
         mainView.asigneViews(loginView, registerView, menuView, settingsView, setupStageView);
 

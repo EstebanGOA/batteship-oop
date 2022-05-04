@@ -15,8 +15,10 @@ public class JImagePanel extends JPanel {
 
     // The image to render
     private BufferedImage image;
-    private float angle;
 
+    private float scale;
+    private float angle;
+    private boolean isRotated;
 
     public void switchImage(String path) {
         try {
@@ -28,59 +30,61 @@ public class JImagePanel extends JPanel {
     }
 
     // Constructor with parameters
-    public JImagePanel(String path) {
-
+    public JImagePanel(String path, float scale, boolean isRotated) {
         try {
             image = ImageIO.read(new File(path));
             this.angle = 0;
+            this.scale = scale;
+            this.isRotated = isRotated;
         } catch (IOException e) {
             // Not properly managed, sorry!
             e.printStackTrace();
         }
     }
 
-    public JImagePanel(String path, float angle) {
+    public JImagePanel(String path) {
         try {
             image = ImageIO.read(new File(path));
-            this.angle = angle;
+            this.angle = 0;
+            this.scale = 1;
+            this.isRotated = false;
         } catch (IOException e) {
             // Not properly managed, sorry!
             e.printStackTrace();
         }
-
     }
 
     public void rotateImage() {
-        if (angle != 0)
+        if (angle != 0) {
             angle = 0;
-        else
+            setPreferredSize(new Dimension (40, 80));
+        } else {
             angle = 90;
-
+            setPreferredSize(new Dimension (80, 40));
+        }
         repaint();
     }
 
     // Paint the image in the background, with the size the layout assigns to the panel
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (angle == 0) {
 
+        if (!isRotated) {
             g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-
         } else {
-
             AffineTransform at = new AffineTransform();
             at.translate(getWidth() / 2, getHeight() / 2);
             at.rotate(Math.toRadians(angle));
-            at.scale(0.2, 0.2);
-
+            at.scale(scale, scale);
             at.translate(-image.getWidth() / 2, -image.getHeight() / 2);
             Graphics2D g2d = (Graphics2D) g;
             g2d.drawImage(image, at, null);
-
         }
+    }
 
+    public void setScale(float scale) {
+        this.scale = scale;
     }
 
 }

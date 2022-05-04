@@ -23,6 +23,13 @@ public class SetupStageView extends JPanel implements MouseListener {
     private JImagePanel rotateButton;
     private JImagePanel shipImage;
 
+    private JImagePanel one_enemies;
+    private JImagePanel two_enemies;
+    private JImagePanel three_enemies;
+    private JImagePanel four_enemies;
+
+    private int numberOfEnemies = 1;
+
     // Image Path
 
     private final String SPRITE_WATER = "sprites/GameViews/water.png";
@@ -37,8 +44,11 @@ public class SetupStageView extends JPanel implements MouseListener {
     private final String SPRITE_BG2 = "sprites/GameViews/SetupStageView/bg2_panel.png";
     private final String SPRITE_ROTATE_BTN_BG = "sprites/GameViews/SetupStageView/bg_rotate_btn.png";
     private final String SPRITE_ROTATE_ARROW_ICO = "sprites/GameViews/SetupStageView/rotated_arrow.png";
+
     private final String SPRITE_FULL_USER = "sprites/GameViews/SetupStageView/full_user.png";
     private final String SPRITE_EMPTY_USER = "sprites/GameViews/SetupStageView/empty_user.png";
+    private final String SPRITE_FULL_USER_50 = "sprites/GameViews/SetupStageView/full_ico_user_50%.png";
+
     private final String SPRITE_ATTACK_BTN_BG = "sprites/GameViews/SetupStageView/start_attack_bg.png";
     private final String SPRITE_ATTACK_ICO = "sprites/GameViews/SetupStageView/attack_icon.png";
 
@@ -111,6 +121,11 @@ public class SetupStageView extends JPanel implements MouseListener {
         destructorPanel.addMouseListener(this);
         aircraftPanel.addMouseListener(this);
         rotateButton.addMouseListener(this);
+
+        one_enemies.addMouseListener(this);
+        two_enemies.addMouseListener(this);
+        three_enemies.addMouseListener(this);
+        four_enemies.addMouseListener(this);
     }
 
     /**
@@ -240,8 +255,8 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         // Image of the ship that is selected.
 
-        shipImage = new JImagePanel(SPRITE_SUBMARINE);
-        shipImage.setPreferredSize(new Dimension(40, 80));
+        shipImage = new JImagePanel(SPRITE_BOAT, 0.2F, true);
+        shipImage.setPreferredSize(new Dimension(180, 100));
         shipImage.setOpaque(false);
 
         // Button to rotate the selected ship.
@@ -294,7 +309,7 @@ public class SetupStageView extends JPanel implements MouseListener {
         gbc_shipPreview.gridx = 0;
         gbc_shipPreview.gridy = 1;
         gbc_shipPreview.gridwidth = 1;
-        shipPreviewPanel.add(addSeparator(75, 0), gbc_shipPreview);
+        shipPreviewPanel.add(addSeparator(0, 0), gbc_shipPreview);
 
         gbc_shipPreview.gridx = 1;
         gbc_shipPreview.gridy = 1;
@@ -348,58 +363,55 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         // Enemy icon number 1. (Is always selected because the minimum number of enemies is 1).
 
-        JImagePanel enemy1 = new JImagePanel(SPRITE_FULL_USER);
-        enemy1.setPreferredSize(new Dimension(30, 30));
-        enemy1.setOpaque(false);
+        one_enemies = new JImagePanel(SPRITE_FULL_USER);
+        one_enemies.setPreferredSize(new Dimension(30, 30));
+        one_enemies.setOpaque(false);
+        one_enemies.setName("one_enemies");
 
         // Enemy icon number 2. (Is empty, can be selected).
 
-        JImagePanel enemy2 = new JImagePanel(SPRITE_EMPTY_USER);
-        enemy2.setPreferredSize(new Dimension(30, 30));
-        enemy2.setOpaque(false);
+        two_enemies = new JImagePanel(SPRITE_EMPTY_USER);
+        two_enemies.setPreferredSize(new Dimension(30,30));
+        two_enemies.setOpaque(false);
+        two_enemies.setName("two_enemies");
 
         // Enemy icon number 3. (Is empty, can be selected).
 
-        JImagePanel enemy3 = new JImagePanel(SPRITE_EMPTY_USER);
-        enemy3.setPreferredSize(new Dimension(30, 30));
-        enemy3.setOpaque(false);
+        three_enemies = new JImagePanel(SPRITE_EMPTY_USER);
+        three_enemies.setPreferredSize(new Dimension(30,30));
+        three_enemies.setOpaque(false);
+        three_enemies.setName("three_enemies");
 
         // Enemy icon number 4. (Is empty, can be selected).
 
-        JImagePanel enemy4 = new JImagePanel(SPRITE_EMPTY_USER);
-        enemy4.setPreferredSize(new Dimension(30, 30));
-        enemy4.setOpaque(false);
+        four_enemies = new JImagePanel(SPRITE_EMPTY_USER);
+        four_enemies.setPreferredSize(new Dimension(30,30));
+        four_enemies.setOpaque(false);
+        four_enemies.setName("four_enemies");
 
-        // Display all the enemies icons with separators panels between them.
+            // Display all the enemies icons with separators panels between them.
 
-        GridBagConstraints gbc_numberOfEnemiesGrid = new GridBagConstraints();
-        gbc_numberOfEnemiesGrid.gridx = 0;
-        gbc_numberOfEnemiesGrid.gridy = 0;
-        numberOfEnemiesGrid.add(enemy1, gbc_numberOfEnemiesGrid);
+            GridBagConstraints gbc_numberOfEnemiesGrid = new GridBagConstraints();
+                gbc_numberOfEnemiesGrid.gridx = 0; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(one_enemies, gbc_numberOfEnemiesGrid);
 
-        gbc_numberOfEnemiesGrid.gridx = 1;
-        gbc_numberOfEnemiesGrid.gridy = 0;
-        numberOfEnemiesGrid.add(addSeparator(10, 0), gbc_numberOfEnemiesGrid);
+                gbc_numberOfEnemiesGrid.gridx = 1; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
 
-        gbc_numberOfEnemiesGrid.gridx = 2;
-        gbc_numberOfEnemiesGrid.gridy = 0;
-        numberOfEnemiesGrid.add(enemy2, gbc_numberOfEnemiesGrid);
+                gbc_numberOfEnemiesGrid.gridx = 2; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(two_enemies, gbc_numberOfEnemiesGrid);
 
-        gbc_numberOfEnemiesGrid.gridx = 3;
-        gbc_numberOfEnemiesGrid.gridy = 0;
-        numberOfEnemiesGrid.add(addSeparator(10, 0), gbc_numberOfEnemiesGrid);
+                gbc_numberOfEnemiesGrid.gridx = 3; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
 
-        gbc_numberOfEnemiesGrid.gridx = 4;
-        gbc_numberOfEnemiesGrid.gridy = 0;
-        numberOfEnemiesGrid.add(enemy3, gbc_numberOfEnemiesGrid);
+                gbc_numberOfEnemiesGrid.gridx = 4; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(three_enemies, gbc_numberOfEnemiesGrid);
 
-        gbc_numberOfEnemiesGrid.gridx = 5;
-        gbc_numberOfEnemiesGrid.gridy = 0;
-        numberOfEnemiesGrid.add(addSeparator(10, 0), gbc_numberOfEnemiesGrid);
+                gbc_numberOfEnemiesGrid.gridx = 5; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(addSeparator(10,0), gbc_numberOfEnemiesGrid);
 
-        gbc_numberOfEnemiesGrid.gridx = 6;
-        gbc_numberOfEnemiesGrid.gridy = 0;
-        numberOfEnemiesGrid.add(enemy4, gbc_numberOfEnemiesGrid);
+                gbc_numberOfEnemiesGrid.gridx = 6; gbc_numberOfEnemiesGrid.gridy = 0;
+                numberOfEnemiesGrid.add(four_enemies, gbc_numberOfEnemiesGrid);
 
         // Display all the things inside the number of enemies panel.
 
@@ -420,15 +432,17 @@ public class SetupStageView extends JPanel implements MouseListener {
     }
 
     /**
+     *
      * Method to create the button to start the attack. Has:
-     * <p>
-     * 1. Label that is inside the button.
-     * 2. Battle icon to make the button visualization better.
+     *
+     *      1. Label that is inside the button.
+     *      2. Battle icon to make the button visualization better.
      *
      * @return the JPanel with the attack button.
+     *
      */
 
-    public JPanel startAttackButton() {
+    public JPanel startAttackButton () {
 
         // --------------------------- Start Attack Button -------------------------- //
 
@@ -532,19 +546,49 @@ public class SetupStageView extends JPanel implements MouseListener {
         String event = ((JComponent) e.getSource()).getName();
         switch (event) {
             case "boat":
+                shipImage.setScale(0.2F);
                 shipImage.switchImage(SPRITE_BOAT);
                 break;
             case "submarine":
+                shipImage.setScale(0.2F);
                 shipImage.switchImage(SPRITE_SUBMARINE);
                 break;
             case "destructor":
+                shipImage.setScale(0.1F);
                 shipImage.switchImage(SPRITE_DESTRUCTOR);
                 break;
             case "aircraft":
+                shipImage.setScale(0.1F);
                 shipImage.switchImage(SPRITE_AIRCRAFT);
                 break;
             case "rotate":
                 shipImage.rotateImage();
+                System.out.println(shipImage.getWidth() + ", " + shipImage.getHeight());
+                break;
+
+            case "one_enemies":
+                two_enemies.switchImage(SPRITE_EMPTY_USER);
+                three_enemies.switchImage(SPRITE_EMPTY_USER);
+                four_enemies.switchImage(SPRITE_EMPTY_USER);
+                numberOfEnemies = 1;
+                break;
+            case "two_enemies":
+                two_enemies.switchImage(SPRITE_FULL_USER);
+                three_enemies.switchImage(SPRITE_EMPTY_USER);
+                four_enemies.switchImage(SPRITE_EMPTY_USER);
+                numberOfEnemies = 2;
+                break;
+            case "three_enemies":
+                two_enemies.switchImage(SPRITE_FULL_USER);
+                three_enemies.switchImage(SPRITE_FULL_USER);
+                four_enemies.switchImage(SPRITE_EMPTY_USER);
+                numberOfEnemies = 3;
+                break;
+            case "four_enemies":
+                two_enemies.switchImage(SPRITE_FULL_USER);
+                three_enemies.switchImage(SPRITE_FULL_USER);
+                four_enemies.switchImage(SPRITE_FULL_USER);
+                numberOfEnemies = 4;
                 break;
         }
     }
@@ -561,11 +605,72 @@ public class SetupStageView extends JPanel implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        String event = ((JComponent) e.getSource()).getName();
 
+        switch (event) {
+            case "two_enemies":
+                if (numberOfEnemies == 1) {
+                    two_enemies.switchImage(SPRITE_FULL_USER_50);
+                    three_enemies.switchImage(SPRITE_EMPTY_USER);
+                    four_enemies.switchImage(SPRITE_EMPTY_USER);
+                }
+                break;
+            case "three_enemies":
+                if (numberOfEnemies == 1) {
+                    two_enemies.switchImage(SPRITE_FULL_USER_50);
+                    three_enemies.switchImage(SPRITE_FULL_USER_50);
+                    four_enemies.switchImage(SPRITE_EMPTY_USER);
+                } else if (numberOfEnemies == 2) {
+                    three_enemies.switchImage(SPRITE_FULL_USER_50);
+                    four_enemies.switchImage(SPRITE_EMPTY_USER);
+                }
+                break;
+            case "four_enemies":
+                if (numberOfEnemies == 1) {
+                    two_enemies.switchImage(SPRITE_FULL_USER_50);
+                    three_enemies.switchImage(SPRITE_FULL_USER_50);
+                    four_enemies.switchImage(SPRITE_FULL_USER_50);
+                } else if (numberOfEnemies == 2) {
+                    three_enemies.switchImage(SPRITE_FULL_USER_50);
+                    four_enemies.switchImage(SPRITE_FULL_USER_50);
+                } else if (numberOfEnemies == 3) {
+                    four_enemies.switchImage(SPRITE_FULL_USER_50);
+                }
+                break;
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        String event = ((JComponent) e.getSource()).getName();
 
+        switch (event) {
+            case "two_enemies":
+                if (numberOfEnemies == 1) {
+                    two_enemies.switchImage(SPRITE_EMPTY_USER);
+                }
+                break;
+            case "three_enemies":
+                if (numberOfEnemies == 1) {
+                    two_enemies.switchImage(SPRITE_EMPTY_USER);
+                    three_enemies.switchImage(SPRITE_EMPTY_USER);
+                }
+                if (numberOfEnemies == 2) {
+                    three_enemies.switchImage(SPRITE_EMPTY_USER);
+                }
+                break;
+            case "four_enemies":
+                if (numberOfEnemies == 1) {
+                    two_enemies.switchImage(SPRITE_EMPTY_USER);
+                    three_enemies.switchImage(SPRITE_EMPTY_USER);
+                    four_enemies.switchImage(SPRITE_EMPTY_USER);
+                } else if (numberOfEnemies == 2) {
+                    three_enemies.switchImage(SPRITE_EMPTY_USER);
+                    four_enemies.switchImage(SPRITE_EMPTY_USER);
+                } else if (numberOfEnemies == 3) {
+                    four_enemies.switchImage(SPRITE_EMPTY_USER);
+                }
+                break;
+        }
     }
 }
