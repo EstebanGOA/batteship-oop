@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLUserDAO implements UserDAO {
-
     @Override
     public boolean addUser(User user) {
         String query = "INSERT INTO User(name, email, password) VALUES ('" +
@@ -16,13 +15,14 @@ public class SQLUserDAO implements UserDAO {
                 user.getPassword() +
                 "');";
 
-        return SQLConnector.getInstance().insertQuery(query);
+        return SQLConnector.insertQuery(query);
     }
 
     @Override
     public boolean deleteUser(String code) {
         String query = "DELETE FROM User WHERE name = '" + code + "';";
-        return SQLConnector.getInstance().deleteQuery(query);
+
+        return SQLConnector.deleteQuery(query);
     }
 
     public String getPassword(String string) {
@@ -34,7 +34,7 @@ public class SQLUserDAO implements UserDAO {
             query = "SELECT * FROM User WHERE name = '" + string + "';";
         }
 
-        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+        ResultSet result = SQLConnector.selectQuery(query);
 
         try {
             //Comprobamos si el usuario existe.

@@ -1,34 +1,20 @@
 package persistance.sql;
 
-import persistance.DatabaseConfigDAO;
-
+import persistance.Config;
 import java.sql.*;
 
 public class SQLConnector {
-
-    private static persistance.sql.SQLConnector instance = null;
-
     // Attributes to connect to the database.
     private final String username;
     private final String password;
     private final String url;
-    private Connection conn;
+    private static Connection conn;
 
-    public static persistance.sql.SQLConnector getInstance() {
-        if (instance == null) {
-            instance = new persistance.sql.SQLConnector(DatabaseConfigDAO.getUsername(), DatabaseConfigDAO.getPassword(), DatabaseConfigDAO.getIp(), DatabaseConfigDAO.getPort(), DatabaseConfigDAO.getDatabaseName());
-            instance.connect();
-        }
-        return instance;
+    public SQLConnector(Config config) {
+        this.username = config.getUsername();
+        this.password = config.getPassword();
+        this.url = "jdbc:mysql://" + config.getIp() + ":" + config.getPort() + "/" + config.getDatabase();
     }
-
-    // Parametrized constructor
-    public SQLConnector(String username, String password, String ip, int port, String database) {
-        this.username = username;
-        this.password = password;
-        this.url = "jdbc:mysql://" + ip + ":" + port + "/" + database;
-    }
-
 
     /**
      * Method that starts the inner connection to the database. Ideally, users would disconnect after
@@ -47,7 +33,7 @@ public class SQLConnector {
      *
      * @param query String representation of the query to execute.
      */
-    public boolean insertQuery(String query) {
+    public static boolean insertQuery(String query) {
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);
@@ -64,7 +50,7 @@ public class SQLConnector {
      *
      * @param query String representation of the query to execute.
      */
-    public void updateQuery(String query) {
+    public static void updateQuery(String query) {
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);
@@ -79,7 +65,7 @@ public class SQLConnector {
      *
      * @param query String representation of the query to execute.
      */
-    public boolean deleteQuery(String query) {
+    public static boolean deleteQuery(String query) {
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);
@@ -97,7 +83,7 @@ public class SQLConnector {
      * @param query String representation of the query to execute.
      * @return The results of the selection.
      */
-    public ResultSet selectQuery(String query) {
+    public static ResultSet selectQuery(String query) {
         ResultSet rs = null;
         try {
             Statement s = conn.createStatement();

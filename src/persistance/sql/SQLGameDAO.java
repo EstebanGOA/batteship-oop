@@ -15,6 +15,6 @@ public class SQLGameDAO implements GameDAO {
                 game.getGameSaved() +
                 "');";
 
-        SQLConnector.getInstance().insertQuery(query);
+        SQLConnector.insertQuery(query);
     }
 }

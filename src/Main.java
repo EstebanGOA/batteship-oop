@@ -1,4 +1,8 @@
 import business.UserManager;
+import persistance.Config;
+import persistance.DatabaseConfigDAO;
+import persistance.sql.SQLConnector;
+import persistance.sql.SQLUserDAO;
 import presentation.controllers.LoginController;
 import presentation.controllers.MenuController;
 import presentation.controllers.RegisterController;
@@ -7,6 +11,11 @@ import presentation.views.*;
 
 public class Main {
     public static void main(String[] args) {
+        DatabaseConfigDAO databaseConfigDAO = new DatabaseConfigDAO();
+        Config config = databaseConfigDAO.readFile();
+        SQLConnector sqlConnector = new SQLConnector(config);
+        sqlConnector.connect();
+
         MainView mainView = new MainView();
 
         UserManager userManager = new UserManager();
