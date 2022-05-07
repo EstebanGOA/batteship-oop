@@ -16,13 +16,14 @@ public class Main {
         RegisterView registerView = new RegisterView(mainView);
         MenuView menuView = new MenuView(mainView);
         SettingsView settingsView = new SettingsView(mainView);
+        GameStageView gameStageView = new GameStageView(mainView);
 
         LoginController loginController = new LoginController(loginView, userManager);
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
         MenuController menuController = new MenuController(userManager, menuView);
 
-        mainView.asigneViews(loginView, registerView, menuView, settingsView);
+        mainView.asigneViews(loginView, registerView, menuView, settingsView, gameStageView);
 
         /* Asignamos los listeners de las vistas a la vista principal */
         loginView.registerMasterView(mainView);

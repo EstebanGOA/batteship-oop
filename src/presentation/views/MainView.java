@@ -16,6 +16,8 @@ public class MainView extends JFrame implements MouseListener {
     private RegisterView registerView;
     private MenuView menuView;
     private SettingsView settingsView;
+    private GameStageView gameStageView;
+
     private JPanel rootPanel;
     private CardLayout cardLayout;
 
@@ -26,6 +28,7 @@ public class MainView extends JFrame implements MouseListener {
     private final String REGISTER_WINDOW = "register";
     private final String MENU_WINDOW = "menu";
     private final String SETTINGS_WINDOW = "settings";
+    private final String GAME_STAGE_WINDOW = "game";
 
     /**
      * Constructor de MainView.
@@ -36,11 +39,12 @@ public class MainView extends JFrame implements MouseListener {
         initializeWindow();
     }
 
-    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView) {
+    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, GameStageView gameStageView) {
         this.loginView = loginView;
         this.registerView = registerView;
         this.menuView = menuView;
         this.settingsView = settingsView;
+        this.gameStageView = gameStageView;
     }
 
     /**
@@ -56,6 +60,7 @@ public class MainView extends JFrame implements MouseListener {
         rootPanel.add(registerView, REGISTER_WINDOW);
         rootPanel.add(menuView, MENU_WINDOW);
         rootPanel.add(settingsView, SETTINGS_WINDOW);
+        rootPanel.add(gameStageView, GAME_STAGE_WINDOW);
 
         this.add(rootPanel);
         this.setVisible(true);
@@ -83,6 +88,7 @@ public class MainView extends JFrame implements MouseListener {
                 case "login" -> switchPanel(MENU_WINDOW);
                 case "create_account" -> switchPanel(REGISTER_WINDOW);
                 case "register", "return_login" -> switchPanel(LOGIN_WINDOW);
+                case "game" -> switchPanel(GAME_STAGE_WINDOW);
             }
         }
     }
