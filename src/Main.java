@@ -1,8 +1,5 @@
 import business.UserManager;
-import presentation.controllers.LoginController;
-import presentation.controllers.MenuController;
-import presentation.controllers.RegisterController;
-import presentation.controllers.SettingsController;
+import presentation.controllers.*;
 import presentation.views.*;
 
 public class Main {
@@ -23,6 +20,7 @@ public class Main {
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
         MenuController menuController = new MenuController(userManager, menuView);
+        SetupStageController setupStageController = new SetupStageController(setupStageView);
 
         mainView.asigneViews(loginView, registerView, menuView, settingsView, setupStageView, gameStageView);
 
@@ -33,6 +31,7 @@ public class Main {
         registerView.registerController(registerController);
         settingsView.settingsController(settingsController);
         loginView.registerController(loginController);
+        setupStageView.setupStageViewController(setupStageController);
 
         mainView.run();
     }

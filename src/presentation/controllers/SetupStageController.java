@@ -17,7 +17,9 @@ public class SetupStageController implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        switch (((JComponent) e.getSource()).getName()) {
+            case "start_attack_button" -> setupStageView.gameView();
+        }
     }
 
     @Override

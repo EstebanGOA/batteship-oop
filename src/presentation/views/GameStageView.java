@@ -12,7 +12,7 @@ public class GameStageView extends JPanel {
     public GameStageView (MainView mainView) {
         this.mainView = mainView;
 
-        setBackground();
+        add(setBackground());
     }
 
     public JPanel setBackground () {

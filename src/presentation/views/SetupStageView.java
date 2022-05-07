@@ -725,4 +725,12 @@ public class SetupStageView extends JPanel implements MouseListener {
                 break;
         }
     }
+
+    public void setupStageViewController (MouseListener mouseListener) {
+        startAttackButton.addMouseListener(mouseListener);
+    }
+
+    public void gameView () {
+        mainView.switchPanel("game");
+    }
 }
