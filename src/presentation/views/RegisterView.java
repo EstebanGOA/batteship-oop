@@ -42,7 +42,7 @@ public class RegisterView extends JPanel {
 
         // ------------------------ Background Image ------------------------ //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/login_background.png");
+        JImagePanel backgroundPanel = new JImagePanel("sprites/login_background_v2.png");
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setLayout(new GridBagLayout());
 

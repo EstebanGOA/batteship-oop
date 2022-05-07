@@ -24,7 +24,7 @@ public class MenuView extends JPanel {
         // ------------------------ Background Image ------------------------ //
         // ---------- Grid layout to divide the window in 3 columns --------- //
 
-        JPanel backgroundPanel = new JPanel();
+        JImagePanel backgroundPanel = new JImagePanel("sprites/background_main_menu_v2.png");
             backgroundPanel.setPreferredSize(new Dimension(1280, 720));
             backgroundPanel.setLayout(new GridBagLayout());
 
@@ -35,6 +35,7 @@ public class MenuView extends JPanel {
         JPanel leftColumn = new JPanel (new GridBagLayout());
             leftColumn.setOpaque(false);
 
+        System.out.println(username);
         GridBagConstraints gbcLeftColumn = new GridBagConstraints();
 
             JPanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
@@ -69,6 +70,8 @@ public class MenuView extends JPanel {
         JImagePanel newBattleButton = new JImagePanel("sprites/new_battle_button.png");
             newBattleButton.setPreferredSize(new Dimension(350,125));
             newBattleButton.setOpaque(false);
+            newBattleButton.setName("new_game");
+            newBattleButton.addMouseListener(mainView);
 
         JImagePanel loadBattleButton = new JImagePanel("sprites/load_battle_button.png");
             loadBattleButton.setPreferredSize(new Dimension(350,125));
@@ -153,12 +156,6 @@ public class MenuView extends JPanel {
         backgroundPanel.add(rightColumn, gbc);
 
         add(backgroundPanel);
-
-        //setVisible(true);
-    }
-
-    public void initializeWindow () {
-        setSize(1280, 720);
     }
 
     public Font initializeFont () {
@@ -189,10 +186,10 @@ public class MenuView extends JPanel {
     public void menuController(MouseListener mouseListener) {
         settingsButton.addMouseListener(mouseListener);
     }
+
     public void settingsView() {
         mainView.switchPanel("settings");
     }
-
 
     public void setUsername(String username) {
         this.username = username;
