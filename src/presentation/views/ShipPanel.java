@@ -10,14 +10,17 @@ import java.io.IOException;
 public class ShipPanel extends JPanel {
 
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";
+    private final JImagePanel shipPanel;
 
-    public ShipPanel(String shipName, String shipPath, int imageWidth, int imageHeight) {
+    public ShipPanel(String shipName, String shipPath, String panelBg, int imageWidth, int imageHeight) {
         Font font = initializeFont(FONT_BOLD, 15F);
 
-        JImagePanel shipPanel = new JImagePanel("sprites/ship_panel.png");
+        shipPanel = new JImagePanel(panelBg);
         shipPanel.setPreferredSize(new Dimension(250, 125));
         shipPanel.setLayout(new GridBagLayout());
         shipPanel.setOpaque(false);
+        //shipPanel.setName("ship_panel");
+        //shipPanel.addMouseListener(this);
 
         JLabel shipNameText = new JLabel();
         shipNameText.setText(shipName);
@@ -57,4 +60,7 @@ public class ShipPanel extends JPanel {
         return font;
     }
 
+    public JImagePanel getBackgroundPanel () {
+        return shipPanel;
+    }
 }

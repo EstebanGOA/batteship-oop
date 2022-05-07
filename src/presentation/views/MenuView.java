@@ -35,6 +35,7 @@ public class MenuView extends JPanel {
         JPanel leftColumn = new JPanel (new GridBagLayout());
             leftColumn.setOpaque(false);
 
+        System.out.println(username);
         GridBagConstraints gbcLeftColumn = new GridBagConstraints();
 
             JPanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
