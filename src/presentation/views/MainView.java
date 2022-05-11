@@ -1,11 +1,14 @@
 package presentation.views;
 
+import business.entities.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 /**
  * Vista principal que se encargará de cambiar entre ventanas dependiendo de la interacción del usuario con el sistema.
@@ -16,6 +19,7 @@ public class MainView extends JFrame implements MouseListener {
     private RegisterView registerView;
     private MenuView menuView;
     private SettingsView settingsView;
+    private StatisticsView statisticsView;
     private JPanel rootPanel;
     private CardLayout cardLayout;
 
@@ -26,6 +30,8 @@ public class MainView extends JFrame implements MouseListener {
     private final String REGISTER_WINDOW = "register";
     private final String MENU_WINDOW = "menu";
     private final String SETTINGS_WINDOW = "settings";
+    private final String STATISTICS_WINDOW = "statistics";
+
 
     /**
      * Constructor de MainView.
@@ -36,11 +42,13 @@ public class MainView extends JFrame implements MouseListener {
         initializeWindow();
     }
 
-    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView) {
+    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, StatisticsView statisticsView) {
         this.loginView = loginView;
         this.registerView = registerView;
         this.menuView = menuView;
         this.settingsView = settingsView;
+        this.statisticsView = statisticsView;
+
     }
 
     /**
@@ -56,13 +64,29 @@ public class MainView extends JFrame implements MouseListener {
         rootPanel.add(registerView, REGISTER_WINDOW);
         rootPanel.add(menuView, MENU_WINDOW);
         rootPanel.add(settingsView, SETTINGS_WINDOW);
+        rootPanel.add(statisticsView, STATISTICS_WINDOW);
 
         this.add(rootPanel);
         this.setVisible(true);
     }
 
-    public void switchPanel(String windowName) {
+    public void switchPanel(String windowName, ArrayList<String> users) {
         cardLayout.show(rootPanel, windowName);
+        if(windowName.equals("statistics")) {
+
+            for(String user : users){
+                statisticsView.addItem(user);
+            }
+
+            statisticsView.addBars( 100);
+
+            statisticsView.addBars( 8);
+
+            statisticsView.addBars( 54);
+
+            statisticsView.addBars( 23);
+
+        }
     }
 
     /**
@@ -80,9 +104,8 @@ public class MainView extends JFrame implements MouseListener {
         if (e.getSource() instanceof JComponent) {
             /*  Para cada evento asociado a una componente asignamos un nombre, dependiendo de su valor cambiaremos la ventana. */
             switch (((JComponent) e.getSource()).getName()) {
-                case "login" -> switchPanel(MENU_WINDOW);
-                case "create_account" -> switchPanel(REGISTER_WINDOW);
-                case "register", "return_login" -> switchPanel(LOGIN_WINDOW);
+
+
             }
         }
     }

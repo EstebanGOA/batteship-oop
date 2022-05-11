@@ -3,8 +3,10 @@ package persistance.sql;
 import persistance.UserDAO;
 import business.entities.User;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SQLUserDAO implements UserDAO {
 
@@ -46,5 +48,32 @@ public class SQLUserDAO implements UserDAO {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public ArrayList<String> getUsersName() {
+        String query = "SELECT name FROM User";
+
+        ArrayList<String> users = new ArrayList<>();
+
+
+        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+
+        try {
+            //Comprobamos si el usuario existe.
+            if (result.next()) {
+
+
+                while(result.next()) {
+                    users.add(result.getString("name"));
+
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return users;
     }
 }

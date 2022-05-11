@@ -4,6 +4,8 @@ import business.entities.User;
 import persistance.UserDAO;
 import persistance.sql.SQLUserDAO;
 
+import java.util.ArrayList;
+
 public class UserManager {
 
     private final UserDAO userDao;
@@ -34,6 +36,10 @@ public class UserManager {
     }
     public void logoutUser() {
         user = null;
+    }
+
+    public ArrayList<String> getUsersName(){
+        return userDao.getUsersName();
     }
 
     public String getUsername() {

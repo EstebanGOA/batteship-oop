@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MenuView extends JPanel {
 
@@ -14,6 +15,7 @@ public class MenuView extends JPanel {
     private String username = "";
 
     private JImagePanel settingsButton;
+    private JImagePanel statisticsButton;
 
     public MenuView(MainView mainView) {
 
@@ -113,9 +115,10 @@ public class MenuView extends JPanel {
 
         // Statistics Button
 
-        JImagePanel statisticsButton = new JImagePanel("sprites/statistics_button.png");
+            statisticsButton = new JImagePanel("sprites/statistics_button.png");
             statisticsButton.setPreferredSize(new Dimension(75,75));
             statisticsButton.setOpaque(false);
+            statisticsButton.setName("statistics");
 
         gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 0;
         rightColumn.add(addSeparator(200,0), gbcRightColumn);
@@ -188,9 +191,14 @@ public class MenuView extends JPanel {
 
     public void menuController(MouseListener mouseListener) {
         settingsButton.addMouseListener(mouseListener);
+        statisticsButton.addMouseListener(mouseListener);
     }
     public void settingsView() {
-        mainView.switchPanel("settings");
+        mainView.switchPanel("settings", null);
+    }
+
+    public void statisticsView(ArrayList<String> users) {
+        mainView.switchPanel("statistics", users);
     }
 
 

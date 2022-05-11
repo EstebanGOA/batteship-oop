@@ -25,6 +25,7 @@ public class SettingsView extends JPanel {
     private final String FONT = "fonts/Poppins-Bold.ttf";
 
     JImagePanel logoutButton;
+    JImagePanel backButton;
 
     public SettingsView(MainView mainView) {
 
@@ -49,9 +50,10 @@ public class SettingsView extends JPanel {
 
                 // Back Button Image
 
-                JImagePanel backButton = new JImagePanel(BACK_BUTTON_IMAGE);
+                    backButton = new JImagePanel(BACK_BUTTON_IMAGE);
                     backButton.setPreferredSize(new Dimension(75, 0));
                     backButton.setOpaque(false);
+                    backButton.setName("back");
 
             // Window Title
 
@@ -145,9 +147,15 @@ public class SettingsView extends JPanel {
         return space;
     }
     public void viewLogin() {
-        mainView.switchPanel("login");
+        mainView.switchPanel("login", null);
+    }
+
+    public void viewMenu() {
+        mainView.switchPanel("menu", null);
     }
     public void settingsController(MouseListener mouseListener) {
         logoutButton.addMouseListener(mouseListener);
+        backButton.addMouseListener(mouseListener);
+
     }
 }

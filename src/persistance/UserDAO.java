@@ -2,6 +2,8 @@ package persistance;
 
 import business.entities.User;
 
+import java.util.ArrayList;
+
 public interface UserDAO {
 
 
@@ -10,4 +12,6 @@ public interface UserDAO {
     boolean deleteUser(String code);
 
     String getPassword(String string);
+
+    ArrayList<String> getUsersName();
 }

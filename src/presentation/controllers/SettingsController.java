@@ -28,7 +28,11 @@ public class SettingsController implements MouseListener {
                 userManager.logoutUser();
                 new JPopup("Logout successfully");
 
+
+
             }
+
+            case "back" -> settingsView.viewMenu();
 
         }
     }
