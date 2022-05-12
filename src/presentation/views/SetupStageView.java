@@ -786,4 +786,9 @@ public class SetupStageView extends JPanel implements MouseListener {
         }
 
     }
+
+    public int getNumberOfEnemies() {
+        return this.numberOfEnemies;
+    }
+
 }

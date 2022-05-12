@@ -43,6 +43,7 @@ public class SetupStageController implements MouseListener {
     }
 
     private void isSetupStageReady() {
+        int numberOfEnemies = setupStageView.getNumberOfEnemies();
         if (gameManager.isSetupStageReady()) {
             gameManager.createIA();
             // setupStageView.switchWindow();
@@ -51,6 +52,7 @@ public class SetupStageController implements MouseListener {
     }
 
     private void processShipPlacement(Cell cell) {
+
         int[] coords = cell.getCoordinates();
         String shipSelected = setupStageView.getShipSelected();
         String orientation = setupStageView.getOrientation();
