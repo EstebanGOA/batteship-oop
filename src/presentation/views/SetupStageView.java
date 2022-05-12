@@ -1,6 +1,8 @@
 package presentation.views;
 
-import presentation.controllers.SetupStageController;
+import business.entities.Board;
+import business.entities.Tile;
+import business.entities.TileType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,20 +32,25 @@ public class SetupStageView extends JPanel implements MouseListener {
     private int numberOfEnemies;
     private String orientation;
     private String shipSelected;
+    private JImagePanel startAttackButton;
+
 
     // Image Path
 
     private final String SPRITE_WATER = "sprites/GameViews/water.png";
     private final String SPRITE_YOUR_SHIPS_BG = "sprites/GameViews/your_ships_panel.png";
-    private final String SPRITE_ROTATION_SHIP = "sprites/GameViews/boat.png";
 
     private final String SPRITE_BOAT = "sprites/GameViews/SetupStageView/rotated_boat.png";
     private final String SPRITE_SUBMARINE = "sprites/GameViews/SetupStageView/rotated_submarine.png";
     private final String SPRITE_AIRCRAFT = "sprites/GameViews/SetupStageView/rotated_aircraft.png";
     private final String SPRITE_DESTRUCTOR = "sprites/GameViews/SetupStageView/rotated_destructor.png";
 
+    private final String SPRITE_SHIP_PANEL_BG = "sprites/ship_panel.png";
+    private final String SPRITE_SHIP_PANEL_BG_HOVER = "sprites/ship_panel_hover.png";
+
     private final String SPRITE_BG2 = "sprites/GameViews/SetupStageView/bg2_panel.png";
     private final String SPRITE_ROTATE_BTN_BG = "sprites/GameViews/SetupStageView/bg_rotate_btn.png";
+    private final String SPRITE_ROTATE_BTN_BG_SELECTED = "sprites/GameViews/SetupStageView/bg_rotate_btn_selected.png";
     private final String SPRITE_ROTATE_ARROW_ICO = "sprites/GameViews/SetupStageView/rotated_arrow.png";
 
     private final String SPRITE_FULL_USER = "sprites/GameViews/SetupStageView/full_user.png";
@@ -51,6 +58,7 @@ public class SetupStageView extends JPanel implements MouseListener {
     private final String SPRITE_FULL_USER_50 = "sprites/GameViews/SetupStageView/full_ico_user_50%.png";
 
     private final String SPRITE_ATTACK_BTN_BG = "sprites/GameViews/SetupStageView/start_attack_bg.png";
+    private final String SPRITE_ATTACK_BTN_BG_SELECTED = "sprites/GameViews/SetupStageView/start_game_selected.png";
     private final String SPRITE_ATTACK_ICO = "sprites/GameViews/SetupStageView/attack_icon.png";
 
     // Strings
@@ -140,6 +148,8 @@ public class SetupStageView extends JPanel implements MouseListener {
         two_enemies.addMouseListener(this);
         three_enemies.addMouseListener(this);
         four_enemies.addMouseListener(this);
+
+        startAttackButton.addMouseListener(this);
     }
 
     /**
@@ -171,15 +181,15 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         // All the ships buttons to locate the ships in the table
 
-        boatPanel = new ShipPanel("Boat", SPRITE_BOAT, 60, 25);
+        boatPanel = new ShipPanel("Boat", SPRITE_BOAT, SPRITE_SHIP_PANEL_BG, 60, 25);
         boatPanel.setName("boat");
-        submarinePanel1 = new ShipPanel("Submarine 1", SPRITE_SUBMARINE, 80, 25);
+        submarinePanel1 = new ShipPanel("Submarine 1", SPRITE_SUBMARINE, SPRITE_SHIP_PANEL_BG, 80, 25);
         submarinePanel1.setName("submarine1");
-        submarinePanel2 = new ShipPanel("Submarine 2", SPRITE_SUBMARINE, 80, 25);
+        submarinePanel2 = new ShipPanel("Submarine 2", SPRITE_SUBMARINE, SPRITE_SHIP_PANEL_BG,80, 25);
         submarinePanel2.setName("submarine2");
-        destructorPanel = new ShipPanel("Destructor", SPRITE_DESTRUCTOR, 100, 25);
+        destructorPanel = new ShipPanel("Destructor", SPRITE_DESTRUCTOR, SPRITE_SHIP_PANEL_BG,100, 25);
         destructorPanel.setName("destructor");
-        aircraftPanel = new ShipPanel("Aircraft", SPRITE_AIRCRAFT, 120, 25);
+        aircraftPanel = new ShipPanel("Aircraft", SPRITE_AIRCRAFT, SPRITE_SHIP_PANEL_BG, 120, 25);
         aircraftPanel.setName("aircraft");
 
         // Display all the things inside the left panel.
@@ -271,7 +281,7 @@ public class SetupStageView extends JPanel implements MouseListener {
         // Image of the ship that is selected.
 
         shipImage = new JImagePanel(SPRITE_BOAT, 0.2F, true);
-        shipImage.setPreferredSize(new Dimension(180, 100));
+        shipImage.setPreferredSize(new Dimension(180, 80));
         shipImage.setOpaque(false);
 
         // Button to rotate the selected ship.
@@ -282,19 +292,19 @@ public class SetupStageView extends JPanel implements MouseListener {
         rotateButton.setOpaque(false);
         rotateButton.setName("rotate");
 
-        // Label with the text of the button rotate.
+            // Label with the text of the button rotate.
 
-        JLabel rotateButtonText = new JLabel();
-        rotateButtonText.setText(LABEL_ROTATE_BTN);
-        rotateButtonText.setForeground(Color.white);
-        rotateButtonText.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-        rotateButtonText.setFont(fontPanelTitle);
+            JLabel rotateButtonText = new JLabel();
+            rotateButtonText.setText(LABEL_ROTATE_BTN);
+            rotateButtonText.setForeground(Color.white);
+            rotateButtonText.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+            rotateButtonText.setFont(fontPanelTitle);
 
-        // Icon of the rotation button.
+            // Icon of the rotation button.
 
-        JImagePanel rotateIcon = new JImagePanel(SPRITE_ROTATE_ARROW_ICO);
-        rotateIcon.setPreferredSize(new Dimension(25, 25));
-        rotateIcon.setOpaque(false);
+            JImagePanel rotateIcon = new JImagePanel(SPRITE_ROTATE_ARROW_ICO);
+            rotateIcon.setPreferredSize(new Dimension(25, 25));
+            rotateIcon.setOpaque(false);
 
         // Display the text and the icon of the rotation button.
 
@@ -464,10 +474,11 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         // --------------------------- Start Attack Button -------------------------- //
 
-        JImagePanel startAttackButton = new JImagePanel(SPRITE_ATTACK_BTN_BG);
+        startAttackButton = new JImagePanel(SPRITE_ATTACK_BTN_BG);
         startAttackButton.setPreferredSize(new Dimension(270, 100));
         startAttackButton.setLayout(new GridBagLayout());
         startAttackButton.setOpaque(false);
+        startAttackButton.setName("start_attack_button");
 
         JLabel startAttackText = new JLabel();
         startAttackText.setText(LABEL_ATTACK_BTN);
@@ -568,22 +579,22 @@ public class SetupStageView extends JPanel implements MouseListener {
                 shipSelected = "Boat";
             }
             case "submarine1" -> {
-                shipImage.setScale(0.2F);
+                shipImage.setScale(0.15F);
                 shipImage.switchImage(SPRITE_SUBMARINE);
                 shipSelected = "Submarine1";
             }
             case "submarine2" -> {
-                shipImage.setScale(0.2F);
+                shipImage.setScale(0.15F);
                 shipImage.switchImage(SPRITE_SUBMARINE);
                 shipSelected = "Submarine2";
             }
             case "destructor" -> {
-                shipImage.setScale(0.1F);
+                shipImage.setScale(0.12F);
                 shipImage.switchImage(SPRITE_DESTRUCTOR);
                 shipSelected = "Destructor";
             }
             case "aircraft" -> {
-                shipImage.setScale(0.1F);
+                shipImage.setScale(0.12F);
                 shipImage.switchImage(SPRITE_AIRCRAFT);
                 shipSelected = "Aircraft";
             }
@@ -667,6 +678,28 @@ public class SetupStageView extends JPanel implements MouseListener {
                     four_enemies.switchImage(SPRITE_FULL_USER_50);
                 }
                 break;
+            case "start_attack_button":
+                startAttackButton.switchImage(SPRITE_ATTACK_BTN_BG_SELECTED);
+                break;
+            case "rotate":
+                rotateButton.switchImage(SPRITE_ROTATE_BTN_BG_SELECTED);
+                break;
+
+            case "boat":
+                boatPanel.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG_HOVER);
+                break;
+            case "submarine1":
+                submarinePanel1.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG_HOVER);
+                break;
+            case "submarine2":
+                submarinePanel2.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG_HOVER);
+                break;
+            case "destructor":
+                destructorPanel.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG_HOVER);
+                break;
+            case "aircraft":
+                aircraftPanel.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG_HOVER);
+                break;
         }
     }
 
@@ -701,6 +734,28 @@ public class SetupStageView extends JPanel implements MouseListener {
                     four_enemies.switchImage(SPRITE_EMPTY_USER);
                 }
                 break;
+            case "start_attack_button":
+                startAttackButton.switchImage(SPRITE_ATTACK_BTN_BG);
+                break;
+            case "rotate":
+                rotateButton.switchImage(SPRITE_ATTACK_BTN_BG);
+                break;
+
+            case "boat":
+                boatPanel.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG);
+                break;
+            case "submarine1":
+                submarinePanel1.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG);
+                break;
+            case "submarine2":
+                submarinePanel2.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG);
+                break;
+            case "destructor":
+                destructorPanel.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG);
+                break;
+            case "aircraft":
+                aircraftPanel.getBackgroundPanel().switchImage(SPRITE_SHIP_PANEL_BG);
+                break;
         }
     }
 
@@ -710,5 +765,25 @@ public class SetupStageView extends JPanel implements MouseListener {
                 cell.addMouseListener(mouseListener);
             }
         }
+        startAttackButton.addMouseListener(mouseListener);
+    }
+
+    public void paintShip(Board board) {
+
+        Tile[][] tiles = board.getTiles();
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles.length; j++) {
+                TileType status = tiles[i][j].getTileType();
+                if (status == TileType.SHIP) {
+                    table[i][j].switchImage(SPRITE_FULL_USER_50);
+                } else if (status == TileType.HIT) {
+                    table[i][j].switchImage(SPRITE_FULL_USER);
+                } else if (status == TileType.WATER) {
+                    table[i][j].switchImage(SPRITE_WATER);
+                }
+            }
+        }
+
     }
 }

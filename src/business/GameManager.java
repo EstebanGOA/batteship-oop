@@ -28,7 +28,7 @@ public class GameManager {
     }
 
 
-    public boolean insertShip(int[] cords, String shipSelected, String orientation) {
+    public Board insertShip(int[] cords, String shipSelected, String orientation) {
 
         if (players.isEmpty()) {
             createPlayer();
@@ -42,6 +42,14 @@ public class GameManager {
 
     public void addGame(Game game) {
         gameDao.addGame(game);
+    }
+
+    public boolean isSetupStageReady() {
+        return players.get(0).allShipPlaced();
+    }
+
+    public void createIA() {
+
     }
 
 }

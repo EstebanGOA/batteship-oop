@@ -8,7 +8,7 @@ public abstract class Ship {
     private final int size;
     private final String orientation;
     private final int[] position;
-    private final ShipSegment[] shipSegments;
+    private ShipSegment[] shipSegments;
 
     /**
      * Constructor de Ship
@@ -68,4 +68,5 @@ public abstract class Ship {
             }
         }
     }
+
 }

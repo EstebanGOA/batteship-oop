@@ -7,14 +7,6 @@ abstract public class Player {
 
     Board board;
 
-    /**
-     * Las posiciones de los barcos dentro del array están predefinidos de la siguiente manera:
-     * 0 -> Boat
-     * 1 -> Submarine
-     * 2 -> Submarine
-     * 3 -> Destroyer
-     * 4 -> Aircrafter
-     */
     Ship[] ships;
 
     /**
@@ -34,63 +26,67 @@ abstract public class Player {
         return board;
     }
 
-    public boolean insertShip(int[] cords, String shipSelected, String orientation) {
+    public Board insertShip(int[] cords, String shipSelected, String orientation) {
 
-        Ship ship;
-        int position;
+        Ship ship = null;
+        int index = 0;
 
         switch (shipSelected) {
             case "Boat" -> {
-                if (ships[0] != null) {
-                    return false;
-                }
                 ship = new Boat(orientation, cords);
-                position = 0;
-            }
-            case "Submarine" -> {
-
-                if (ships[1] != null && ships[2] != null) {
-                    return false;
+                if (ships[0] != null) {
+                    board.remove(ships[0]);
                 }
-
+                index = 0;
+            }
+            case "Submarine1" -> {
                 ship = new Submarine(orientation, cords);
-
                 if (ships[1] != null) {
-                    position = 2;
-                } else {
-                    position = 1;
+                    board.remove(ships[1]);
                 }
-
+                index = 1;
             }
-            case "Destroyer" -> {
-                if (ships[3] != null) {
-                    return false;
+            case "Submarine2" -> {
+                ship = new Submarine(orientation, cords);
+                if (ships[2] != null) {
+                    board.remove(ships[2]);
                 }
+                index = 2;
+            }
+            case "Destructor" -> {
                 ship = new Destroyer(orientation, cords);
-                position = 3;
+                if (ships[3] != null) {
+                    board.remove(ships[3]);
+                }
+                index = 3;
             }
             case "Aircraft" -> {
-                if (ships[4] != null) {
-                    return false;
-                }
-                position = 4;
                 ship = new AircraftCarrier(orientation, cords);
-            }
-            default -> {
-                ship = null;
-                position = 0;
+                if (ships[4] != null) {
+                    board.remove(ships[4]);
+                }
+                index = 4;
             }
         }
 
         if (ship != null) {
             if (board.placeShip(ship)) {
-                ships[position] = ship;
-                return true;
+                ships[index] = ship;
+                return board;
             }
         }
+        return null;
+    }
 
-        return false;
-
+    public boolean allShipPlaced() {
+        boolean flag = true;
+        for (Ship ship : ships) {
+            if (ship == null) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
     }
 
 }

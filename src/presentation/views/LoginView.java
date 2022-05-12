@@ -5,14 +5,11 @@ import presentation.controllers.LoginController;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
-public class LoginView extends JPanel {
+public class LoginView extends JPanel implements MouseListener {
 
     /**
      * Guardamos la referencia del parent para cambiar las ventanas al realizar ciertas interacciones en la ventana actual.
@@ -24,6 +21,8 @@ public class LoginView extends JPanel {
     private final JPasswordField jPasswordInput;
     private final JLabel jRegisterAccount;
 
+    private final JImagePanel backgroundPanel;
+
     public LoginView(MainView mainView) {
 
         this.mainView = mainView;
@@ -32,9 +31,10 @@ public class LoginView extends JPanel {
 
         // ------------------------ Background Image ------------------------ //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/login_background_v2.png");
+        backgroundPanel = new JImagePanel("sprites/login_background_v2.png");
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setLayout(new GridBagLayout());
+        backgroundPanel.setName("background_panel");
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -68,7 +68,9 @@ public class LoginView extends JPanel {
         jEmailInput = new JTextField(10);
         jEmailInput.setOpaque(false);
         jEmailInput.setFont(font);
-        jEmailInput.setForeground(new Color(255,255,255));
+        jEmailInput.setText("Username or Email");
+        jEmailInput.setName("email_input");
+        jEmailInput.setForeground(new Color(255,255,255, 125));
         jEmailInput.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 20));
 
         Border oldBorder = jEmailInput.getBorder();
@@ -94,7 +96,10 @@ public class LoginView extends JPanel {
         jPasswordInput = new JPasswordField();
         jPasswordInput.setOpaque(false);
         jPasswordInput.setFont(font);
-        jPasswordInput.setForeground(new Color(255,255,255));
+        jPasswordInput.setText("Password");
+        jPasswordInput.setName("password_input");
+        jPasswordInput.setEchoChar((char)0); // show the password
+        jPasswordInput.setForeground(new Color(255,255,255, 125));
         jPasswordInput.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 20));
 
         Border oldBorder2 = jPasswordInput.getBorder();
@@ -143,6 +148,15 @@ public class LoginView extends JPanel {
 
         this.add(backgroundPanel);
         //setVisible(true);
+
+        initializeListeners();
+    }
+
+    public void initializeListeners () {
+        jEmailInput.addMouseListener(this);
+        jPasswordInput.addMouseListener(this);
+        backgroundPanel.addMouseListener(this);
+        jLoginButton.addMouseListener(this);
     }
 
     public Font initializeFont () {
@@ -194,4 +208,74 @@ public class LoginView extends JPanel {
         return new String(jPasswordInput.getPassword());
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        String event = ((JComponent) e.getSource()).getName();
+
+        switch (event) {
+            case "email_input":
+                jEmailInput.setText("");
+                jEmailInput.setForeground(new Color(255,255,255));
+
+                if (jPasswordInput.getPassword().length == 0) {
+                    jPasswordInput.setText("Password");
+                    jPasswordInput.setEchoChar((char)0);
+                    jPasswordInput.setForeground(new Color(255,255,255, 125));
+                }
+                break;
+            case "password_input":
+                jPasswordInput.setText("");
+                jPasswordInput.setEchoChar('*');
+                jPasswordInput.setForeground(new Color(255,255,255));
+
+                if (jEmailInput.getText().equals("")) {
+                    jEmailInput.setText("Username or Email");
+                    jEmailInput.setForeground(new Color(255, 255, 255, 125));
+                }
+                break;
+            case "background_panel":
+                if (jEmailInput.getText().equals("")) {
+                    jEmailInput.setText("Username or Email");
+                    jEmailInput.setForeground(new Color(255, 255, 255, 125));
+                }
+                if (jPasswordInput.getPassword().length == 0) {
+                    jPasswordInput.setText("Password");
+                    jPasswordInput.setEchoChar((char)0);
+                    jPasswordInput.setForeground(new Color(255,255,255, 125));
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        String event = ((JComponent) e.getSource()).getName();
+
+        switch (event) {
+            case "login":
+                jLoginButton.switchImage("sprites/login_button_hover.png");
+                break;
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        String event = ((JComponent) e.getSource()).getName();
+
+        switch (event) {
+            case "login":
+                jLoginButton.switchImage("sprites/login_button.png");
+                break;
+        }
+    }
 }

@@ -15,6 +15,10 @@ public class Board {
         }
     }
 
+    public Tile[][] getTiles() {
+        return tiles;
+    }
+
     public boolean placeShip(Ship ship) {
 
         int boardStart = 0;
@@ -61,7 +65,7 @@ public class Board {
                 if (status) {
                     for (int i = 0; i < ship.getSize(); i++) {
                         tiles[y+i][x] = new ShipSegment();
-                        ship.addSegment((ShipSegment) tiles[y][x+i]);
+                        ship.addSegment((ShipSegment) tiles[y+i][x]);
                         tiles[y+i][x].setTileType(TileType.SHIP);
                     }
                 }
@@ -78,4 +82,20 @@ public class Board {
 
     }
 
+    public void remove(Ship ship) {
+
+        int x = ship.getPosition()[0];
+        int y = ship.getPosition()[1];
+
+        if (ship.getOrientation().equals("horizontal")) {
+            for (int i = 0; i < ship.getSize(); i++) {
+                    tiles[y][x+i] = new Tile();
+            }
+        } else {
+            for (int i = 0; i < ship.getSize(); i++) {
+                tiles[y+i][x] = new Tile();
+            }
+        }
+
+    }
 }

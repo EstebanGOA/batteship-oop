@@ -1,6 +1,7 @@
 package presentation.controllers;
 
 import business.GameManager;
+import business.entities.Board;
 import presentation.views.Cell;
 import presentation.views.JPopup;
 import presentation.views.SetupStageView;
@@ -28,18 +29,39 @@ public class SetupStageController implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        Cell cell = (Cell) e.getSource();
+        switch (((JComponent) e.getSource()).getName()) {
+            case "cell" -> {
+                Cell cell = (Cell) e.getSource();
+                processShipPlacement(cell);
+            }
+            case "start_attack_button" -> {
+                isSetupStageReady();
+            }
+        }
+
+
+    }
+
+    private void isSetupStageReady() {
+        if (gameManager.isSetupStageReady()) {
+            gameManager.createIA();
+            // setupStageView.switchWindow();
+            // gameManager.playGame();
+        }
+    }
+
+    private void processShipPlacement(Cell cell) {
         int[] coords = cell.getCoordinates();
         String shipSelected = setupStageView.getShipSelected();
         String orientation = setupStageView.getOrientation();
 
-        if (gameManager.insertShip(coords, shipSelected, orientation)) {
-            System.out.println("Barco insertado");
-        } else {
-            System.out.println("No se puede insertar");
-            // Show popup
-        }
+        Board board = gameManager.insertShip(coords, shipSelected, orientation);
 
+        if (board != null) {
+            setupStageView.paintShip(board);
+        } else {
+            new JPopup("Error, ship can not be placed there!");
+        }
 
     }
 
