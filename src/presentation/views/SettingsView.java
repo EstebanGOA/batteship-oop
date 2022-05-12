@@ -24,7 +24,7 @@ public class SettingsView extends JPanel {
 
     private final String FONT = "fonts/Poppins-Bold.ttf";
 
-    JImagePanel logoutButton;
+    private JImagePanel logoutButton;
 
     public SettingsView(MainView mainView) {
 
