@@ -5,27 +5,25 @@ import persistance.UserDAO;
 import persistance.sql.SQLUserDAO;
 
 public class UserManager {
-
-    private final UserDAO userDao;
+    private final UserDAO userDAO;
     private User user;
-
     private String username;
 
-    public UserManager() {
-        userDao = new SQLUserDAO();
+    public UserManager(SQLUserDAO sqlUserDAO) {
+        this.userDAO = sqlUserDAO;
     }
 
     public boolean addUser(String username, String email, String password) {
         this.user = new User(username, email, password);
-        return userDao.addUser(user);
+        return userDAO.addUser(user);
     }
 
     public void deleteUser() {
-        userDao.deleteUser(username);
+        userDAO.deleteUser(username);
     }
 
     public boolean checkLogin(String login, String password) {
-        if (password.equals(userDao.getPassword(login))) {
+        if (password.equals(userDAO.getPassword(login))) {
          username = login;
 
          return true;

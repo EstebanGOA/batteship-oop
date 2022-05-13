@@ -4,6 +4,11 @@ import persistance.GameDAO;
 import business.entities.Game;
 
 public class SQLGameDAO implements GameDAO {
+    private final SQLConnector sqlConnector;
+
+    public SQLGameDAO(SQLConnector sqlConnector) {
+        this.sqlConnector = sqlConnector;
+    }
 
     @Override
     public void addGame(Game game) {
@@ -14,7 +19,6 @@ public class SQLGameDAO implements GameDAO {
                 game.isWin() + "', '" +
                 game.getGameSaved() +
                 "');";
-
-        SQLConnector.insertQuery(query);
+        sqlConnector.insertQuery(query);
     }
 }

@@ -2,6 +2,7 @@ import business.UserManager;
 import persistance.Config;
 import persistance.DatabaseConfigDAO;
 import persistance.sql.SQLConnector;
+import persistance.sql.SQLGameDAO;
 import persistance.sql.SQLUserDAO;
 import presentation.controllers.LoginController;
 import presentation.controllers.MenuController;
@@ -14,11 +15,13 @@ public class Main {
         DatabaseConfigDAO databaseConfigDAO = new DatabaseConfigDAO();
         Config config = databaseConfigDAO.readFile();
         SQLConnector sqlConnector = new SQLConnector(config);
+        SQLUserDAO sqlUserDAO = new SQLUserDAO(sqlConnector);
+        SQLGameDAO sqlGameDAO = new SQLGameDAO(sqlConnector);
         sqlConnector.connect();
 
         MainView mainView = new MainView();
 
-        UserManager userManager = new UserManager();
+        UserManager userManager = new UserManager(sqlUserDAO);
 
 
         LoginView loginView = new LoginView(mainView);

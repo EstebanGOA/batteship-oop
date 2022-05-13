@@ -5,15 +5,13 @@ import persistance.GameDAO;
 import persistance.sql.SQLGameDAO;
 
 public class GameManager {
+    private final GameDAO gameDAO;
 
-    private GameDAO gameDao;
-
-    public GameManager() {
-        gameDao = new SQLGameDAO();
+    public GameManager(SQLGameDAO sqlGameDAO) {
+        this.gameDAO = sqlGameDAO;
     }
 
     public void addGame(Game game) {
-        gameDao.addGame(game);
+        gameDAO.addGame(game);
     }
-
 }

@@ -7,6 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLUserDAO implements UserDAO {
+    private final SQLConnector sqlConnector;
+
+    public SQLUserDAO(SQLConnector sqlConnector) {
+        this.sqlConnector = sqlConnector;
+    }
+
     @Override
     public boolean addUser(User user) {
         String query = "INSERT INTO User(name, email, password) VALUES ('" +
@@ -15,14 +21,14 @@ public class SQLUserDAO implements UserDAO {
                 user.getPassword() +
                 "');";
 
-        return SQLConnector.insertQuery(query);
+        return sqlConnector.insertQuery(query);
     }
 
     @Override
     public boolean deleteUser(String code) {
         String query = "DELETE FROM User WHERE name = '" + code + "';";
 
-        return SQLConnector.deleteQuery(query);
+        return sqlConnector.deleteQuery(query);
     }
 
     public String getPassword(String string) {
@@ -34,7 +40,7 @@ public class SQLUserDAO implements UserDAO {
             query = "SELECT * FROM User WHERE name = '" + string + "';";
         }
 
-        ResultSet result = SQLConnector.selectQuery(query);
+        ResultSet result = sqlConnector.selectQuery(query);
 
         try {
             //Comprobamos si el usuario existe.

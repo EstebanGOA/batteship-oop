@@ -33,7 +33,7 @@ public class SQLConnector {
      *
      * @param query String representation of the query to execute.
      */
-    public static boolean insertQuery(String query) {
+    public boolean insertQuery(String query) {
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);
@@ -50,7 +50,7 @@ public class SQLConnector {
      *
      * @param query String representation of the query to execute.
      */
-    public static void updateQuery(String query) {
+    public void updateQuery(String query) {
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);
@@ -65,7 +65,7 @@ public class SQLConnector {
      *
      * @param query String representation of the query to execute.
      */
-    public static boolean deleteQuery(String query) {
+    public boolean deleteQuery(String query) {
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);
@@ -83,7 +83,7 @@ public class SQLConnector {
      * @param query String representation of the query to execute.
      * @return The results of the selection.
      */
-    public static ResultSet selectQuery(String query) {
+    public ResultSet selectQuery(String query) {
         ResultSet rs = null;
         try {
             Statement s = conn.createStatement();
