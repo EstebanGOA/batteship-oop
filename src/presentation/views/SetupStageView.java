@@ -35,7 +35,6 @@ public class SetupStageView extends JPanel implements MouseListener {
 
     private final String SPRITE_WATER = "sprites/GameViews/water.png";
     private final String SPRITE_YOUR_SHIPS_BG = "sprites/GameViews/your_ships_panel.png";
-    private final String SPRITE_ROTATION_SHIP = "sprites/GameViews/boat.png";
 
     private final String SPRITE_BOAT = "sprites/GameViews/SetupStageView/rotated_boat.png";
     private final String SPRITE_SUBMARINE = "sprites/GameViews/SetupStageView/rotated_submarine.png";
@@ -165,15 +164,15 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         // All the ships buttons to locate the ships in the table
 
-        boatPanel = new ShipPanel("Boat", SPRITE_BOAT, SPRITE_SHIP_PANEL_BG, 60, 25);
+        boatPanel = new ShipPanel("Boat", SPRITE_BOAT, SPRITE_SHIP_PANEL_BG, 60, 25, 250);
         boatPanel.setName("boat");
-        submarinePanel1 = new ShipPanel("Submarine 1", SPRITE_SUBMARINE, SPRITE_SHIP_PANEL_BG, 80, 25);
+        submarinePanel1 = new ShipPanel("Submarine 1", SPRITE_SUBMARINE, SPRITE_SHIP_PANEL_BG, 80, 25, 250);
         submarinePanel1.setName("submarine1");
-        submarinePanel2 = new ShipPanel("Submarine 2", SPRITE_SUBMARINE, SPRITE_SHIP_PANEL_BG,80, 25);
+        submarinePanel2 = new ShipPanel("Submarine 2", SPRITE_SUBMARINE, SPRITE_SHIP_PANEL_BG,80, 25, 250);
         submarinePanel2.setName("submarine2");
-        destructorPanel = new ShipPanel("Destructor", SPRITE_DESTRUCTOR, SPRITE_SHIP_PANEL_BG,100, 25);
+        destructorPanel = new ShipPanel("Destructor", SPRITE_DESTRUCTOR, SPRITE_SHIP_PANEL_BG,100, 25, 250);
         destructorPanel.setName("destructor");
-        aircraftPanel = new ShipPanel("Aircraft", SPRITE_AIRCRAFT, SPRITE_SHIP_PANEL_BG, 120, 25);
+        aircraftPanel = new ShipPanel("Aircraft", SPRITE_AIRCRAFT, SPRITE_SHIP_PANEL_BG, 120, 25, 250);
         aircraftPanel.setName("aircraft");
 
         // Display all the things inside the left panel.

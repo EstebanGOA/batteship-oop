@@ -12,15 +12,13 @@ public class ShipPanel extends JPanel {
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";
     private final JImagePanel shipPanel;
 
-    public ShipPanel(String shipName, String shipPath, String panelBg, int imageWidth, int imageHeight) {
+    public ShipPanel(String shipName, String shipPath, String panelBg, int imageWidth, int imageHeight, int widthShipPanel) {
         Font font = initializeFont(FONT_BOLD, 15F);
 
         shipPanel = new JImagePanel(panelBg);
-        shipPanel.setPreferredSize(new Dimension(250, 125));
+        shipPanel.setPreferredSize(new Dimension(widthShipPanel, 125));
         shipPanel.setLayout(new GridBagLayout());
         shipPanel.setOpaque(false);
-        //shipPanel.setName("ship_panel");
-        //shipPanel.addMouseListener(this);
 
         JLabel shipNameText = new JLabel();
         shipNameText.setText(shipName);

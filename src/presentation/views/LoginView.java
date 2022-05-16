@@ -79,7 +79,7 @@ public class LoginView extends JPanel implements MouseListener {
         jEmailInput.setBorder(newBorder);
 
         emailPanel.add(emailIco);
-        emailPanel.add(addSeparator(20,0));
+        emailPanel.add(new JSeparator(15,0));
         emailPanel.add(jEmailInput);
 
         // ------------------------ Password Box Layout ------------------------ //
@@ -108,7 +108,7 @@ public class LoginView extends JPanel implements MouseListener {
         jPasswordInput.setBorder(newBorder2);
 
         passwordPanel.add(passwordIco);
-        passwordPanel.add(addSeparator(20,0));
+        passwordPanel.add(new JSeparator(15,0));
         passwordPanel.add(jPasswordInput);
 
         // ----------------- Label to create a new account ----------------- //
@@ -123,25 +123,25 @@ public class LoginView extends JPanel implements MouseListener {
         // ------------------------ Display Objects ------------------------ //
 
         gbc.gridx = 0; gbc.gridy = 0;
-        backgroundPanel.add(addSeparator(0,150), gbc);
+        backgroundPanel.add(new JSeparator(0,150), gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
         backgroundPanel.add(emailPanel, gbc);
 
         gbc.gridx = 0; gbc.gridy = 2;
-        backgroundPanel.add(addSeparator(0,50), gbc);
+        backgroundPanel.add(new JSeparator(0,50), gbc);
 
         gbc.gridx = 0; gbc.gridy = 3;
         backgroundPanel.add(passwordPanel, gbc);
 
         gbc.gridx = 0; gbc.gridy = 4;
-        backgroundPanel.add(addSeparator(0,75), gbc);
+        backgroundPanel.add(new JSeparator(0,75), gbc);
 
         gbc.gridx = 0; gbc.gridy = 5;
         backgroundPanel.add(buttonPanel, gbc);
 
         gbc.gridx = 0; gbc.gridy = 6;
-        backgroundPanel.add(addSeparator(0,50), gbc);
+        backgroundPanel.add(new JSeparator(0,50), gbc);
 
         gbc.gridx = 0; gbc.gridy = 7;
         backgroundPanel.add(jRegisterAccount, gbc);
@@ -171,17 +171,6 @@ public class LoginView extends JPanel implements MouseListener {
         }
 
         return font;
-    }
-
-    public JPanel addSeparator (int width, int height) {
-        JPanel space = new JPanel();
-        space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
-        space.setOpaque(false);
-
-        Component rigidArea = Box. createRigidArea(new Dimension(width, height));
-        space.add(rigidArea);
-
-        return space;
     }
 
     public void registerView() {
