@@ -1,28 +1,30 @@
+import business.GameManager;
 import business.UserManager;
-import presentation.controllers.LoginController;
-import presentation.controllers.MenuController;
-import presentation.controllers.RegisterController;
-import presentation.controllers.SettingsController;
+import presentation.controllers.*;
 import presentation.views.*;
 
 public class Main {
     public static void main(String[] args) {
+
         MainView mainView = new MainView();
 
         UserManager userManager = new UserManager();
+        GameManager gameManager = new GameManager();
 
 
         LoginView loginView = new LoginView(mainView);
         RegisterView registerView = new RegisterView(mainView);
         MenuView menuView = new MenuView(mainView);
         SettingsView settingsView = new SettingsView(mainView);
+        SetupStageView setupStageView = new SetupStageView(mainView);
 
         LoginController loginController = new LoginController(loginView, userManager);
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
         MenuController menuController = new MenuController(userManager, menuView);
+        SetupStageController setupStageController = new SetupStageController(setupStageView, gameManager);
 
-        mainView.asigneViews(loginView, registerView, menuView, settingsView);
+        mainView.asigneViews(loginView, registerView, menuView, settingsView, setupStageView);
 
         /* Asignamos los listeners de las vistas a la vista principal */
         loginView.registerMasterView(mainView);
@@ -31,7 +33,9 @@ public class Main {
         registerView.registerController(registerController);
         settingsView.settingsController(settingsController);
         loginView.registerController(loginController);
+        setupStageView.registerController(setupStageController);
 
         mainView.run();
+        
     }
 }

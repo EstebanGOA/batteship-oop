@@ -16,6 +16,7 @@ public class MainView extends JFrame implements MouseListener {
     private RegisterView registerView;
     private MenuView menuView;
     private SettingsView settingsView;
+    private SetupStageView setupStageView;
     private JPanel rootPanel;
     private CardLayout cardLayout;
 
@@ -25,6 +26,7 @@ public class MainView extends JFrame implements MouseListener {
     private final String LOGIN_WINDOW = "login";
     private final String REGISTER_WINDOW = "register";
     private final String MENU_WINDOW = "menu";
+    private final String SETUP_STAGE_WINDOW = "setup";
     private final String SETTINGS_WINDOW = "settings";
 
     /**
@@ -36,11 +38,12 @@ public class MainView extends JFrame implements MouseListener {
         initializeWindow();
     }
 
-    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView) {
+    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, SetupStageView setupStageView) {
         this.loginView = loginView;
         this.registerView = registerView;
         this.menuView = menuView;
         this.settingsView = settingsView;
+        this.setupStageView = setupStageView;
     }
 
     /**
@@ -55,9 +58,11 @@ public class MainView extends JFrame implements MouseListener {
         rootPanel.add(loginView, LOGIN_WINDOW);
         rootPanel.add(registerView, REGISTER_WINDOW);
         rootPanel.add(menuView, MENU_WINDOW);
+        rootPanel.add(setupStageView, SETUP_STAGE_WINDOW);
         rootPanel.add(settingsView, SETTINGS_WINDOW);
 
         this.add(rootPanel);
+        pack();
         this.setVisible(true);
     }
 
@@ -72,6 +77,7 @@ public class MainView extends JFrame implements MouseListener {
         setSize(1280, 720);
         setTitle("Battleship v1.0.0");
         setLocationRelativeTo(null);
+        setResizable(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
@@ -83,6 +89,7 @@ public class MainView extends JFrame implements MouseListener {
                 case "login" -> switchPanel(MENU_WINDOW);
                 case "create_account" -> switchPanel(REGISTER_WINDOW);
                 case "register", "return_login" -> switchPanel(LOGIN_WINDOW);
+                case "new_game" -> switchPanel(SETUP_STAGE_WINDOW);
             }
         }
     }
