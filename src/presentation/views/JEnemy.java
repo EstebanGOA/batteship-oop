@@ -1,11 +1,16 @@
 package presentation.views;
 
+import business.entities.Board;
+import business.entities.Tile;
+import business.entities.TileType;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class JEnemy extends JPanel {
     private final String PANEL_BG = "sprites/enemyBg.png";
+    private final String SPRITE_BOAT = "sprites/GameViews/SetupStageView/rotated_boat.png";
     private final JPanel enemyShipsStatusAndTablePanel;
 
     private Cell[][] table = new Cell[15][15];
@@ -13,6 +18,7 @@ public class JEnemy extends JPanel {
     private final String SPRITE_WATER = "sprites/GameViews/water.png";
 
     public JEnemy () {
+
         enemyShipsStatusAndTablePanel = new JPanel();
             enemyShipsStatusAndTablePanel.setOpaque(false);
             enemyShipsStatusAndTablePanel.setLayout(new GridBagLayout());
@@ -84,5 +90,26 @@ public class JEnemy extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(-15, 0, -15, 0));
         setOpaque(false);
         add(enemyShipsStatusAndTablePanel);
+    }
+
+    public void paintBoard(Board board) {
+
+        Tile[][] tiles = board.getTiles();
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles.length; j++) {
+
+                TileType status = tiles[i][j].getTileType();
+                if (status == TileType.SHIP) {
+                    table[i][j].switchImage(SPRITE_BOAT);
+                } else if (status == TileType.HIT) {
+                    table[i][j].switchImage(SPRITE_BOAT);
+                } else if (status == TileType.WATER) {
+                    table[i][j].switchImage(SPRITE_WATER);
+                }
+
+            }
+        }
+
     }
 }

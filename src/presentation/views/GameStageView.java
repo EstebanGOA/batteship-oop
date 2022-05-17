@@ -1,6 +1,6 @@
 package presentation.views;
 
-import business.entities.Ship;
+import business.entities.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,8 +38,10 @@ public class GameStageView extends JPanel implements MouseListener {
     private final Font fontEndBattleTexts = initializeFont (FONT_BOLD, 25F);
 
     private JImagePanel endBattleBtn;
+    private JPanel backgound;
 
     private Cell[][] table = new Cell[15][15];
+    private ArrayList<JEnemy> enemies = new ArrayList<>();
 
     /**
      *
@@ -51,22 +53,6 @@ public class GameStageView extends JPanel implements MouseListener {
 
     public GameStageView (MainView mainView) {
         this.mainView = mainView;
-
-        JPanel bg = setBackground();
-            bg.setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = 0; gbc.gridy = 0;
-            bg.add(yourShipsPanel(), gbc);
-
-            gbc.gridx = 1; gbc.gridy = 0;
-            bg.add(tableAndEndBattlePanel(), gbc);
-
-            gbc.gridx = 2; gbc.gridy = 0;
-            bg.add(rightPanel(), gbc);
-
-        initializeListeners();
-        add(bg);
     }
 
     public void initializeListeners () {
@@ -295,34 +281,28 @@ public class GameStageView extends JPanel implements MouseListener {
         return tableGrid;
     }
 
-    public JPanel rightPanel () {
+    public JPanel rightPanel (int numberOfEnemies) {
+
         JPanel rightPanel = new JPanel();
             rightPanel.setLayout(new GridBagLayout ());
             rightPanel.setOpaque(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = 0; gbc.gridy = 0;
-            rightPanel.add(new JEnemy(), gbc);
 
-            gbc.gridx = 0; gbc.gridy = 1;
+        for (int i = 0; i < numberOfEnemies*2; i = i + 2) {
+
+            gbc.gridx = 0; gbc.gridy = i;
+
+            JEnemy jEnemy = new JEnemy();
+            rightPanel.add(jEnemy, gbc);
+            enemies.add(jEnemy);
+
+            gbc.gridx = 0; gbc.gridy = (i+1);
             rightPanel.add(new JSeparator(0,5), gbc);
 
-            gbc.gridx = 0; gbc.gridy = 2;
-            rightPanel.add(new JEnemy(), gbc);
-
-            gbc.gridx = 0; gbc.gridy = 3;
-            rightPanel.add(new JSeparator(0,5), gbc);
-
-            gbc.gridx = 0; gbc.gridy = 4;
-            rightPanel.add(new JEnemy(), gbc);
-
-            gbc.gridx = 0; gbc.gridy = 5;
-            rightPanel.add(new JSeparator(0,5), gbc);
-
-            gbc.gridx = 0; gbc.gridy = 6;
-            rightPanel.add(new JEnemy(), gbc);
-
+        }
         return rightPanel;
+
     }
 
     public Font initializeFont(String fontPath, float fontSize) {
@@ -374,5 +354,54 @@ public class GameStageView extends JPanel implements MouseListener {
                 endBattleBtn.switchImage(SPRITE_END_BATTLE_BTN);
                 break;
         }
+    }
+
+    public void paintLayout(int numberOfEnemies) {
+
+        backgound = setBackground();
+        backgound.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 0;
+        backgound.add(yourShipsPanel(), gbc);
+
+        gbc.gridx = 1; gbc.gridy = 0;
+        backgound.add(tableAndEndBattlePanel(), gbc);
+
+        gbc.gridx = 2; gbc.gridy = 0;
+        backgound.add(rightPanel(numberOfEnemies), gbc);
+
+        initializeListeners();
+        add(backgound);
+    }
+
+    public void paintGameStatus(ArrayList<Player> players) {
+        for (int i = 0; i < players.size(); i++) {
+            Player p = players.get(i);
+
+            Board board = p.getBoard();
+
+            Tile[][] tiles = board.getTiles();
+
+            if (i == 0) {
+                for (int a = 0; a < tiles.length; a++) {
+                    for (int j = 0; j < tiles.length; j++) {
+                        TileType status = tiles[a][j].getTileType();
+                        if (status == TileType.SHIP) {
+                            table[a][j].switchImage(SPRITE_BOAT);
+                        } else if (status == TileType.HIT) {
+                            table[a][j].switchImage(SPRITE_BOAT);
+                        } else if (status == TileType.WATER) {
+                            table[a][j].switchImage(SPRITE_WATER);
+                        }
+                    }
+                }
+            } else {
+                JEnemy jEnemy = enemies.get(i-1);
+                jEnemy.paintBoard(board);
+            }
+
+        }
+
     }
 }

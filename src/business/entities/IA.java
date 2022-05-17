@@ -1,4 +1,9 @@
 package business.entities;
 
-public class IA {
+public class IA extends Player {
+
+    public IA(Board board) {
+        super(board);
+    }
+
 }
