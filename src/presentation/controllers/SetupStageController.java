@@ -45,7 +45,7 @@ public class SetupStageController implements MouseListener {
     private void isSetupStageReady() {
         int numberOfEnemies = setupStageView.getNumberOfEnemies();
         if (gameManager.isSetupStageReady()) {
-            gameManager.createIA();
+            gameManager.createIA(numberOfEnemies);
             // setupStageView.switchWindow();
             // gameManager.playGame();
         }
