@@ -10,12 +10,6 @@ public class SettingsView extends JPanel {
 
     private MainView mainView;
 
-    // Images Paths
-
-    private final String BACK_BUTTON_IMAGE    = "sprites/back_button.png";
-    private final String DELETE_ACCOUNT_IMAGE = "sprites/delete_account_button.png";
-    private final String LOGOUT_BUTTON        = "sprites/logout_button.png";
-
     // Background Color
 
     private final Color BACKGROUND_COLOR = new Color(39,152,213);
@@ -49,7 +43,7 @@ public class SettingsView extends JPanel {
 
                 // Back Button Image
 
-                JImagePanel backButton = new JImagePanel(BACK_BUTTON_IMAGE);
+                JImagePanel backButton = new JImagePanel(SpritePath.BACK_BUTTON);
                     backButton.setPreferredSize(new Dimension(75, 0));
                     backButton.setOpaque(false);
 
@@ -74,11 +68,11 @@ public class SettingsView extends JPanel {
 
         // ------------------------ Initializing Buttons ------------------------ //
 
-        JImagePanel deleteAccountButton = new JImagePanel(DELETE_ACCOUNT_IMAGE);
+        JImagePanel deleteAccountButton = new JImagePanel(SpritePath.DELETE_ACCOUNT_BUTTON);
             deleteAccountButton.setPreferredSize(new Dimension(250,75));
             deleteAccountButton.setOpaque(false);
 
-            logoutButton = new JImagePanel(LOGOUT_BUTTON);
+            logoutButton = new JImagePanel(SpritePath.LOGOUT_BUTTON);
             logoutButton.setPreferredSize(new Dimension(250,75));
             logoutButton.setOpaque(false);
             logoutButton.setName("logout");

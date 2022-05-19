@@ -6,4 +6,8 @@ public class IA extends Player {
         super(board);
     }
 
+    @Override
+    public void attack(int x, int y) {
+
+    }
 }

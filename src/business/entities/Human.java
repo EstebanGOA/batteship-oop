@@ -13,5 +13,9 @@ public class Human extends Player {
         super(board);
     }
 
+    @Override
+    public void attack(int x, int y) {
+
+    }
 
 }

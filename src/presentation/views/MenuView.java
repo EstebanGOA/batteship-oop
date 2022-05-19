@@ -24,7 +24,7 @@ public class MenuView extends JPanel {
         // ------------------------ Background Image ------------------------ //
         // ---------- Grid layout to divide the window in 3 columns --------- //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/background_main_menu_v2.png");
+        JImagePanel backgroundPanel = new JImagePanel(SpritePath.MENU_BACKGROUND);
             backgroundPanel.setPreferredSize(new Dimension(1280, 720));
             backgroundPanel.setLayout(new GridBagLayout());
 
@@ -38,7 +38,7 @@ public class MenuView extends JPanel {
         System.out.println(username);
         GridBagConstraints gbcLeftColumn = new GridBagConstraints();
 
-            JPanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
+            JPanel nameBackgroundPanel = new JImagePanel(SpritePath.TITLE_MENU);
                 nameBackgroundPanel.setOpaque(false);
                 nameBackgroundPanel.setLayout(new BorderLayout());
                 nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
@@ -67,13 +67,13 @@ public class MenuView extends JPanel {
 
         GridBagConstraints gbcMidColumn = new GridBagConstraints();
 
-        JImagePanel newBattleButton = new JImagePanel("sprites/new_battle_button.png");
+        JImagePanel newBattleButton = new JImagePanel(SpritePath.NEW_BATTLE_BUTTON);
             newBattleButton.setPreferredSize(new Dimension(350,125));
             newBattleButton.setOpaque(false);
             newBattleButton.setName("new_game");
             newBattleButton.addMouseListener(mainView);
 
-        JImagePanel loadBattleButton = new JImagePanel("sprites/load_battle_button.png");
+        JImagePanel loadBattleButton = new JImagePanel(SpritePath.LOAD_BATTLE_BUTTON);
             loadBattleButton.setPreferredSize(new Dimension(350,125));
             loadBattleButton.setOpaque(false);
 
@@ -95,7 +95,7 @@ public class MenuView extends JPanel {
 
         // Trophies Panel
 
-        JImagePanel trophiesBackground = new JImagePanel("sprites/trophies_background.png");
+        JImagePanel trophiesBackground = new JImagePanel(SpritePath.TROPHIES_BACKGROUND);
             trophiesBackground.setOpaque(false);
             trophiesBackground.setLayout(new BorderLayout());
             trophiesBackground.setPreferredSize(new Dimension(200, 75));
@@ -109,14 +109,14 @@ public class MenuView extends JPanel {
 
         // Settings Button
 
-            settingsButton = new JImagePanel("sprites/settings_button.png");
+            settingsButton = new JImagePanel(SpritePath.SETTINGS_BUTTON);
             settingsButton.setPreferredSize(new Dimension(75,75));
             settingsButton.setOpaque(false);
             settingsButton.setName("settings");
 
         // Statistics Button
 
-        JImagePanel statisticsButton = new JImagePanel("sprites/statistics_button.png");
+        JImagePanel statisticsButton = new JImagePanel(SpritePath.STATISTICS_BUTTON);
             statisticsButton.setPreferredSize(new Dimension(75,75));
             statisticsButton.setOpaque(false);
 

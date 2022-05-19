@@ -5,9 +5,9 @@ package business.entities;
  */
 abstract public class Player {
 
-    Board board;
+    private Board board;
 
-    Ship[] ships;
+    private Ship[] ships;
 
     /**
      * Constructor de Player.
@@ -88,5 +88,7 @@ abstract public class Player {
         }
         return flag;
     }
+
+    abstract public void attack(int x, int y);
 
 }

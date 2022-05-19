@@ -12,7 +12,7 @@ public class ShipPanel extends JPanel {
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";
     private final JImagePanel shipPanel;
 
-    public ShipPanel(String shipName, String shipPath, String panelBg, int imageWidth, int imageHeight, int widthShipPanel) {
+    public ShipPanel(String shipName, SpritePath shipPath, SpritePath panelBg, int imageWidth, int imageHeight, int widthShipPanel) {
         Font font = initializeFont(FONT_BOLD, 15F);
 
         shipPanel = new JImagePanel(panelBg);
