@@ -1,5 +1,7 @@
 package business.entities;
 
+import java.util.ArrayList;
+
 /**
  * Clase abstracta con las variables comunes entre los jugadores.
  */
@@ -89,6 +91,6 @@ abstract public class Player {
         return flag;
     }
 
-    abstract public void attack(int x, int y);
+    abstract public void attack(Player player, int x, int y);
 
 }

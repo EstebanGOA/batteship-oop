@@ -24,6 +24,7 @@ public class Main {
         SettingsController settingsController = new SettingsController(userManager, settingsView);
         MenuController menuController = new MenuController(userManager, menuView);
         SetupStageController setupStageController = new SetupStageController(setupStageView, gameStageView, gameManager);
+        GameController gameController = new GameController(gameStageView, gameManager);
 
         mainView.asigneViews(loginView, registerView, menuView, settingsView, setupStageView, gameStageView);
 
@@ -35,6 +36,7 @@ public class Main {
         settingsView.settingsController(settingsController);
         loginView.registerController(loginController);
         setupStageView.registerController(setupStageController);
+        gameStageView.registerController(gameController);
 
         mainView.run();
 

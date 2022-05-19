@@ -11,11 +11,13 @@ public class GameManager {
     private GameDAO gameDao;
     private ArrayList<Player> players;
     private Timer timer;
+    private int turn;
 
     public GameManager() {
         this.gameDao = new SQLGameDAO();
         this.players = new ArrayList<>();
         this.timer = new Timer();
+        this.turn = 0;
     }
 
     /**
@@ -40,13 +42,11 @@ public class GameManager {
 
     }
 
-    public void addGame(Game game) {
-        gameDao.addGame(game);
-    }
-
     public boolean isSetupStageReady() {
-        if (players.isEmpty())
+
+        if (players.isEmpty()) {
             return false;
+        }
 
         return players.get(0).allShipPlaced();
 
@@ -54,14 +54,40 @@ public class GameManager {
 
     public void createIA(int numberOfEnemies) {
 
-        Board board = players.get(0).getBoard();
+        Board board = null;
+        try {
+            board = (Board) players.get(0).getBoard().clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
 
-        for (int i = 0; i < numberOfEnemies; i++)
+        for (int i = 0; i < numberOfEnemies; i++) {
             players.add(new IA(board));
+        }
 
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     public ArrayList<Player> getPlayers() {
         return players;
     }
+
+    public void attack(Player player, int x, int y) {
+
+        for (Player objective : players) {
+            if (!objective.equals(player)) {
+                player.attack(objective, x, y);
+            }
+        }
+
+
+    }
+
 }

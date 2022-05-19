@@ -35,6 +35,21 @@ public class GameStageView extends JPanel implements MouseListener {
 
     public GameStageView(MainView mainView) {
         this.mainView = mainView;
+
+        backgound = setBackground();
+        backgound.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        backgound.add(yourShipsPanel(), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        backgound.add(tableAndEndBattlePanel(), gbc);
+
+        initializeListeners();
+
     }
 
     public void initializeListeners() {
@@ -248,6 +263,7 @@ public class GameStageView extends JPanel implements MouseListener {
             for (int j = 0; j < 15; j++) {
                 table[i][j] = new Cell(j, i, SpritePath.WATER);
                 tableGrid.add(table[i][j]);
+                table[i][j].setName("cell");
             }
         }
 
@@ -331,26 +347,28 @@ public class GameStageView extends JPanel implements MouseListener {
         }
     }
 
+    public void registerController(MouseListener mouseListener) {
+
+        for (Cell[] cells : table) {
+            for (Cell cell : cells) {
+                cell.addMouseListener(mouseListener);
+            }
+        }
+
+        endBattleBtn.addMouseListener(mouseListener);
+
+    }
+
     public void paintLayout(int numberOfEnemies) {
 
-        backgound = setBackground();
-        backgound.setLayout(new GridBagLayout());
-
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        backgound.add(yourShipsPanel(), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        backgound.add(tableAndEndBattlePanel(), gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 0;
         backgound.add(rightPanel(numberOfEnemies), gbc);
 
-        initializeListeners();
         add(backgound);
+
     }
 
     public void paintGameStatus(ArrayList<Player> players) {
