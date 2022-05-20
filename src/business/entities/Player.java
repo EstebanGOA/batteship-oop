@@ -28,6 +28,14 @@ abstract public class Player {
         return board;
     }
 
+    /**
+     *
+     * @return
+     */
+    public Ship[] getShips() {
+        return ships;
+    }
+
     public Board insertShip(int[] cords, String shipSelected, String orientation) {
 
         Ship ship = null;

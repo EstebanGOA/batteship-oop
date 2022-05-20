@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameStageView extends JPanel implements MouseListener {
 
@@ -26,6 +27,7 @@ public class GameStageView extends JPanel implements MouseListener {
 
     private Cell[][] table = new Cell[15][15];
     private ArrayList<JEnemy> enemies = new ArrayList<>();
+    private JShipStatus[] shipsStatus = new JShipStatus[5];
 
     /**
      * Constructor method for the GameStageView Panel
@@ -107,13 +109,11 @@ public class GameStageView extends JPanel implements MouseListener {
         ships.add(new ShipPanel("Destructor", SpritePath.DESTRUCTOR, SpritePath.SHIP_PANEL_BACKGROUND, 70, 25, 125));
         ships.add(new ShipPanel("Aircraft", SpritePath.AIRCRAFT, SpritePath.SHIP_PANEL_BACKGROUND, 70, 25, 125));
 
-        ArrayList<JShipStatus> shipsStatus = new ArrayList<>();
-
-        shipsStatus.add(new JShipStatus("Intact", 125));
-        shipsStatus.add(new JShipStatus("Intact", 125));
-        shipsStatus.add(new JShipStatus("Intact", 125));
-        shipsStatus.add(new JShipStatus("Intact", 125));
-        shipsStatus.add(new JShipStatus("Intact", 125));
+        shipsStatus[0] = new JShipStatus("Default text for ship status", 125);
+        shipsStatus[1] = new JShipStatus("Default text for ship status", 125);
+        shipsStatus[2] = new JShipStatus("Default text for ship status", 125);
+        shipsStatus[3] = new JShipStatus("Default text for ship status", 125);
+        shipsStatus[4] = new JShipStatus("Default text for ship status", 125);
 
         // Insert the arraylist in the JTable
 
@@ -377,29 +377,45 @@ public class GameStageView extends JPanel implements MouseListener {
             Player p = players.get(i);
 
             Board board = p.getBoard();
+            Ship[] ships = p.getShips();
 
             Tile[][] tiles = board.getTiles();
 
             if (p instanceof Human) {
-                for (int a = 0; a < tiles.length; a++) {
-                    for (int j = 0; j < tiles.length; j++) {
-                        TileType status = tiles[a][j].getTileType();
-                        if (status == TileType.SHIP) {
-                            table[a][j].switchImage(SpritePath.PASSWORD_ICON);
-                        } else if (status == TileType.HIT) {
-                            table[a][j].switchImage(SpritePath.ATTACK_BUTTON_ICON);
-                        } else if (status == TileType.WATER) {
-                            table[a][j].switchImage(SpritePath.WATER);
-                        } else if (status == TileType.MISS) {
-                            table[a][j].switchImage(SpritePath.EMAIL_ICON);
-                        }
-                    }
-                }
+
+                updateBoard(tiles);
+                updateShips(ships);
+
             } else {
                 JEnemy jEnemy = enemies.get(i - 1);
-                jEnemy.paintBoard(board);
+                jEnemy.updateEnemy(board, ships);
             }
 
+        }
+
+    }
+
+    private void updateShips(Ship[] ships) {
+        for (int i = 0; i < ships.length; i++) {
+            shipsStatus[i].updateStatus(ships[i].isSunk());
+        }
+    }
+
+    private void updateBoard(Tile[][] tiles) {
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles.length; j++) {
+                TileType status = tiles[i][j].getTileType();
+                if (status == TileType.SHIP) {
+                    table[i][j].switchImage(SpritePath.BOAT);
+                } else if (status == TileType.HIT) {
+                    table[i][j].switchImage(SpritePath.HIT);
+                } else if (status == TileType.WATER) {
+                    table[i][j].switchImage(SpritePath.WATER);
+                } else if (status == TileType.MISS) {
+                    table[i][j].switchImage(SpritePath.MISS);
+                }
+            }
         }
 
     }

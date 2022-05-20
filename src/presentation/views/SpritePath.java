@@ -4,6 +4,8 @@ public enum SpritePath {
 
     // ************************* BOARD SPRITES *************************
     WATER("sprites/GameViews/water.png"),
+    HIT("sprites/GameViews/explosion.png"),
+    MISS("sprites/GameViews/miss.png"),
     WATER_HOVER("sprites/GameViews/water_hover.png"),
 
     // ************************* SHIPS SPRITES *************************

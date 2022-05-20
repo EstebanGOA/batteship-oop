@@ -7,9 +7,9 @@ import java.util.List;
 
 public class EnemyShipsTableRenderer implements TableCellRenderer {
     private List<EnemyText> shipsNames;
-    private List<EnemyText> shipsStatus;
+    private EnemyText[] shipsStatus;
 
-    public EnemyShipsTableRenderer (List<EnemyText> shipsNames, List<EnemyText> shipsStatus) {
+    public EnemyShipsTableRenderer (List<EnemyText> shipsNames, EnemyText[] shipsStatus) {
         this.shipsNames = shipsNames;
         this.shipsStatus = shipsStatus;
     }
@@ -21,6 +21,6 @@ public class EnemyShipsTableRenderer implements TableCellRenderer {
         if (column == 0)
             return shipsNames.get(row);
         else
-            return shipsStatus.get(row);
+            return shipsStatus[row];
     }
 }

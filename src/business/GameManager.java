@@ -52,23 +52,36 @@ public class GameManager {
 
     }
 
-    public void createIA(int numberOfEnemies) {
-
-        Board board = null;
-        try {
-            board = (Board) players.get(0).getBoard().clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-
-        for (int i = 0; i < numberOfEnemies; i++) {
-            players.add(new IA(board));
-        }
-
-    }
-
     public void setTurn(int turn) {
         this.turn = turn;
+    }
+
+    public void createIA(int numberOfEnemies) {
+        String[] shipSelected = {"Boat", "Submarine1", "Submarine2", "Destructor", "Aircraft"};
+        int X = 0;
+        int Y = 0;
+        int[] cords = {X, Y};
+        int orient = 0;
+        String[] orientation = {"horizontal", "vertical"};
+        for(int currentEnemy = 0; currentEnemy < numberOfEnemies; currentEnemy++) {
+            Board board = new Board();
+            Player IA = new IA(board);
+
+            for(int currentBoat = 0; currentBoat < 5; currentBoat++) {
+                boolean insert = false;
+                while (!insert) {
+                    X = (int) (Math.random() * 15);
+                    Y = (int) (Math.random() * 15);
+                    orient = (int) (Math.random() * 2);
+                    cords[0] = X;
+                    cords[1] = Y;
+                    if (IA.insertShip(cords, shipSelected[currentBoat], orientation[orient]) != null) {
+                        insert = true;
+                    }
+                }
+            }
+            players.add(IA);
+        }
     }
 
     public int getTurn() {
@@ -86,8 +99,6 @@ public class GameManager {
                 player.attack(objective, x, y);
             }
         }
-
-
     }
 
 }
