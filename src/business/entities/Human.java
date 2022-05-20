@@ -15,9 +15,4 @@ public class Human extends Player {
         super(board);
     }
 
-    @Override
-    public void attack(Player player, int x, int y) {
-        player.getBoard().sendAttack(x, y);
-    }
-
 }

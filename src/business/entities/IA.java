@@ -2,14 +2,27 @@ package business.entities;
 
 import java.util.ArrayList;
 
-public class IA extends Player {
+public class IA extends Player implements Runnable {
 
-    public IA(Board board) {
+    private ArrayList<Player> players;
+
+    public IA(Board board, ArrayList<Player> players) {
         super(board);
+        this.players = players;
+    }
+
+    private int[] generateAttack() {
+     return null;
     }
 
     @Override
-    public void attack(Player player, int x, int y) {
+    public void run() {
+
+        for (Player objective : players) {
+            if (!objective.equals(this)) {
+                this.attack(objective, x, y);
+            }
+        }
 
     }
 

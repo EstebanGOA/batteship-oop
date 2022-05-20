@@ -11,13 +11,11 @@ public class GameManager {
     private GameDAO gameDao;
     private ArrayList<Player> players;
     private Timer timer;
-    private int turn;
 
     public GameManager() {
         this.gameDao = new SQLGameDAO();
         this.players = new ArrayList<>();
         this.timer = new Timer();
-        this.turn = 0;
     }
 
     /**
@@ -52,10 +50,6 @@ public class GameManager {
 
     }
 
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
     public void createIA(int numberOfEnemies) {
         String[] shipSelected = {"Boat", "Submarine1", "Submarine2", "Destructor", "Aircraft"};
         int X = 0;
@@ -65,7 +59,7 @@ public class GameManager {
         String[] orientation = {"horizontal", "vertical"};
         for(int currentEnemy = 0; currentEnemy < numberOfEnemies; currentEnemy++) {
             Board board = new Board();
-            Player IA = new IA(board);
+            Player IA = new IA(board, players);
 
             for(int currentBoat = 0; currentBoat < 5; currentBoat++) {
                 boolean insert = false;
@@ -84,10 +78,6 @@ public class GameManager {
         }
     }
 
-    public int getTurn() {
-        return turn;
-    }
-
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -99,6 +89,7 @@ public class GameManager {
                 player.attack(objective, x, y);
             }
         }
+
     }
 
 }

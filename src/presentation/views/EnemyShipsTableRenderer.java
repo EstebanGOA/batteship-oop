@@ -6,10 +6,10 @@ import java.awt.*;
 import java.util.List;
 
 public class EnemyShipsTableRenderer implements TableCellRenderer {
-    private List<EnemyText> shipsNames;
+    private EnemyText[] shipsNames;
     private EnemyText[] shipsStatus;
 
-    public EnemyShipsTableRenderer (List<EnemyText> shipsNames, EnemyText[] shipsStatus) {
+    public EnemyShipsTableRenderer (EnemyText[] shipsNames, EnemyText[] shipsStatus) {
         this.shipsNames = shipsNames;
         this.shipsStatus = shipsStatus;
     }
@@ -19,7 +19,7 @@ public class EnemyShipsTableRenderer implements TableCellRenderer {
                                                    boolean isSelected, boolean hasFocus, int row, int column)
     {
         if (column == 0)
-            return shipsNames.get(row);
+            return shipsNames[row];
         else
             return shipsStatus[row];
     }

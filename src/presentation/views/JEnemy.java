@@ -15,6 +15,9 @@ public class JEnemy extends JPanel {
 
     private Cell[][] table = new Cell[15][15];
     private EnemyText[] shipsStatus = new EnemyText[5];
+    private EnemyText[] shipsName = new EnemyText[5];
+    private JTable shipsStatusTable;
+
 
     public JEnemy() {
 
@@ -27,12 +30,11 @@ public class JEnemy extends JPanel {
         enemyPanel.setLayout(new GridBagLayout());
         enemyPanel.setOpaque(false);
 
-        ArrayList<EnemyText> shipsNames = new ArrayList<>();
-        shipsNames.add(new EnemyText("Boat"));
-        shipsNames.add(new EnemyText("Submarine 1"));
-        shipsNames.add(new EnemyText("Submarine 2"));
-        shipsNames.add(new EnemyText("Destructor"));
-        shipsNames.add(new EnemyText("Aircraft"));
+        shipsName[0] = (new EnemyText("Boat"));
+        shipsName[1] = (new EnemyText("Submarine 1"));
+        shipsName[2] = (new EnemyText("Submarine 2"));
+        shipsName[3] = (new EnemyText("Destructor"));
+        shipsName[4] = (new EnemyText("Aircraft"));
 
         shipsStatus[0] = new EnemyText("Intact");
         shipsStatus[1] = new EnemyText("Intact");
@@ -41,8 +43,8 @@ public class JEnemy extends JPanel {
         shipsStatus[4] = new EnemyText("Intact");
 
         // Insert the arraylist in the JTable
-        JTable shipsStatusTable = new JTable(new EnemyShipsTableModel());
-        shipsStatusTable.setDefaultRenderer(EnemyText.class, new EnemyShipsTableRenderer(shipsNames, shipsStatus));
+        shipsStatusTable = new JTable(new EnemyShipsTableModel());
+        shipsStatusTable.setDefaultRenderer(EnemyText.class, new EnemyShipsTableRenderer(shipsName, shipsStatus));
         shipsStatusTable.setRowHeight(20);
         shipsStatusTable.getColumnModel().getColumn(0).setPreferredWidth(100);
         shipsStatusTable.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -121,6 +123,7 @@ public class JEnemy extends JPanel {
     private void updateShips(Ship[] ships) {
         for (int i = 0; i < ships.length; i++) {
             shipsStatus[i].updateStatus(ships[i].isSunk());
+            shipsStatusTable.repaint();
         }
     }
 }

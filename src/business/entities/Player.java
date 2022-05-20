@@ -99,6 +99,8 @@ abstract public class Player {
         return flag;
     }
 
-    abstract public void attack(Player player, int x, int y);
+    public void attack(Player player, int x, int y) {
+        player.getBoard().sendAttack(x, y);
+    }
 
 }
