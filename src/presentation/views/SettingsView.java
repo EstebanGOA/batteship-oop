@@ -147,11 +147,11 @@ public class SettingsView extends JPanel {
         return space;
     }
     public void viewLogin() {
-        mainView.switchPanel("login", null);
+        mainView.switchPanel("login");
     }
 
     public void viewMenu() {
-        mainView.switchPanel("menu", null);
+        mainView.switchPanel("menu");
     }
     public void settingsController(MouseListener mouseListener) {
         logoutButton.addMouseListener(mouseListener);

@@ -17,6 +17,8 @@ public class MenuView extends JPanel {
     private JImagePanel settingsButton;
     private JImagePanel statisticsButton;
 
+    JLabel usernameLabel;
+
     public MenuView(MainView mainView) {
 
         this.mainView = mainView;
@@ -44,7 +46,7 @@ public class MenuView extends JPanel {
                 nameBackgroundPanel.setLayout(new BorderLayout());
                 nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
 
-                    JLabel usernameLabel = new JLabel(username);
+                    usernameLabel = new JLabel(username);
                     usernameLabel.setFont(font);
                     usernameLabel.setForeground(Color.white);
                     usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
@@ -194,15 +196,16 @@ public class MenuView extends JPanel {
         statisticsButton.addMouseListener(mouseListener);
     }
     public void settingsView() {
-        mainView.switchPanel("settings", null);
+        mainView.switchPanel("settings");
     }
 
     public void statisticsView(ArrayList<String> users) {
-        mainView.switchPanel("statistics", users);
+        mainView.switchPanel("statistics");
+        mainView.setStatisticsData(users);
     }
 
 
     public void setUsername(String username) {
-        this.username = username;
+        this.usernameLabel.setText("Username: " + username);
     }
 }

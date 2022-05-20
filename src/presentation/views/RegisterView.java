@@ -247,7 +247,7 @@ public class RegisterView extends JPanel {
      * Cuando acabemos las operaciones en el registro cambiaremos la ventana que mostramos al usuario.
      */
     public void registerCompleted() {
-        mainView.switchPanel("login", null);
+        mainView.switchPanel("login");
     }
 
     /**

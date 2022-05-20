@@ -171,11 +171,12 @@ public class LoginView extends JPanel {
     }
 
     public void registerView() {
-        mainView.switchPanel("register", null);
+        mainView.switchPanel("register");
     }
 
-    public void menuView() {
-        mainView.switchPanel("menu", null);
+    public void menuView(String username) {
+        mainView.switchPanel("menu");
+        mainView.setUsername(username);
     }
 
     public void registerMasterView(MouseListener mouseListener) {

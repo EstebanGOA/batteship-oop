@@ -70,10 +70,13 @@ public class MainView extends JFrame implements MouseListener {
         this.setVisible(true);
     }
 
-    public void switchPanel(String windowName, ArrayList<String> users) {
+    public void switchPanel(String windowName) {
         cardLayout.show(rootPanel, windowName);
-        if(windowName.equals("statistics")) {
 
+    }
+
+
+    public void setStatisticsData(ArrayList<String> users){
             for(String user : users){
                 statisticsView.addItem(user);
             }
@@ -86,7 +89,11 @@ public class MainView extends JFrame implements MouseListener {
 
             statisticsView.addBars( 23);
 
-        }
+
+    }
+
+    public void setUsername(String username) {
+        menuView.setUsername(username);
     }
 
     /**

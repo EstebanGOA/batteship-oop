@@ -188,8 +188,8 @@ public class StatisticsView extends JPanel {
 
     }
 
-    public void menuView(ArrayList<String> users) {
-        mainView.switchPanel("menu", users);
+    public void menuView() {
+        mainView.switchPanel("menu");
     }
 
     public void addItem(String s) {
