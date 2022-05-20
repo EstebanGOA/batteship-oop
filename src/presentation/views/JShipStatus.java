@@ -6,28 +6,31 @@ import java.io.File;
 import java.io.IOException;
 
 public class JShipStatus extends JPanel {
+
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";
     private final JImagePanel shipStatusPanel;
+
+    private JLabel status;
 
     public JShipStatus (String shipStatus, int widthShipStatusPanel) {
         Font font = initializeFont(FONT_BOLD, 15F);
 
         shipStatusPanel = new JImagePanel(SpritePath.SHIP_PANEL_BACKGROUND);
-            shipStatusPanel.setPreferredSize(new Dimension(widthShipStatusPanel, 125));
-            shipStatusPanel.setLayout(new BorderLayout());
-            shipStatusPanel.setOpaque(false);
+        shipStatusPanel.setPreferredSize(new Dimension(widthShipStatusPanel, 125));
+        shipStatusPanel.setLayout(new BorderLayout());
+        shipStatusPanel.setOpaque(false);
 
-        JLabel shipStatusText = new JLabel();
-            shipStatusText.setText(shipStatus);
-            shipStatusText.setForeground(Color.white);
-            shipStatusText.setHorizontalAlignment(SwingConstants.CENTER);
-            shipStatusText.setVerticalAlignment(SwingConstants.CENTER);
-            shipStatusText.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-            shipStatusText.setFont(font);
+        status = new JLabel();
+        status.setText(shipStatus);
+        status.setForeground(Color.white);
+        status.setHorizontalAlignment(SwingConstants.CENTER);
+        status.setVerticalAlignment(SwingConstants.CENTER);
+        status.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        status.setFont(font);
 
         setOpaque(false);
         setBorder(BorderFactory.createEmptyBorder(-15, 0, -15, 0));
-        shipStatusPanel.add(shipStatusText, BorderLayout.CENTER);
+        shipStatusPanel.add(status, BorderLayout.CENTER);
         add(shipStatusPanel);
     }
 
@@ -43,5 +46,13 @@ public class JShipStatus extends JPanel {
         }
 
         return font;
+    }
+
+    public void updateStatus(boolean sunk) {
+        if (sunk) {
+            this.status.setText("Sunk");
+        } else {
+            this.status.setText("Alive");
+        }
     }
 }

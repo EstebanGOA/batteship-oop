@@ -27,7 +27,7 @@ public class Timer implements Runnable {
                     minutes++;
                     seconds = 0;
                 }
-                System.out.println(generateString());
+                gameManager.updateTimer(generateString());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

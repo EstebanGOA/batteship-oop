@@ -1,5 +1,7 @@
 package business.entities;
 
+import java.util.ArrayList;
+
 /**
  * Clase que se encargará de manejar toda la lógica referente al jugador y sus movimientos.
  */
@@ -14,8 +16,8 @@ public class Human extends Player {
     }
 
     @Override
-    public void attack(int x, int y) {
-
+    public void attack(Player player, int x, int y) {
+        player.getBoard().sendAttack(x, y);
     }
 
 }

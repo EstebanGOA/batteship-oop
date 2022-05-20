@@ -2,7 +2,9 @@ package business.entities;
 
 import presentation.views.JPopup;
 
-public class Board {
+import java.util.ArrayList;
+
+public class Board implements Cloneable {
 
     private Tile[][] tiles;
 
@@ -17,6 +19,11 @@ public class Board {
 
     public Tile[][] getTiles() {
         return tiles;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public boolean placeShip(Ship ship) {
@@ -83,4 +90,25 @@ public class Board {
             }
         }
     }
+
+    public boolean sendAttack(int x, int y) {
+
+        TileType tileType = tiles[y][x].getTileType();
+
+        if (tileType == TileType.HIT || tileType == TileType.MISS) {
+            // Casilla donde ya se ha disparado anteriormente.
+            return false;
+        } else {
+            // Si no se ha disparado anteriormente actualizaremos la casilla a HIT, en caso de encontrarse con un barco,
+            // si no nos encontramos con un barco actualizaremos la casilla a MISS.
+            if (tiles[y][x] instanceof ShipSegment) {
+                tiles[y][x].setTileType(TileType.HIT);
+            } else {
+                tiles[y][x].setTileType(TileType.MISS);
+            }
+            return true;
+        }
+
+    }
+
 }

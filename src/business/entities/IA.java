@@ -1,5 +1,7 @@
 package business.entities;
 
+import java.util.ArrayList;
+
 public class IA extends Player {
 
     public IA(Board board) {
@@ -7,7 +9,8 @@ public class IA extends Player {
     }
 
     @Override
-    public void attack(int x, int y) {
+    public void attack(Player player, int x, int y) {
 
     }
+
 }

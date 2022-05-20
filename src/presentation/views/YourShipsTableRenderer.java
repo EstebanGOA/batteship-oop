@@ -7,9 +7,9 @@ import java.util.List;
 
 public class YourShipsTableRenderer implements TableCellRenderer {
     private List<ShipPanel> ships;
-    private List<JShipStatus> shipsStatus;
+    private JShipStatus[] shipsStatus;
 
-    public YourShipsTableRenderer (List<ShipPanel> ships, List<JShipStatus> shipsStatus) {
+    public YourShipsTableRenderer (List<ShipPanel> ships, JShipStatus[] shipsStatus) {
         this.ships = ships;
         this.shipsStatus = shipsStatus;
     }
@@ -21,6 +21,6 @@ public class YourShipsTableRenderer implements TableCellRenderer {
         if (column == 0)
             return ships.get(row);
         else
-            return shipsStatus.get(row);
+            return shipsStatus[row];
     }
 }
