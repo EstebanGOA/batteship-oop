@@ -34,6 +34,10 @@ public class GameManager {
         gameController.updateTimer(time);
     }
 
+    public void stopTimer () {
+        this.timer.stop();
+    }
+
     public void startTimer() {
         this.timer = new Timer(this);
         Thread thread = new Thread(timer);

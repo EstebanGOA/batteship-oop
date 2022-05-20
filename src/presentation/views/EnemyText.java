@@ -55,8 +55,10 @@ public class EnemyText extends JPanel {
     public void updateStatus(boolean sunk) {
         if (sunk) {
             status.setText("Sunk");
+            status.setForeground(Color.RED);
         } else {
             status.setText("Alive");
+            status.setForeground(Color.WHITE);
         }
         status.paintImmediately(status.getVisibleRect());
     }

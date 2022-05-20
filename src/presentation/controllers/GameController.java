@@ -6,6 +6,7 @@ import business.entities.Player;
 import presentation.views.Cell;
 import presentation.views.GameStageView;
 import presentation.views.JPopup;
+import presentation.views.JSaveGame;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -44,6 +45,10 @@ public class GameController implements MouseListener {
                 } else {
                     new JPopup("Error, no es tu turno");
                 }
+            }
+            case "endBattleBtn" -> {
+                gameManager.stopTimer();
+                new JSaveGame();
             }
         }
     }
