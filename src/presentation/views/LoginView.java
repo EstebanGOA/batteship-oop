@@ -31,7 +31,7 @@ public class LoginView extends JPanel implements MouseListener {
 
         // ------------------------ Background Image ------------------------ //
 
-        backgroundPanel = new JImagePanel("sprites/login_background_v2.png");
+        backgroundPanel = new JImagePanel(SpritePath.LOGIN_BACKGROUND);
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setLayout(new GridBagLayout());
         backgroundPanel.setName("background_panel");
@@ -46,7 +46,7 @@ public class LoginView extends JPanel implements MouseListener {
         buttonPanel.setPreferredSize(new Dimension(200,100));
         buttonPanel.setOpaque(false);
 
-        jLoginButton = new JImagePanel("sprites/login_button.png");
+        jLoginButton = new JImagePanel(SpritePath.LOGIN_BUTTON);
         jLoginButton.setPreferredSize(new Dimension(100,100));
         jLoginButton.setOpaque(false);
         // TODO: Primero deberíamos hacer la petición al servidor, comprobar los datos y cuando todo sea correcto cambiar ventana.
@@ -61,7 +61,7 @@ public class LoginView extends JPanel implements MouseListener {
         emailPanel.setPreferredSize(new Dimension(350, 35));
         emailPanel.setOpaque(false);
 
-        JImagePanel emailIco = new JImagePanel("sprites/email_ico.png");
+        JImagePanel emailIco = new JImagePanel(SpritePath.EMAIL_ICON);
         emailIco.setOpaque(false);
         emailIco.setPreferredSize(new Dimension(35,0));
 
@@ -89,7 +89,7 @@ public class LoginView extends JPanel implements MouseListener {
         passwordPanel.setPreferredSize(new Dimension(350, 35));
         passwordPanel.setOpaque(false);
 
-        JImagePanel passwordIco = new JImagePanel("sprites/lock_ico.png");
+        JImagePanel passwordIco = new JImagePanel(SpritePath.PASSWORD_ICON);
         passwordIco.setOpaque(false);
         passwordIco.setPreferredSize(new Dimension(35,0));
 
@@ -252,7 +252,7 @@ public class LoginView extends JPanel implements MouseListener {
 
         switch (event) {
             case "login":
-                jLoginButton.switchImage("sprites/login_button_hover.png");
+                jLoginButton.switchImage(SpritePath.LOGIN_BUTTON_HOVER);
                 break;
         }
     }
@@ -263,7 +263,7 @@ public class LoginView extends JPanel implements MouseListener {
 
         switch (event) {
             case "login":
-                jLoginButton.switchImage("sprites/login_button.png");
+                jLoginButton.switchImage(SpritePath.LOGIN_BUTTON);
                 break;
         }
     }

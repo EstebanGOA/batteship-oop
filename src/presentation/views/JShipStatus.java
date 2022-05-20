@@ -12,7 +12,7 @@ public class JShipStatus extends JPanel {
     public JShipStatus (String shipStatus, int widthShipStatusPanel) {
         Font font = initializeFont(FONT_BOLD, 15F);
 
-        shipStatusPanel = new JImagePanel("sprites/ship_panel.png");
+        shipStatusPanel = new JImagePanel(SpritePath.SHIP_PANEL_BACKGROUND);
             shipStatusPanel.setPreferredSize(new Dimension(widthShipStatusPanel, 125));
             shipStatusPanel.setLayout(new BorderLayout());
             shipStatusPanel.setOpaque(false);

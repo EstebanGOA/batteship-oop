@@ -5,9 +5,11 @@ import presentation.views.*;
 
 public class Main {
     public static void main(String[] args) {
+
         MainView mainView = new MainView();
 
         UserManager userManager = new UserManager();
+        GameManager gameManager = new GameManager();
 
 
         LoginView loginView = new LoginView(mainView);
@@ -21,7 +23,7 @@ public class Main {
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
         MenuController menuController = new MenuController(userManager, menuView);
-        SetupStageController setupStageController = new SetupStageController(setupStageView);
+        SetupStageController setupStageController = new SetupStageController(setupStageView, gameStageView, gameManager);
 
         mainView.asigneViews(loginView, registerView, menuView, settingsView, setupStageView, gameStageView);
 
@@ -32,8 +34,9 @@ public class Main {
         registerView.registerController(registerController);
         settingsView.settingsController(settingsController);
         loginView.registerController(loginController);
-        setupStageView.setupStageViewController(setupStageController);
+        setupStageView.registerController(setupStageController);
 
         mainView.run();
+
     }
 }

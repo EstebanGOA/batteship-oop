@@ -4,9 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -20,9 +18,9 @@ public class JImagePanel extends JPanel {
     private float angle;
     private boolean isRotated;
 
-    public void switchImage(String path) {
+    public void switchImage(SpritePath path) {
         try {
-            image = ImageIO.read(new File(path));
+            image = ImageIO.read(new File(path.toString()));
             repaint();
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,9 +28,9 @@ public class JImagePanel extends JPanel {
     }
 
     // Constructor with parameters
-    public JImagePanel(String path, float scale, boolean isRotated) {
+    public JImagePanel(SpritePath path, float scale, boolean isRotated) {
         try {
-            image = ImageIO.read(new File(path));
+            image = ImageIO.read(new File(path.toString()));
             this.angle = 0;
             this.scale = scale;
             this.isRotated = isRotated;
@@ -42,9 +40,9 @@ public class JImagePanel extends JPanel {
         }
     }
 
-    public JImagePanel(String path) {
+    public JImagePanel(SpritePath path) {
         try {
-            image = ImageIO.read(new File(path));
+            image = ImageIO.read(new File(path.toString()));
             this.angle = 0;
             this.scale = 1;
             this.isRotated = false;

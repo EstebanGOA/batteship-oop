@@ -1,11 +1,8 @@
 package presentation.views;
 
-import presentation.controllers.RegisterController;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +39,7 @@ public class RegisterView extends JPanel {
 
         // ------------------------ Background Image ------------------------ //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/login_background_v2.png");
+        JImagePanel backgroundPanel = new JImagePanel(SpritePath.LOGIN_BACKGROUND);
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setLayout(new GridBagLayout());
 
@@ -103,7 +100,7 @@ public class RegisterView extends JPanel {
         buttonPanel.setPreferredSize(new Dimension(200,100));
         buttonPanel.setOpaque(false);
 
-        this.jImageButton = new JImagePanel("sprites/register_button.png");
+        this.jImageButton = new JImagePanel(SpritePath.REGISTER_BUTTON);
         this.jImageButton.setPreferredSize(new Dimension(100,100));
         this.jImageButton.setOpaque(false);
         this.jImageButton.setName("register");
@@ -131,7 +128,7 @@ public class RegisterView extends JPanel {
         emailPanel.setPreferredSize(new Dimension(350, 35));
         emailPanel.setOpaque(false);
 
-        JImagePanel emailIco = new JImagePanel("sprites/email_ico.png");
+        JImagePanel emailIco = new JImagePanel(SpritePath.EMAIL_ICON);
         emailIco.setOpaque(false);
         emailIco.setPreferredSize(new Dimension(35,0));
 
@@ -156,7 +153,7 @@ public class RegisterView extends JPanel {
         passwordPanel.setPreferredSize(new Dimension(350, 35));
         passwordPanel.setOpaque(false);
 
-        JImagePanel passwordIco = new JImagePanel("sprites/lock_ico.png");
+        JImagePanel passwordIco = new JImagePanel(SpritePath.PASSWORD_ICON);
         passwordIco.setOpaque(false);
         passwordIco.setPreferredSize(new Dimension(35,0));
 
@@ -179,7 +176,7 @@ public class RegisterView extends JPanel {
         usernamePanel.setPreferredSize(new Dimension(350, 35));
         usernamePanel.setLayout(new BoxLayout(usernamePanel, BoxLayout.X_AXIS));
 
-        JImagePanel userIco = new JImagePanel("sprites/user_ico.png");
+        JImagePanel userIco = new JImagePanel(SpritePath.USER_ICON);
         userIco.setOpaque(false);
         userIco.setPreferredSize(new Dimension(35,0));
 
