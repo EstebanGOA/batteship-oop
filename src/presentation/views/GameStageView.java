@@ -24,10 +24,13 @@ public class GameStageView extends JPanel implements MouseListener {
 
     private JImagePanel endBattleBtn;
     private JPanel backgound;
+    private JLabel gameTime;
+
 
     private Cell[][] table = new Cell[15][15];
     private ArrayList<JEnemy> enemies = new ArrayList<>();
     private JShipStatus[] shipsStatus = new JShipStatus[5];
+
 
     /**
      * Constructor method for the GameStageView Panel
@@ -199,7 +202,7 @@ public class GameStageView extends JPanel implements MouseListener {
         statusAttack.setFont(fontEndBattleTexts);
         statusAttack.setBorder(BorderFactory.createEmptyBorder(0, 25, 15, 0));
 
-        JLabel gameTime = new JLabel();
+        gameTime = new JLabel();
         gameTime.setText("00:00");
         gameTime.setForeground(Color.white);
         gameTime.setFont(fontEndBattleTexts);
@@ -418,5 +421,9 @@ public class GameStageView extends JPanel implements MouseListener {
             }
         }
 
+    }
+
+    public void updateTime(String time) {
+        gameTime.setText(time);
     }
 }

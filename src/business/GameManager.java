@@ -3,6 +3,7 @@ package business;
 import business.entities.*;
 import persistance.GameDAO;
 import persistance.sql.SQLGameDAO;
+import presentation.controllers.GameController;
 
 import java.util.ArrayList;
 
@@ -10,12 +11,12 @@ public class GameManager {
 
     private GameDAO gameDao;
     private ArrayList<Player> players;
+    private GameController gameController;
     private Timer timer;
 
     public GameManager() {
         this.gameDao = new SQLGameDAO();
         this.players = new ArrayList<>();
-        this.timer = new Timer();
     }
 
     /**
@@ -27,6 +28,20 @@ public class GameManager {
         players.add(player);
     }
 
+    public void updateTimer(String time) {
+        gameController.updateTimer(time);
+    }
+
+    public void stopTimer () {
+        this.timer.stop();
+    }
+
+    public void startTimer() {
+        this.timer = new Timer(this);
+        Thread thread = new Thread(timer);
+        this.timer.resume();
+        thread.start();
+    }
 
     public Board insertShip(int[] cords, String shipSelected, String orientation) {
 
@@ -90,6 +105,10 @@ public class GameManager {
             }
         }
 
+    }
+
+    public void asigneController(GameController gameController) {
+        this.gameController = gameController;
     }
 
 }

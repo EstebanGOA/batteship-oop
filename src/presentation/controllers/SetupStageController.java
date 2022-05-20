@@ -51,6 +51,7 @@ public class SetupStageController implements MouseListener {
             gameStageView.paintLayout(numberOfEnemies);
             ArrayList<Player> players = gameManager.getPlayers();
             gameStageView.paintGameStatus(players);
+            gameManager.startTimer();
             // setupStageView.switchWindow();
             // gameManager.playGame();
         } else {

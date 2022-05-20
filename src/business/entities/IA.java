@@ -18,12 +18,6 @@ public class IA extends Player implements Runnable {
     @Override
     public void run() {
 
-        for (Player objective : players) {
-            if (!objective.equals(this)) {
-                this.attack(objective, x, y);
-            }
-        }
-
     }
 
 }
