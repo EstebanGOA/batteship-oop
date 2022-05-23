@@ -13,10 +13,12 @@ public class GameManager {
     private ArrayList<Player> players;
     private GameController gameController;
     private Timer timer;
+    private ArrayList<Thread> threads;
 
     public GameManager() {
         this.gameDao = new SQLGameDAO();
         this.players = new ArrayList<>();
+        this.threads = new ArrayList<>();
     }
 
     /**
@@ -24,7 +26,7 @@ public class GameManager {
      */
     public void createPlayer() {
         Board board = new Board();
-        Player player = new Human(board);
+        Player player = new Human(board, this);
         players.add(player);
     }
 
@@ -32,8 +34,11 @@ public class GameManager {
         gameController.updateTimer(time);
     }
 
-    public void stopTimer () {
+    public void stopGame() {
         this.timer.stop();
+        for (Thread thread : threads) {
+            thread.interrupt();
+        }
     }
 
     public void startTimer() {
@@ -65,25 +70,33 @@ public class GameManager {
 
     }
 
+    public void startGame() {
+        for (Player p : players) {
+            Thread thread = new Thread(p);
+            threads.add(thread);
+            thread.start();
+        }
+    }
+
     public void createIA(int numberOfEnemies) {
         String[] shipSelected = {"Boat", "Submarine1", "Submarine2", "Destructor", "Aircraft"};
-        int X = 0;
-        int Y = 0;
-        int[] cords = {X, Y};
+        int x = 0;
+        int y = 0;
+        int[] cords = {x, y};
         int orient = 0;
         String[] orientation = {"horizontal", "vertical"};
-        for(int currentEnemy = 0; currentEnemy < numberOfEnemies; currentEnemy++) {
+        for (int currentEnemy = 0; currentEnemy < numberOfEnemies; currentEnemy++) {
             Board board = new Board();
-            Player IA = new IA(board, players);
+            Player IA = new IA(board, this);
 
-            for(int currentBoat = 0; currentBoat < 5; currentBoat++) {
+            for (int currentBoat = 0; currentBoat < 5; currentBoat++) {
                 boolean insert = false;
                 while (!insert) {
-                    X = (int) (Math.random() * 15);
-                    Y = (int) (Math.random() * 15);
+                    x = (int) (Math.random() * 15);
+                    y = (int) (Math.random() * 15);
                     orient = (int) (Math.random() * 2);
-                    cords[0] = X;
-                    cords[1] = Y;
+                    cords[0] = x;
+                    cords[1] = y;
                     if (IA.insertShip(cords, shipSelected[currentBoat], orientation[orient]) != null) {
                         insert = true;
                     }
@@ -104,11 +117,33 @@ public class GameManager {
                 player.attack(objective, x, y);
             }
         }
+        player.setRecharging(true);
+        updatePhase("Recharging");
+        updateGame();
+    }
 
+    public void updatePhase(String status) {
+        gameController.updatePhase(status);
+    }
+
+    public void updateGame() {
+        int count = 0;
+        for (Player p : players) {
+            if (!p.status()) {
+                count++;
+                p.setAlive(false);
+            }
+        }
+        if (count == players.size()-1) {
+            stopGame();
+        } else {
+            gameController.updateGame(players);
+        }
     }
 
     public void asigneController(GameController gameController) {
         this.gameController = gameController;
     }
+
 
 }

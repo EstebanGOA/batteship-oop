@@ -50,9 +50,10 @@ public class JShipStatus extends JPanel {
 
     public void updateStatus(boolean sunk) {
         if (sunk) {
-            this.status.setText("Sunk");
+            status.setText("Sunk");
+            status.setForeground(Color.RED);
         } else {
-            this.status.setText("Alive");
+            status.setText("Alive");
         }
     }
 }

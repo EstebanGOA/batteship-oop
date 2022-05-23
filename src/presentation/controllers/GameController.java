@@ -1,7 +1,6 @@
 package presentation.controllers;
 
 import business.GameManager;
-import business.entities.IA;
 import business.entities.Player;
 import presentation.views.Cell;
 import presentation.views.GameStageView;
@@ -11,6 +10,7 @@ import presentation.views.JSaveGame;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class GameController implements MouseListener {
 
@@ -26,6 +26,10 @@ public class GameController implements MouseListener {
         this.gameStageView.updateTime(time);
     }
 
+    public void updateGame(ArrayList<Player> players) {
+        this.gameStageView.updateGame(players);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         switch (((JComponent) e.getSource()).getName()) {
@@ -33,21 +37,16 @@ public class GameController implements MouseListener {
                 Cell cell = (Cell) e.getSource();
                 int x = cell.getCoordinates()[0];
                 int y = cell.getCoordinates()[1];
-                System.out.println("x: " + x + "\ny: " + y);
-                if (gameManager.getTurn() == 0) {
-                    Player player = gameManager.getPlayers().get(0);
-                    for (Player objective : gameManager.getPlayers()) {
-                        if (objective instanceof IA) {
-                            player.attack(objective, x, y);
-                        }
-                    }
-                    gameStageView.paintGameStatus(gameManager.getPlayers());
+                Player player = gameManager.getPlayers().get(0);
+                if (!player.isRecharging()) {
+                    gameManager.attack(player, x, y);
+                    gameStageView.updateGame(gameManager.getPlayers());
                 } else {
                     new JPopup("Error, no es tu turno");
                 }
             }
             case "endBattleBtn" -> {
-                gameManager.stopTimer();
+                gameManager.stopGame();
                 new JSaveGame();
             }
         }
@@ -71,5 +70,9 @@ public class GameController implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public void updatePhase(String recharging) {
+        gameStageView.updatePhase(recharging);
     }
 }

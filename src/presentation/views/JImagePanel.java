@@ -14,14 +14,44 @@ public class JImagePanel extends JPanel {
     // The image to render
     private BufferedImage image;
 
+    private String path;
     private float scale;
     private float angle;
     private boolean isRotated;
 
     public void switchImage(SpritePath path) {
         try {
-            image = ImageIO.read(new File(path.toString()));
+            if (path.equals(SpritePath.WATER)) {
+                isRotated = false;
+            }
+            if (!this.path.equals(path.toString())) {
+                image = ImageIO.read(new File(path.toString()));
+                this.path = path.toString();
+            }
             repaint();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void switchImage(SpritePath boatPieces, int piece, float scale, String orientation) {
+        try {
+
+            if (orientation.equals("horizontal")) {
+                this.angle = 0;
+                isRotated = false;
+            } else {
+                this.angle = 90;
+                this.scale = scale;
+                isRotated = true;
+            }
+
+            if (!this.path.equals(boatPieces.getPath(piece))) {
+                image = ImageIO.read(new File(boatPieces.getPath(piece)));
+                this.path = boatPieces.getPath(piece);
+            }
+            repaint();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,6 +61,7 @@ public class JImagePanel extends JPanel {
     public JImagePanel(SpritePath path, float scale, boolean isRotated) {
         try {
             image = ImageIO.read(new File(path.toString()));
+            this.path = path.toString();
             this.angle = 0;
             this.scale = scale;
             this.isRotated = isRotated;
@@ -43,6 +74,7 @@ public class JImagePanel extends JPanel {
     public JImagePanel(SpritePath path) {
         try {
             image = ImageIO.read(new File(path.toString()));
+            this.path = path.toString();
             this.angle = 0;
             this.scale = 1;
             this.isRotated = false;
@@ -84,5 +116,6 @@ public class JImagePanel extends JPanel {
     public void setScale(float scale) {
         this.scale = scale;
     }
+
 
 }

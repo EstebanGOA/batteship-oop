@@ -1,8 +1,6 @@
 package presentation.views;
 
-import business.entities.Board;
-import business.entities.Tile;
-import business.entities.TileType;
+import business.entities.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -155,9 +153,9 @@ public class SetupStageView extends JPanel implements MouseListener {
         boatPanel.setName("boat");
         submarinePanel1 = new ShipPanel("Submarine 1", SpritePath.SUBMARINE, SpritePath.SHIP_PANEL_BACKGROUND, 80, 25, 250);
         submarinePanel1.setName("submarine1");
-        submarinePanel2 = new ShipPanel("Submarine 2", SpritePath.SUBMARINE, SpritePath.SHIP_PANEL_BACKGROUND,80, 25, 250);
+        submarinePanel2 = new ShipPanel("Submarine 2", SpritePath.SUBMARINE, SpritePath.SHIP_PANEL_BACKGROUND, 80, 25, 250);
         submarinePanel2.setName("submarine2");
-        destructorPanel = new ShipPanel("Destructor", SpritePath.DESTRUCTOR, SpritePath.SHIP_PANEL_BACKGROUND,100, 25, 250);
+        destructorPanel = new ShipPanel("Destructor", SpritePath.DESTRUCTOR, SpritePath.SHIP_PANEL_BACKGROUND, 100, 25, 250);
         destructorPanel.setName("destructor");
         aircraftPanel = new ShipPanel("Aircraft", SpritePath.AIRCRAFT, SpritePath.SHIP_PANEL_BACKGROUND, 120, 25, 250);
         aircraftPanel.setName("aircraft");
@@ -262,19 +260,19 @@ public class SetupStageView extends JPanel implements MouseListener {
         rotateButton.setOpaque(false);
         rotateButton.setName("rotate");
 
-            // Label with the text of the button rotate.
+        // Label with the text of the button rotate.
 
-            JLabel rotateButtonText = new JLabel();
-            rotateButtonText.setText(LABEL_ROTATE_BTN);
-            rotateButtonText.setForeground(Color.white);
-            rotateButtonText.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-            rotateButtonText.setFont(fontPanelTitle);
+        JLabel rotateButtonText = new JLabel();
+        rotateButtonText.setText(LABEL_ROTATE_BTN);
+        rotateButtonText.setForeground(Color.white);
+        rotateButtonText.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        rotateButtonText.setFont(fontPanelTitle);
 
-            // Icon of the rotation button.
+        // Icon of the rotation button.
 
-            JImagePanel rotateIcon = new JImagePanel(SpritePath.ROTATE_ARROW_ICON);
-            rotateIcon.setPreferredSize(new Dimension(25, 25));
-            rotateIcon.setOpaque(false);
+        JImagePanel rotateIcon = new JImagePanel(SpritePath.ROTATE_ARROW_ICON);
+        rotateIcon.setPreferredSize(new Dimension(25, 25));
+        rotateIcon.setOpaque(false);
 
         // Display the text and the icon of the rotation button.
 
@@ -738,23 +736,45 @@ public class SetupStageView extends JPanel implements MouseListener {
         startAttackButton.addMouseListener(mouseListener);
     }
 
-    public void paintShip(Board board) {
+    public void updateBoard(Board board) {
 
         Tile[][] tiles = board.getTiles();
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
-                TileType status = tiles[i][j].getTileType();
-                if (status == TileType.SHIP) {
-                    table[i][j].switchImage(SpritePath.USER_HOVER_ICON);
-                } else if (status == TileType.HIT) {
-                    table[i][j].switchImage(SpritePath.USER_SELECTED_ICON);
-                } else if (status == TileType.WATER) {
+                TileType tile = tiles[i][j].getTileType();
+                if (tile == TileType.SHIP) {
+                    ShipSegment shipSegment = (ShipSegment) tiles[i][j];
+                    replaceShipImage(shipSegment, i, j);
+                } else if (tile == TileType.WATER) {
                     table[i][j].switchImage(SpritePath.WATER);
                 }
             }
         }
 
+    }
+
+    private void replaceShipImage(ShipSegment shipSegment, int i, int j) {
+
+        Ship ship = shipSegment.getShip();
+        ShipSegment[] shipSegments = ship.getShipSegments();
+        float scale = 0.3F;
+
+        for (int piece = 0; piece < shipSegments.length; piece++) {
+            ShipSegment segment = shipSegments[piece];
+            if (segment.equals(shipSegment)) {
+                if (ship instanceof Boat) {
+                    table[i][j].switchImage(SpritePath.BOAT_PIECES, piece, scale, ship.getOrientation());
+                } else if (ship instanceof Submarine) {
+                    table[i][j].switchImage(SpritePath.SUBMARINE_PIECES, piece, scale, ship.getOrientation());
+                } else if (ship instanceof Destroyer) {
+                    table[i][j].switchImage(SpritePath.DESTRUCTOR_PIECES, piece, scale, ship.getOrientation());
+                } else if (ship instanceof AircraftCarrier) {
+                    table[i][j].switchImage(SpritePath.AIRCRAFT_PIECES, piece, scale, ship.getOrientation());
+                }
+            }
+
+        }
     }
 
     public int getNumberOfEnemies() {

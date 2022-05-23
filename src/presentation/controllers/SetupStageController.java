@@ -50,8 +50,9 @@ public class SetupStageController implements MouseListener {
             setupStageView.switchWindow();
             gameStageView.paintLayout(numberOfEnemies);
             ArrayList<Player> players = gameManager.getPlayers();
-            gameStageView.paintGameStatus(players);
+            gameStageView.updateGame(players);
             gameManager.startTimer();
+            gameManager.startGame();
             // setupStageView.switchWindow();
             // gameManager.playGame();
         } else {
@@ -68,7 +69,7 @@ public class SetupStageController implements MouseListener {
         Board board = gameManager.insertShip(coords, shipSelected, orientation);
 
         if (board != null) {
-            setupStageView.paintShip(board);
+            setupStageView.updateBoard(board);
         } else {
             new JPopup("Error, ship can not be placed there!");
         }

@@ -9,7 +9,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameStageView extends JPanel implements MouseListener {
 
@@ -25,11 +24,12 @@ public class GameStageView extends JPanel implements MouseListener {
     private JImagePanel endBattleBtn;
     private JPanel backgound;
     private JLabel gameTime;
-
+    JLabel statusAttack;
 
     private Cell[][] table = new Cell[15][15];
     private ArrayList<JEnemy> enemies = new ArrayList<>();
     private JShipStatus[] shipsStatus = new JShipStatus[5];
+    private JTable shipsStatusTable;
 
 
     /**
@@ -120,7 +120,7 @@ public class GameStageView extends JPanel implements MouseListener {
 
         // Insert the arraylist in the JTable
 
-        JTable shipsStatusTable = new JTable(new YourShipsTableModel());
+        shipsStatusTable = new JTable(new YourShipsTableModel());
         shipsStatusTable.setDefaultRenderer(ShipPanel.class, new YourShipsTableRenderer(ships, shipsStatus));
         shipsStatusTable.setDefaultRenderer(JShipStatus.class, new YourShipsTableRenderer(ships, shipsStatus));
         shipsStatusTable.setRowHeight(100);
@@ -196,7 +196,7 @@ public class GameStageView extends JPanel implements MouseListener {
         endBattlePanel.setLayout(new GridBagLayout());
         endBattlePanel.setPreferredSize(new Dimension(480, 170));
 
-        JLabel statusAttack = new JLabel();
+        statusAttack = new JLabel();
         statusAttack.setText("Attack");
         statusAttack.setForeground(Color.white);
         statusAttack.setFont(fontEndBattleTexts);
@@ -374,7 +374,7 @@ public class GameStageView extends JPanel implements MouseListener {
 
     }
 
-    public void paintGameStatus(ArrayList<Player> players) {
+    public void updateGame(ArrayList<Player> players) {
 
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
@@ -401,6 +401,7 @@ public class GameStageView extends JPanel implements MouseListener {
     private void updateShips(Ship[] ships) {
         for (int i = 0; i < ships.length; i++) {
             shipsStatus[i].updateStatus(ships[i].isSunk());
+            shipsStatusTable.repaint();
         }
     }
 
@@ -410,11 +411,10 @@ public class GameStageView extends JPanel implements MouseListener {
             for (int j = 0; j < tiles.length; j++) {
                 TileType status = tiles[i][j].getTileType();
                 if (status == TileType.SHIP) {
-                    table[i][j].switchImage(SpritePath.BOAT);
+                    ShipSegment shipSegment = (ShipSegment) tiles[i][j];
+                    replaceShipImage(shipSegment, i, j);
                 } else if (status == TileType.HIT) {
                     table[i][j].switchImage(SpritePath.HIT);
-                } else if (status == TileType.WATER) {
-                    table[i][j].switchImage(SpritePath.WATER);
                 } else if (status == TileType.MISS) {
                     table[i][j].switchImage(SpritePath.MISS);
                 }
@@ -423,7 +423,35 @@ public class GameStageView extends JPanel implements MouseListener {
 
     }
 
+    private void replaceShipImage(ShipSegment shipSegment, int i, int j) {
+
+        Ship ship = shipSegment.getShip();
+        ShipSegment[] shipSegments = ship.getShipSegments();
+        float scale = 0.2F;
+
+        for (int piece = 0; piece < shipSegments.length; piece++) {
+            ShipSegment segment = shipSegments[piece];
+            if (segment.equals(shipSegment)) {
+                if (ship instanceof Boat) {
+                    table[i][j].switchImage(SpritePath.BOAT_PIECES, piece, scale, ship.getOrientation());
+                } else if (ship instanceof Submarine) {
+                    table[i][j].switchImage(SpritePath.SUBMARINE_PIECES, piece, scale, ship.getOrientation());
+                } else if (ship instanceof Destroyer) {
+                    table[i][j].switchImage(SpritePath.DESTRUCTOR_PIECES, piece, scale, ship.getOrientation());
+                } else if (ship instanceof AircraftCarrier) {
+                    table[i][j].switchImage(SpritePath.AIRCRAFT_PIECES, piece, scale, ship.getOrientation());
+                }
+            }
+        }
+    }
+
     public void updateTime(String time) {
         gameTime.setText(time);
     }
+
+    public void updatePhase(String recharging) {
+        statusAttack.setText(recharging);
+    }
+
 }
+

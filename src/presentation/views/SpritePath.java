@@ -2,6 +2,12 @@ package presentation.views;
 
 public enum SpritePath {
 
+    // SHIP PIECES
+    BOAT_PIECES(new String[]{ "sprites/GameViews/Separated Ships/Boat/1.png", "sprites/GameViews/Separated Ships/Boat/2.png" }),
+    SUBMARINE_PIECES(new String[]{ "sprites/GameViews/Separated Ships/Submarine/1.png", "sprites/GameViews/Separated Ships/Submarine/2.png", "sprites/GameViews/Separated Ships/Submarine/3.png" }),
+    DESTRUCTOR_PIECES (new String[]{"sprites/GameViews/Separated Ships/Destructor/1.png", "sprites/GameViews/Separated Ships/Destructor/2.png", "sprites/GameViews/Separated Ships/Destructor/3.png", "sprites/GameViews/Separated Ships/Destructor/4.png" }),
+    AIRCRAFT_PIECES (new String[]{"sprites/GameViews/Separated Ships/Aircraft/1.png", "sprites/GameViews/Separated Ships/Aircraft/2.png", "sprites/GameViews/Separated Ships/Aircraft/3.png", "sprites/GameViews/Separated Ships/Aircraft/4.png", "sprites/GameViews/Separated Ships/Aircraft/5.png" }),
+
     // ************************* BOARD SPRITES *************************
     WATER("sprites/GameViews/water.png"),
     HIT("sprites/GameViews/explosion.png"),
@@ -59,13 +65,25 @@ public enum SpritePath {
     TITLE_MENU("sprites/name_background.png");
 
     private final String path;
+    
+    private final String[] paths;
 
     SpritePath(String path) {
         this.path = path;
+        this.paths = null;
+    }
+
+    SpritePath(String[] paths) {
+        this.paths = paths;
+        this.path = null;
     }
 
     @Override
     public String toString() {
         return path;
+    }
+
+    public String getPath(int i) {
+        return paths[i];
     }
 }

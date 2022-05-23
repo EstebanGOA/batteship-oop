@@ -1,12 +1,11 @@
 package business.entities;
 
-import presentation.views.JPopup;
-
-import java.util.ArrayList;
-
-public class Board implements Cloneable {
+public class Board {
 
     private Tile[][] tiles;
+    private int BOARD_START = 0;
+    private int BOARD_FINISH = 15;
+
 
     public Board() {
         this.tiles = new Tile[15][15];
@@ -21,60 +20,101 @@ public class Board implements Cloneable {
         return tiles;
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
     public boolean placeShip(Ship ship) {
 
-        int boardStart = 0;
-        int boardLimit = 16;
+        int boardLimit = BOARD_FINISH - ship.getSize();
+
         int x = ship.getPosition()[0];
         int y = ship.getPosition()[1];
-        int shipLimit = tiles.length - ship.getSize();
-        boolean status = true;
 
         if (ship.getOrientation().equals("horizontal")) {
-            if (x >= boardStart && x <= shipLimit && y >= boardStart && x < boardLimit) {
-                for (int i = 0; i < ship.getSize(); i++) {
-                    if (tiles[y][x+i].getTileType() != TileType.WATER) {
-                        status = false;
-                        break;
-                    }
-                }
-                if (status) {
-                    for (int i = 0; i < ship.getSize(); i++) {
-                        tiles[y][x+i] = new ShipSegment();
-                        ship.addSegment((ShipSegment) tiles[y][x+i]);
-                        tiles[y][x+i].setTileType(TileType.SHIP);
-                    }
-                }
-            } else {
-                status = false;
-            }
+            return horizontalInsert(boardLimit, ship, x, y);
         } else if (ship.getOrientation().equals("vertical")) {
-            if (x >= boardStart && x < boardLimit && y >= boardStart && y <= shipLimit) {
-                for (int i = 0; i < ship.getSize(); i++) {
-                    if (tiles[y+i][x].getTileType() != TileType.WATER) {
-                        status = false;
-                        break;
-                    }
-                }
-                if (status) {
-                    for (int i = 0; i < ship.getSize(); i++) {
-                        tiles[y+i][x] = new ShipSegment();
-                        ship.addSegment((ShipSegment) tiles[y+i][x]);
-                        tiles[y+i][x].setTileType(TileType.SHIP);
-                    }
-                }
-            } else {
-                status = false;
-            }
+            return verticalInsert(boardLimit, ship, x, y);
         } else {
-            status = false;
+            return false;
         }
-        return status;
+
+    }
+
+    public TileType getTile(int x, int y) {
+        if (x >= BOARD_START && x < BOARD_FINISH && y >= BOARD_START && y < BOARD_FINISH) {
+            return tiles[y][x].getTileType();
+        }
+        return null;
+    }
+
+    public boolean checkAdjacent(int dx, int dy) {
+
+        if (getTile(dx, dy) != TileType.WATER && getTile(dx, dy) != null ) return false;
+        if (getTile(dx + 1, dy) != TileType.WATER && getTile(dx + 1, dy) != null) return false;
+        if (getTile(dx - 1, dy) != TileType.WATER && getTile(dx - 1, dy) != null) return false;
+        if (getTile(dx, dy + 1) != TileType.WATER && getTile(dx, dy + 1) != null) return false;
+        if (getTile(dx, dy - 1) != TileType.WATER && getTile(dx, dy - 1) != null) return false;
+        if (getTile(dx + 1, dy + 1) != TileType.WATER && getTile(dx + 1, dy + 1) != null) return false;
+        if (getTile(dx - 1, dy - 1) != TileType.WATER && getTile(dx - 1, dy - 1) != null) return false;
+        if (getTile(dx + 1, dy - 1) != TileType.WATER && getTile(dx + 1, dy - 1) != null) return false;
+        if (getTile(dx - 1, dy + 1) != TileType.WATER && getTile(dx - 1, dy + 1) != null) return false;
+        return true;
+
+    }
+
+    public boolean verticalInsert(int boardLimit, Ship ship, int x, int y) {
+
+        boolean result = true;
+
+        if (x >= BOARD_START && x < BOARD_FINISH && y >= BOARD_START && y <= boardLimit ) {
+            // Para cada posición del barco comprobamos todos sus bloques adyacentes.
+            for (int i = 0; i < ship.getSize(); i++) {
+                int dx = x;
+                int dy = y + i;
+                if (!checkAdjacent(dx, dy)) {
+                    return false;
+                }
+            }
+
+            for (int i = 0; i < ship.getSize(); i++) {
+                tiles[y+i][x] = new ShipSegment(ship);
+                ship.addSegment((ShipSegment) tiles[y+i][x]);
+                tiles[y+i][x].setTileType(TileType.SHIP);
+            }
+
+            return result;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    public boolean horizontalInsert(int boardLimit, Ship ship, int x, int y) {
+
+        boolean result = true;
+
+        if (x >= BOARD_START && x <= boardLimit && y >= BOARD_START && y < BOARD_FINISH ) {
+            // Para cada posición del barco comprobamos todos sus bloques adyacentes.
+            for (int i = 0; i < ship.getSize(); i++) {
+                int dy = y;
+                int dx = x + i;
+                if (!checkAdjacent(dx, dy)) {
+                    return false;
+                }
+            }
+
+            for (int i = 0; i < ship.getSize(); i++) {
+                tiles[y][x+i] = new ShipSegment(ship);
+                ship.addSegment((ShipSegment) tiles[y][x+i]);
+                tiles[y][x+i].setTileType(TileType.SHIP);
+            }
+
+            return result;
+
+        } else {
+
+            return false;
+
+        }
     }
 
     public void remove(Ship ship) {

@@ -103,18 +103,14 @@ public class JEnemy extends JPanel {
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
-
                 TileType status = tiles[i][j].getTileType();
-                if (status == TileType.MISS) {
-                    table[i][j].switchImage(SpritePath.MISS);
+                if (status == TileType.SHIP) {
+                    table[i][j].switchImage(SpritePath.BOAT);
                 } else if (status == TileType.HIT) {
                     table[i][j].switchImage(SpritePath.HIT);
-                } else if (status == TileType.WATER) {
-                    table[i][j].switchImage(SpritePath.WATER);
-                } else if (status == TileType.SHIP) {
-                    table[i][j].switchImage(SpritePath.EMAIL_ICON);
+                } else if (status == TileType.MISS) {
+                    table[i][j].switchImage(SpritePath.MISS);
                 }
-
             }
         }
 

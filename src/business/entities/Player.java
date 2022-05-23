@@ -1,15 +1,19 @@
 package business.entities;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Clase abstracta con las variables comunes entre los jugadores.
  */
-abstract public class Player {
+abstract public class Player implements Runnable {
 
     private Board board;
 
     private Ship[] ships;
+
+    private AtomicBoolean recharging;
+    private AtomicBoolean isAlive;
 
     /**
      * Constructor de Player.
@@ -18,6 +22,8 @@ abstract public class Player {
     public Player(Board board) {
         this.board = board;
         this.ships = new Ship[5];
+        this.recharging = new AtomicBoolean(false);
+        this.isAlive = new AtomicBoolean(true);
     }
 
     /**
@@ -101,6 +107,36 @@ abstract public class Player {
 
     public void attack(Player player, int x, int y) {
         player.getBoard().sendAttack(x, y);
+        recharging.set(true);
     }
 
+    public void setRecharging(boolean recharging) {
+        this.recharging.set(recharging);
+    }
+
+    public boolean isRecharging() {
+        return recharging.get();
+    }
+
+    public boolean isAlive() {
+        return isAlive.get();
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive.set(alive);
+    }
+
+    /**
+     * Method that will check if the player still has a ship alive.
+     * @return It will return true if so, otherwise returns false.
+     */
+    public boolean status() {
+        int count = 0;
+        for (Ship ship : getShips()) {
+            if (ship.isSunk()) {
+                count++;
+            }
+        }
+        return count != 5;
+    }
 }
