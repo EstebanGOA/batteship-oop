@@ -9,6 +9,14 @@ public class Game {
     private boolean win;
     private JSObject gameSaved;
 
+    /**
+     * Constructor of Game, used to
+     * @param id
+     * @param playerId
+     * @param numberOfAttacks
+     * @param win
+     * @param gameSaved
+     */
     public Game(int id, int playerId, int numberOfAttacks, boolean win, JSObject gameSaved) {
         this.id = id;
         this.playerId = playerId;

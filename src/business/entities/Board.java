@@ -2,10 +2,16 @@ package business.entities;
 
 import presentation.views.JPopup;
 
+/**
+ * Class board
+ */
 public class Board {
 
     private Tile[][] tiles;
 
+    /**
+     * Constructor of board, where we create 15 tiles x 15 tiles board.
+     */
     public Board() {
         this.tiles = new Tile[15][15];
         for (int i = 0; i < 15; i++) {
@@ -15,10 +21,19 @@ public class Board {
         }
     }
 
+    /**
+     * Function that gets the all the tiles of the board.
+     * @return Returns all the tiles of the board.
+     */
     public Tile[][] getTiles() {
         return tiles;
     }
 
+    /**
+     * Function that places a ship in the board.
+     * @param ship The ship we want to place.
+     * @return Returns a boolean indicating if the ship was placed successfully.
+     */
     public boolean placeShip(Ship ship) {
 
         int boardStart = 0;
@@ -82,6 +97,10 @@ public class Board {
 
     }
 
+    /**
+     * Function That removes a ship from the board.
+     * @param ship The ship we want to remove.
+     */
     public void remove(Ship ship) {
 
         int x = ship.getPosition()[0];

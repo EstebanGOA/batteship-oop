@@ -1,7 +1,7 @@
 package business.entities;
 
 /**
- * Clase abstracta con las variables comunes entre los jugadores.
+ * Abstract class with the common variables of the players.
  */
 abstract public class Player {
 
@@ -10,8 +10,8 @@ abstract public class Player {
     Ship[] ships;
 
     /**
-     * Constructor de Player.
-     * @param board Board donde estarán los barcos del jugador.
+     * Constructor of Player.
+     * @param board A board with the ships of the player.
      */
     public Player(Board board) {
         this.board = board;
@@ -19,13 +19,20 @@ abstract public class Player {
     }
 
     /**
-     * Devuelve el tablero del jugador.
-     * @return Board donde tiene colocado los barcos el jugador.
+     * Return the board of the player.
+     * @return Returns a board where the user has placed the ships
      */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Function that inserts a ships.
+     * @param cords X and Y coordinates of the start of the ship.
+     * @param shipSelected The ships that are going to be placed.
+     * @param orientation  A string of the orientation of the ships, vertical or horizontal.
+     * @return Returns the board with the ships placed.
+     */
     public Board insertShip(int[] cords, String shipSelected, String orientation) {
 
         Ship ship = null;
@@ -78,6 +85,10 @@ abstract public class Player {
         return null;
     }
 
+    /**
+     * Function that checks if all the ships are placed, if true all ships are placed, else all ships aren't placed
+     * @return Return the boolean regarding if all the ships are placed
+     */
     public boolean allShipPlaced() {
         boolean flag = true;
         for (Ship ship : ships) {
@@ -87,6 +98,22 @@ abstract public class Player {
             }
         }
         return flag;
+    }
+
+    /**
+     * Function that checks if all the ships are sunk, if true all ships are sunk, else all ships aren't sunk
+     * @return Return the boolean regarding if all the ships are sunk
+     */
+    public boolean allShipsDestroyed() {
+
+        int shipsDestroyed = 0;
+
+        for( int numShips = 0; numShips < 5; numShips++) {
+                if (ships[numShips].isSunk()) {
+                    shipsDestroyed++;
+                }
+        }
+        return shipsDestroyed == 5;
     }
 
 }

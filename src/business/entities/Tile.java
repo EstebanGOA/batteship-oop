@@ -12,16 +12,16 @@ public class Tile {
     }
 
     /**
-     *
-     * @return
+     *  Function that gets the tile type.
+     * @return Returns the tile type.
      */
     public TileType getTileType() {
         return tileType;
     }
 
     /**
-     *
-     * @param tileType
+     *  Function that sets the tile type.
+     * @param tileType that is set in the tile.
      */
     public void setTileType(TileType tileType) {
         this.tileType = tileType;

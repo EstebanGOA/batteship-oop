@@ -1,13 +1,14 @@
 package business.entities;
 
 /**
- * Clase que se encargará de manejar toda la lógica referente al jugador y sus movimientos.
+ * Class that will control all the logic of the player and his movements.
  */
 public class Human extends Player {
 
     /**
-     * Constructor de Human.
-     * @param board Board donde están colocadas los barcos del jugador.
+     * Constructor of Human.
+     *
+     * @param board Board of the player, where the player will put the shiops
      */
     public Human(Board board) {
         super(board);
