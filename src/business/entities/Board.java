@@ -143,10 +143,12 @@ public class Board {
             // si no nos encontramos con un barco actualizaremos la casilla a MISS.
             if (tiles[y][x] instanceof ShipSegment) {
                 tiles[y][x].setTileType(TileType.HIT);
+                return true;
             } else {
                 tiles[y][x].setTileType(TileType.MISS);
+                return false;
             }
-            return true;
+
         }
 
     }

@@ -111,12 +111,15 @@ public class GameManager {
     }
 
     public void attack(Player player, int x, int y) {
-
+        boolean check = false;
         for (Player objective : players) {
             if (!objective.equals(player)) {
                 player.attack(objective, x, y);
+
+
             }
         }
+
         player.setRecharging(true);
         updatePhase("Recharging");
         updateGame();
