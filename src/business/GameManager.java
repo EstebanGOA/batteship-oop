@@ -15,8 +15,8 @@ public class GameManager {
     private Timer timer;
     private ArrayList<Thread> threads;
 
-    public GameManager() {
-        this.gameDao = new SQLGameDAO();
+    public GameManager(SQLGameDAO sqlGameDAO) {
+        this.gameDao = sqlGameDAO;
         this.players = new ArrayList<>();
         this.threads = new ArrayList<>();
     }
@@ -111,15 +111,20 @@ public class GameManager {
     }
 
     public void attack(Player player, int x, int y) {
+        if (player.isAttackedAlready(x, y)) {
 
-        for (Player objective : players) {
-            if (!objective.equals(player)) {
-                player.attack(objective, x, y);
+            for (Player objective : players) {
+                if (!objective.equals(player)) {
+                    player.attack(objective, x, y);
+                }
             }
+
+            player.setRecharging(true);
+            updatePhase("Recharging");
+            updateGame();
+
         }
-        player.setRecharging(true);
-        updatePhase("Recharging");
-        updateGame();
+
     }
 
     public void updatePhase(String status) {
@@ -127,15 +132,20 @@ public class GameManager {
     }
 
     public void updateGame() {
-        int count = 0;
-        for (Player p : players) {
+        int count = 0, winner = 0;
+        for (int i = 0; i < players.size(); i++) {
+            Player p = players.get(i);
             if (!p.status()) {
                 count++;
                 p.setAlive(false);
+            } else {
+                winner = i;
             }
         }
+
         if (count == players.size()-1) {
             stopGame();
+            saveGame(players.get(winner));
         } else {
             gameController.updateGame(players);
         }
@@ -145,5 +155,8 @@ public class GameManager {
         this.gameController = gameController;
     }
 
-
+    private void saveGame(Player winner) {
+        boolean isWinner = winner instanceof Human;
+        gameDao.addFinishedGame(isWinner, winner.getNumberOfAttacks().get());
+    }
 }

@@ -1,7 +1,9 @@
 package business.entities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Clase abstracta con las variables comunes entre los jugadores.
@@ -9,11 +11,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 abstract public class Player implements Runnable {
 
     private Board board;
+    private boolean attacked[][];
 
     private Ship[] ships;
 
     private AtomicBoolean recharging;
     private AtomicBoolean isAlive;
+    private AtomicInteger numberOfAttacks;
 
     /**
      * Constructor de Player.
@@ -24,6 +28,8 @@ abstract public class Player implements Runnable {
         this.ships = new Ship[5];
         this.recharging = new AtomicBoolean(false);
         this.isAlive = new AtomicBoolean(true);
+        this.numberOfAttacks = new AtomicInteger(0);
+        this.attacked = new boolean[15][15];
     }
 
     /**
@@ -107,7 +113,16 @@ abstract public class Player implements Runnable {
 
     public void attack(Player player, int x, int y) {
         player.getBoard().sendAttack(x, y);
-        recharging.set(true);
+    }
+
+    public boolean isAttackedAlready(int x, int y) {
+        if (!attacked[x][y]) {
+            attacked[x][y] = true;
+            numberOfAttacks.incrementAndGet();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setRecharging(boolean recharging) {
@@ -138,5 +153,9 @@ abstract public class Player implements Runnable {
             }
         }
         return count != 5;
+    }
+
+    public AtomicInteger getNumberOfAttacks() {
+        return numberOfAttacks;
     }
 }

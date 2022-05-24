@@ -1,7 +1,6 @@
 package presentation.controllers;
 
 import business.UserManager;
-import business.entities.User;
 import presentation.views.JPopup;
 import presentation.views.SettingsView;
 
@@ -25,7 +24,7 @@ public class SettingsController implements MouseListener {
         switch (((JComponent) e.getSource()).getName()) {
             case "logout" ->  {
                 settingsView.viewLogin();
-                userManager.logoutUser();
+                userManager.logout();
                 new JPopup("Logout successfully");
 
             }

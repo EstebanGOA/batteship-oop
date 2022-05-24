@@ -3,24 +3,17 @@ package business.entities;
 import netscape.javascript.JSObject;
 
 public class Game {
-    private int id;
-    private int playerId;
-    private int numberOfAttacks;
-    private boolean win;
-    private JSObject gameSaved;
 
-    public Game(int id, int playerId, int numberOfAttacks, boolean win, JSObject gameSaved) {
-        this.id = id;
+    private final int playerId;
+    private final int numberOfAttacks;
+    private final boolean win;
+    private final String path;
+
+    public Game(int playerId, int numberOfAttacks, boolean win, String path) {
         this.playerId = playerId;
         this.numberOfAttacks = numberOfAttacks;
         this.win = win;
-        this.gameSaved = gameSaved;
-    }
-
-    public JSObject getGameSaved() { return gameSaved; }
-
-    public int getId() {
-        return id;
+        this.path = null;
     }
 
     public int getPlayerId() { return playerId; }
@@ -32,4 +25,9 @@ public class Game {
     public boolean isWin() {
         return win;
     }
+
+    public String getPath() {
+        return path;
+    }
+
 }
