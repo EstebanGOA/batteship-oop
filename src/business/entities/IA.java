@@ -29,15 +29,13 @@ public class IA extends Player {
 
     private int[] generateAttack() {
 
-
-
         if (checkHit == 0) {
             do {
                 coords[0] = (int) (Math.random() * 15);
                 coords[1] = (int) (Math.random() * 15);
 
             } while (hits[coords[1]][coords[0]]);
-            coordsAux = coords;
+            coordsAux = new int[] {coords[0], coords[1]};
         } else if (checkHit == 1) {
             coords[1]++;
         } else if ( checkHit == 2) {
@@ -85,7 +83,7 @@ public class IA extends Player {
             case 1:
                 if (!hit) {
                     checkHit = 2;
-                    coords = coordsAux;
+                    coords = coordsAux.clone();
                 } else {
                     orientation = true;
                 }
@@ -93,7 +91,7 @@ public class IA extends Player {
             case 2:
                 if (!hit) {
                     checkHit = 3;
-                    coords = coordsAux;
+                    coords = coordsAux.clone();
                     // Check if the ship was vertical.
                     if (orientation) {
                         checkHit = 0;
@@ -105,7 +103,7 @@ public class IA extends Player {
             case 3:
                 if (!hit) {
                     checkHit = 4;
-                    coords = coordsAux;
+                    coords = coordsAux.clone();
                 }
                 break;
             case 4:
