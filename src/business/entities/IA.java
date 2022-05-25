@@ -2,7 +2,6 @@ package business.entities;
 
 import business.GameManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -25,7 +24,9 @@ public class IA extends Player {
         checkHit = 0;
     }
 
-
+    private boolean isInsideBoard(int[] cords) {
+        return cords[1] < 15 && cords[1] >= 0 && cords[0] < 15 && cords[0] >= 0;
+    }
 
     private int[] generateAttack() {
 
@@ -33,17 +34,32 @@ public class IA extends Player {
             do {
                 coords[0] = (int) (Math.random() * 15);
                 coords[1] = (int) (Math.random() * 15);
-
             } while (hits[coords[1]][coords[0]]);
             coordsAux = new int[] {coords[0], coords[1]};
         } else if (checkHit == 1) {
             coords[1]++;
+            if (!isInsideBoard(coords)) {
+                coords = coordsAux.clone();
+                checkHit = 2;
+            }
         } else if ( checkHit == 2) {
             coords[1]--;
+            if (!isInsideBoard(coords)) {
+                coords = coordsAux.clone();
+                checkHit = 3;
+            }
         } else if (checkHit == 3) {
             coords[0]++;
+            if (!isInsideBoard(coords)) {
+                coords = coordsAux.clone();
+                checkHit = 4;
+            }
         } else if (checkHit == 4) {
             coords[0]--;
+            if (!isInsideBoard(coords)) {
+                coords = coordsAux.clone();
+                checkHit = 0;
+            }
         }
         hits[coords[1]][coords[0]] = true;
 

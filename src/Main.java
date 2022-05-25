@@ -1,6 +1,7 @@
 import business.GameManager;
 import business.UserManager;
 import business.entities.Timer;
+import persistance.sql.SQLGameDAO;
 import presentation.controllers.*;
 import presentation.views.*;
 
@@ -18,8 +19,10 @@ public class Main {
         SetupStageView setupStageView = new SetupStageView(mainView);
         GameStageView gameStageView = new GameStageView(mainView);
 
+
         UserManager userManager = new UserManager();
-        GameManager gameManager = new GameManager();
+        SQLGameDAO sqlGameDAO = new SQLGameDAO(userManager);
+        GameManager gameManager = new GameManager(sqlGameDAO);
 
         LoginController loginController = new LoginController(loginView, userManager);
         RegisterController registerController = new RegisterController(userManager, registerView);
