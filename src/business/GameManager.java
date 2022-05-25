@@ -2,13 +2,16 @@ package business;
 
 import business.entities.*;
 import persistance.GameDAO;
+import persistance.SaveGameJSON;
 import persistance.sql.SQLGameDAO;
 import presentation.controllers.GameController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameManager {
 
+    private SaveGameJSON saveGameJSON;
     private GameDAO gameDao;
     private ArrayList<Player> players;
     private GameController gameController;
@@ -34,11 +37,12 @@ public class GameManager {
         gameController.updateTimer(time);
     }
 
-    public void stopGame() {
+    public void stopGame() throws IOException {
         this.timer.stop();
         for (Thread thread : threads) {
             thread.interrupt();
         }
+        saveGameJSON.addUnfinishedGame(players);
     }
 
     public void startTimer() {
@@ -110,7 +114,7 @@ public class GameManager {
         return players;
     }
 
-    public void attack(Player player, int x, int y) {
+    public void attack(Player player, int x, int y) throws IOException {
         if (player.isAttackedAlready(x, y)) {
 
             for (Player objective : players) {
@@ -131,7 +135,7 @@ public class GameManager {
         gameController.updatePhase(status);
     }
 
-    public void updateGame() {
+    public void updateGame() throws IOException {
         int count = 0, winner = 0;
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
