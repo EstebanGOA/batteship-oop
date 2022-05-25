@@ -31,6 +31,7 @@ public class Human extends Player {
                 throw new RuntimeException(e);
             }
         }
+        gameManager.updatePhase("Dead");
+        setRecharging(true);
     }
-
 }

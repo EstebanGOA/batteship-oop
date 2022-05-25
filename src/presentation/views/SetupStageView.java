@@ -49,6 +49,7 @@ public class SetupStageView extends JPanel implements MouseListener {
     private final Font fontPanelTitle = initializeFont(FONT_BOLD, 18F);
 
     private Cell[][] table = new Cell[15][15];
+    private JPanel backgroundPanel;
 
     public SetupStageView(MainView mainView) {
 
@@ -61,7 +62,7 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         // ------------------------ Background Image ------------------------ //
 
-        JPanel backgroundPanel = new JPanel();
+        backgroundPanel = new JPanel();
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setBackground(BACKGROUND_COLOR);
         backgroundPanel.setLayout(new GridBagLayout());
@@ -783,5 +784,13 @@ public class SetupStageView extends JPanel implements MouseListener {
 
     public void switchWindow() {
         mainView.switchPanel("game");
+    }
+
+    public void reset() {
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table.length; j++) {
+                table[i][j].switchImage(SpritePath.WATER);
+            }
+        }
     }
 }

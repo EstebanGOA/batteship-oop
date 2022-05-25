@@ -146,6 +146,8 @@ public class GameManager {
         if (count == players.size()-1) {
             stopGame();
             saveGame(players.get(winner));
+            gameController.returnMenu(players.get(winner));
+            players.clear();
         } else {
             gameController.updateGame(players);
         }

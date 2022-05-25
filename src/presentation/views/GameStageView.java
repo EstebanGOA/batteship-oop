@@ -453,5 +453,18 @@ public class GameStageView extends JPanel implements MouseListener {
         statusAttack.setText(recharging);
     }
 
+    public void reset() {
+
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                table[i][j].switchImage(SpritePath.WATER);
+            }
+        }
+
+    }
+
+    public void returnMenu(String menu) {
+        mainView.switchPanel(menu);
+    }
 }
 

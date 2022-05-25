@@ -1,6 +1,7 @@
 package presentation.controllers;
 
 import business.GameManager;
+import business.entities.Human;
 import business.entities.Player;
 import presentation.views.Cell;
 import presentation.views.GameStageView;
@@ -74,5 +75,18 @@ public class GameController implements MouseListener {
 
     public void updatePhase(String recharging) {
         gameStageView.updatePhase(recharging);
+    }
+
+    public void returnMenu(Player player) {
+        boolean isWinner = player instanceof Human;
+
+        if (isWinner)
+            new JPopup("You have won!");
+        else
+            new JPopup("You have lost.");
+
+        gameStageView.returnMenu("menu");
+        gameStageView.reset();
+
     }
 }

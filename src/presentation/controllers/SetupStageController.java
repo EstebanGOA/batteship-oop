@@ -23,7 +23,6 @@ public class SetupStageController implements MouseListener {
         this.setupStageView = setupStageView;
         this.gameStageView = gameStageView;
         this.gameManager = gameManager;
-
     }
 
     @Override
@@ -47,12 +46,13 @@ public class SetupStageController implements MouseListener {
         int numberOfEnemies = setupStageView.getNumberOfEnemies();
         if (gameManager.isSetupStageReady()) {
             gameManager.createIA(numberOfEnemies);
-            setupStageView.switchWindow();
             gameStageView.paintLayout(numberOfEnemies);
             ArrayList<Player> players = gameManager.getPlayers();
             gameStageView.updateGame(players);
             gameManager.startTimer();
             gameManager.startGame();
+            setupStageView.switchWindow();
+            setupStageView.reset();
             // setupStageView.switchWindow();
             // gameManager.playGame();
         } else {

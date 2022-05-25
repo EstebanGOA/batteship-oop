@@ -94,6 +94,7 @@ public class MainView extends JFrame implements MouseListener {
                 case "register", "return_login" -> switchPanel(LOGIN_WINDOW);
                 case "start_game" -> switchPanel(GAME_STAGE_WINDOW);
                 case "new_game" -> switchPanel(SETUP_STAGE_WINDOW);
+                case "settings" -> switchPanel(SETTINGS_WINDOW);
             }
         }
     }
