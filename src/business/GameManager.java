@@ -7,6 +7,8 @@ import persistance.sql.SQLGameDAO;
 import presentation.controllers.GameController;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class GameManager {
@@ -18,8 +20,9 @@ public class GameManager {
     private Timer timer;
     private ArrayList<Thread> threads;
 
-    public GameManager(SQLGameDAO sqlGameDAO) {
+    public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
         this.gameDao = sqlGameDAO;
+        this.saveGameJSON = new SaveGameJSON();
         this.players = new ArrayList<>();
         this.threads = new ArrayList<>();
     }
@@ -42,7 +45,8 @@ public class GameManager {
         for (Thread thread : threads) {
             thread.interrupt();
         }
-        saveGameJSON.addUnfinishedGame(players);
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        saveGameJSON.addUnfinishedGame(timer.toString(), date.format(LocalDateTime.now()), players);
     }
 
     public void startTimer() {
