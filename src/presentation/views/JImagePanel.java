@@ -19,6 +19,14 @@ public class JImagePanel extends JPanel {
     private float angle;
     private boolean isRotated;
 
+    /**
+     *
+     * Method to switch an image.
+     *
+     * @param path Path of the new image.
+     *
+     */
+
     public void switchImage(SpritePath path) {
         try {
             if (path.equals(SpritePath.WATER)) {
@@ -33,6 +41,17 @@ public class JImagePanel extends JPanel {
             e.printStackTrace();
         }
     }
+
+    /**
+     *
+     * Method to switch image for the table with the ships parts.
+     *
+     * @param boatPieces path of the boat piece.
+     * @param piece number of pieces.
+     * @param scale scale of the piece.
+     * @param orientation orientation of boat piece.
+     *
+     */
 
     public void switchImage(SpritePath boatPieces, int piece, float scale, String orientation) {
         try {
@@ -57,7 +76,16 @@ public class JImagePanel extends JPanel {
         }
     }
 
-    // Constructor with parameters
+    /**
+     *
+     * Constructor of the JImagePanel, to show an image.
+     *
+     * @param path path of the image that you want to load.
+     * @param scale scale of the image.
+     * @param isRotated rotation flag.
+     *
+     */
+
     public JImagePanel(SpritePath path, float scale, boolean isRotated) {
         try {
             image = ImageIO.read(new File(path.toString()));

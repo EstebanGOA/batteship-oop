@@ -16,6 +16,14 @@ public class EnemyText extends JPanel {
 
     private JLabel status;
 
+    /**
+     *
+     * Constructor of the enemy text class.
+     *
+     * @param shipName String name of the ship.
+     *
+     */
+
     public EnemyText(String shipName) {
 
         Font font = initializeFont(FONT_BOLD, 12F);
@@ -38,6 +46,17 @@ public class EnemyText extends JPanel {
         add(enemyPanel);
     }
 
+    /**
+     *
+     * Method to initialize the font.
+     *
+     * @param fontPath path of the font.
+     * @param fontSize size of the font.
+     *
+     * @return the initialized font.
+     *
+     */
+
     public Font initializeFont(String fontPath, float fontSize) {
         Font font = null;
 
@@ -51,6 +70,14 @@ public class EnemyText extends JPanel {
 
         return font;
     }
+
+    /**
+     *
+     * Method to update the status text of the enemy ships.
+     *
+     * @param sunk boolean variable to check if the ship is sunk or not.
+     *
+     */
 
     public void updateStatus(boolean sunk) {
         if (sunk) {

@@ -15,6 +15,14 @@ public class MenuView extends JPanel {
 
     private JImagePanel settingsButton;
 
+    /**
+     *
+     * Constructor of the menuView.
+     *
+     * @param mainView which controls the menuView.
+     *
+     */
+
     public MenuView(MainView mainView) {
 
         this.mainView = mainView;
@@ -158,6 +166,14 @@ public class MenuView extends JPanel {
         add(backgroundPanel);
     }
 
+    /**
+     *
+     * Method to initialize the font for the texts.
+     *
+     * @return the initialized font.
+     *
+     */
+
     public Font initializeFont () {
         Font font = null;
 
@@ -172,6 +188,17 @@ public class MenuView extends JPanel {
         return font;
     }
 
+    /**
+     *
+     * Method to add a separator panel between two panels of the view.
+     *
+     * @param width of the separator panel.
+     * @param height of the separator panel.
+     *
+     * @return the separator panel.
+     *
+     */
+
     public JPanel addSeparator (int width, int height) {
         JPanel space = new JPanel();
         space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
@@ -183,13 +210,33 @@ public class MenuView extends JPanel {
         return space;
     }
 
+    /**
+     *
+     * Method to assign the listener to the settings button.
+     *
+     * @param mouseListener the mouse listener of the view.
+     *
+     */
+
     public void menuController(MouseListener mouseListener) {
         settingsButton.addMouseListener(mouseListener);
     }
 
+    /**
+     * Method to switch the panel of the settings view.
+     */
+
     public void settingsView() {
         mainView.switchPanel("settings");
     }
+
+    /**
+     *
+     * Method to set the username of the player.
+     *
+     * @param username username of the player.
+     *
+     */
 
     public void setUsername(String username) {
         this.username = username;

@@ -23,6 +23,14 @@ public class LoginView extends JPanel implements MouseListener {
 
     private final JImagePanel backgroundPanel;
 
+    /**
+     *
+     * Constructor of the LoginView class.
+     *
+     * @param mainView that controls the login window.
+     *
+     */
+
     public LoginView(MainView mainView) {
 
         this.mainView = mainView;
@@ -31,10 +39,7 @@ public class LoginView extends JPanel implements MouseListener {
 
         // ------------------------ Background Image ------------------------ //
 
-        backgroundPanel = new JImagePanel(SpritePath.LOGIN_BACKGROUND);
-        backgroundPanel.setPreferredSize(new Dimension(1280, 720));
-        backgroundPanel.setLayout(new GridBagLayout());
-        backgroundPanel.setName("background_panel");
+        backgroundPanel = setBackground();
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -49,7 +54,6 @@ public class LoginView extends JPanel implements MouseListener {
         jLoginButton = new JImagePanel(SpritePath.LOGIN_BUTTON);
         jLoginButton.setPreferredSize(new Dimension(100,100));
         jLoginButton.setOpaque(false);
-        // TODO: Primero deberíamos hacer la petición al servidor, comprobar los datos y cuando todo sea correcto cambiar ventana.
         jLoginButton.setName("login");
 
         buttonPanel.add(jLoginButton);
@@ -119,7 +123,6 @@ public class LoginView extends JPanel implements MouseListener {
         jRegisterAccount.setForeground(new Color(200,200,200));
         jRegisterAccount.setName("create_account");
 
-
         // ------------------------ Display Objects ------------------------ //
 
         gbc.gridx = 0; gbc.gridy = 0;
@@ -147,10 +150,31 @@ public class LoginView extends JPanel implements MouseListener {
         backgroundPanel.add(jRegisterAccount, gbc);
 
         this.add(backgroundPanel);
-        //setVisible(true);
 
         initializeListeners();
     }
+
+    /**
+     *
+     * Method to set the background Image of the login window.
+     *
+     * @return the background image panel.
+     *
+     */
+
+    public JImagePanel setBackground () {
+        JImagePanel bg = new JImagePanel(SpritePath.LOGIN_BACKGROUND);
+        bg.setPreferredSize(new Dimension(1280, 720));
+        bg.setLayout(new GridBagLayout());
+        bg.setName("background_panel");
+        return bg;
+    }
+
+    /**
+     *
+     * Method to initialize all the listeners of the loginView window.
+     *
+     */
 
     public void initializeListeners () {
         jEmailInput.addMouseListener(this);
@@ -158,6 +182,14 @@ public class LoginView extends JPanel implements MouseListener {
         backgroundPanel.addMouseListener(this);
         jLoginButton.addMouseListener(this);
     }
+
+    /**
+     *
+     * Method to initialize the font of the texts of the window.
+     *
+     * @return the initialized font.
+     *
+     */
 
     public Font initializeFont () {
         Font font = null;
@@ -173,29 +205,81 @@ public class LoginView extends JPanel implements MouseListener {
         return font;
     }
 
+    /**
+     *
+     * Method to switch to the register view panel.
+     *
+     */
+
     public void registerView() {
         mainView.switchPanel("register");
     }
+
+    /**
+     *
+     * Method to switch to the menu view panel.
+     *
+     */
 
     public void menuView() {
         mainView.switchPanel("menu");
     }
 
+    /**
+     *
+     * Method to register add the listener to the register button.
+     *
+     * @param mouseListener the listener of the view.
+     *
+     */
+
     public void registerMasterView(MouseListener mouseListener) {
         jRegisterAccount.addMouseListener(mouseListener);
     }
+
+    /**
+     *
+     * Method to add the listener to the login button.
+     *
+     * @param mouseListener the listener of the view.
+     *
+     */
 
     public void registerController(MouseListener mouseListener) {
         jLoginButton.addMouseListener(mouseListener);
     }
 
+    /**
+     *
+     * Method to return the email input from the login view.
+     *
+     * @return the email input text.
+     *
+     */
+
     public String getLogin() {
         return jEmailInput.getText();
     }
 
+    /**
+     *
+     * Method to get the password from the input.
+     *
+     * @return the password input.
+     *
+     */
+
     public String getPassword() {
         return new String(jPasswordInput.getPassword());
     }
+
+    /**
+     *
+     * Method to manage the mouseClicked listeners of the view.
+     *
+     * @param e MouseEvent of the components of the view.
+     *
+     */
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -236,15 +320,39 @@ public class LoginView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     *
+     * Method to manage the mousePressed listener of the view.
+     *
+     * @param e MouseEvent of the component of the view.
+     *
+     */
+
     @Override
     public void mousePressed(MouseEvent e) {
 
     }
 
+    /**
+     *
+     * Method to manage the mouseReleased listener of the view.
+     *
+     * @param e MouseEvent of the component of the view.
+     *
+     */
+
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
+
+    /**
+     *
+     * Method to manage the mouseEntered listener of the view.
+     *
+     * @param e MouseEvent of the component of the view.
+     *
+     */
 
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -256,6 +364,14 @@ public class LoginView extends JPanel implements MouseListener {
                 break;
         }
     }
+
+    /**
+     *
+     * Method to manage the mouseExited listener of the view.
+     *
+     * @param e MouseEvent of the component of the view.
+     *
+     */
 
     @Override
     public void mouseExited(MouseEvent e) {

@@ -12,6 +12,15 @@ public class JShipStatus extends JPanel {
 
     private JLabel status;
 
+    /**
+     *
+     * Constructor of the method ShipStatus.
+     *
+     * @param shipStatus String with the status of the ship.
+     * @param widthShipStatusPanel width of the panel.
+     *
+     */
+
     public JShipStatus (String shipStatus, int widthShipStatusPanel) {
         Font font = initializeFont(FONT_BOLD, 15F);
 
@@ -34,6 +43,17 @@ public class JShipStatus extends JPanel {
         add(shipStatusPanel);
     }
 
+    /**
+     *
+     * Method to initialize the font.
+     *
+     * @param fontPath path of the font.
+     * @param fontSize size of the font.
+     *
+     * @return the initialized font.
+     *
+     */
+
     public Font initializeFont(String fontPath, float fontSize) {
         Font font = null;
 
@@ -48,7 +68,15 @@ public class JShipStatus extends JPanel {
         return font;
     }
 
-    public void updateStatus(boolean sunk) {
+    /**
+     *
+     * Method to change the text and the color of the status of the ships.
+     *
+     * @param sunk variable to check if the ship is sunk or not.
+     *
+     */
+
+    public void updateStatus (boolean sunk) {
         if (sunk) {
             status.setText("Sunk");
             status.setForeground(Color.RED);

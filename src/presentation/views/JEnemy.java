@@ -18,6 +18,13 @@ public class JEnemy extends JPanel {
     private EnemyText[] shipsName = new EnemyText[5];
     private JTable shipsStatusTable;
 
+    /**
+     *
+     * Constructor of the enemy class that has:
+     *      - Board enemy.
+     *      - ShipStatus enemy.
+     *
+     */
 
     public JEnemy() {
 
@@ -92,10 +99,27 @@ public class JEnemy extends JPanel {
         add(enemyShipsStatusAndTablePanel);
     }
 
+    /**
+     *
+     * Method to update the enemy
+     *
+     * @param board enemy board.
+     * @param ships enemy ship.
+     *
+     */
+
     public void updateEnemy(Board board, Ship[] ships) {
         updateBoard(board);
         updateShips(ships);
     }
+
+    /**
+     *
+     * Method to update the board of the current enemy.
+     *
+     * @param board Board with all the cells of the enemy.
+     *
+     */
 
     public void updateBoard(Board board) {
 
@@ -115,6 +139,14 @@ public class JEnemy extends JPanel {
         }
 
     }
+
+    /**
+     *
+     * Method to update the ships of the enemy.
+     *
+     * @param ships pieces that you want to update.
+     *
+     */
 
     private void updateShips(Ship[] ships) {
         for (int i = 0; i < ships.length; i++) {
