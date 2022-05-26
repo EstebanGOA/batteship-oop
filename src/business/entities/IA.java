@@ -2,6 +2,7 @@ package business.entities;
 
 import business.GameManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -86,7 +87,7 @@ public class IA extends Player {
 
             }
             System.out.println("RIP IA");
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
     }

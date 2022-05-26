@@ -2,20 +2,25 @@ package business;
 
 import business.entities.*;
 import persistance.GameDAO;
+import persistance.SaveGameJSON;
 import persistance.sql.SQLGameDAO;
 import presentation.controllers.GameController;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class GameManager {
-
+    private String gameName = "Kevin";
+    private SaveGameJSON saveGameJSON;
     private GameDAO gameDao;
     private ArrayList<Player> players;
     private GameController gameController;
     private Timer timer;
     private ArrayList<Thread> threads;
 
-    public GameManager(SQLGameDAO sqlGameDAO) {
+    public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
         this.gameDao = sqlGameDAO;
         this.players = new ArrayList<>();
         this.threads = new ArrayList<>();
@@ -34,11 +39,15 @@ public class GameManager {
         gameController.updateTimer(time);
     }
 
-    public void stopGame() {
+    public void stopGame() throws IOException {
         this.timer.stop();
         for (Thread thread : threads) {
             thread.interrupt();
         }
+
+        this.saveGameJSON = new SaveGameJSON(gameName);
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        saveGameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players);
     }
 
     public void startTimer() {
@@ -108,7 +117,7 @@ public class GameManager {
         return players;
     }
 
-    public void attack(Player player, int x, int y) {
+    public void attack(Player player, int x, int y) throws IOException {
         if (player.isAttackedAlready(x, y)) {
 
             for (Player objective : players) {
@@ -129,7 +138,7 @@ public class GameManager {
         gameController.updatePhase(status);
     }
 
-    public void updateGame() {
+    public void updateGame() throws IOException {
         int count = 0, winner = 0;
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
@@ -150,6 +159,9 @@ public class GameManager {
             gameController.returnMenu(p);
             players = new ArrayList<>();
             threads = new ArrayList<>();
+
+            //En el caso de haber terminado una partida previamente guardada, esta debe ser eliminada del programa.
+            saveGameJSON.deleteFile(gameName);
         }
     }
 

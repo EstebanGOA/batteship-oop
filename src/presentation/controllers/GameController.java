@@ -11,6 +11,7 @@ import presentation.views.JSaveGame;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameController implements MouseListener {
@@ -40,14 +41,22 @@ public class GameController implements MouseListener {
                 int y = cell.getCoordinates()[1];
                 Player player = gameManager.getPlayers().get(0);
                 if (!player.isRecharging()) {
-                    gameManager.attack(player, x, y);
+                    try {
+                        gameManager.attack(player, x, y);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     gameStageView.updateGame(gameManager.getPlayers());
                 } else {
                     new JPopup("Error, no es tu turno");
                 }
             }
             case "endBattleBtn" -> {
-                gameManager.stopGame();
+                try {
+                    gameManager.stopGame();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 new JSaveGame();
             }
         }

@@ -51,6 +51,14 @@ public class SetupStageView extends JPanel implements MouseListener {
     private Cell[][] table = new Cell[15][15];
     private JPanel backgroundPanel;
 
+    /**
+     *
+     * Constructor of the setup stage view where we create the view.
+     *
+     * @param mainView which controls the game stage view.
+     *
+     */
+
     public SetupStageView(MainView mainView) {
 
         this.mainView = mainView;
@@ -97,13 +105,35 @@ public class SetupStageView extends JPanel implements MouseListener {
         initializeListeners();
     }
 
+    /**
+     *
+     * Method to get the orientation of the preview ship.
+     *
+     * @return the orientation of the preview ship.
+     *
+     */
+
     public String getOrientation() {
         return orientation;
     }
 
+    /**
+     *
+     * Method to get the ship that is selected.
+     *
+     * @return the ship that is selected.
+     *
+     */
+
     public String getShipSelected() {
         return shipSelected;
     }
+
+    /**
+     *
+     * Method to initialize the listeners of the current view.
+     *
+     */
 
     private void initializeListeners() {
         boatPanel.addMouseListener(this);
@@ -513,6 +543,17 @@ public class SetupStageView extends JPanel implements MouseListener {
         return rightPanel;
     }
 
+    /**
+     *
+     * Method to initialize the font.
+     *
+     * @param fontPath the font path.
+     * @param fontSize the font size.
+     *
+     * @return the initialized font.
+     *
+     */
+
     public Font initializeFont(String fontPath, float fontSize) {
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(fontSize);
@@ -524,6 +565,17 @@ public class SetupStageView extends JPanel implements MouseListener {
         }
         return null;
     }
+
+    /**
+     *
+     * Method to create a separator panel between two panels.
+     *
+     * @param width width of the separator panel.
+     * @param height height of the separator panel.
+     *
+     * @return the separator panel.
+     *
+     */
 
     public JPanel addSeparator(int width, int height) {
 
@@ -537,6 +589,14 @@ public class SetupStageView extends JPanel implements MouseListener {
         return space;
 
     }
+
+    /**
+     *
+     * Method to check if the mouse is clicked in one of the objects of the view.
+     *
+     * @param e MouseEvent that has an object of the view.
+     *
+     */
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -603,15 +663,39 @@ public class SetupStageView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     *
+     * Method to check if the mouse is pressed in one of the objects of the view.
+     *
+     * @param e MouseEvent that has an object of the view.
+     *
+     */
+
     @Override
     public void mousePressed(MouseEvent e) {
 
     }
 
+    /**
+     *
+     * Method to check if the mouse is released in one of the objects of the view.
+     *
+     * @param e MouseEvent that has an object of the view.
+     *
+     */
+
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
+
+    /**
+     *
+     * Method to check if the mouse is entered in one of the objects of the view.
+     *
+     * @param e MouseEvent that has an object of the view.
+     *
+     */
 
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -672,6 +756,14 @@ public class SetupStageView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     *
+     * Method to check if the mouse is exited in one of the objects of the view.
+     *
+     * @param e MouseEvent that has an object of the view.
+     *
+     */
+
     @Override
     public void mouseExited(MouseEvent e) {
         String event = ((JComponent) e.getSource()).getName();
@@ -728,6 +820,14 @@ public class SetupStageView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     *
+     * Method to add to the table the listeners.
+     *
+     * @param mouseListener listener that you want to add to the table cells.
+     *
+     */
+
     public void registerController(MouseListener mouseListener) {
         for (Cell[] cells : table) {
             for (Cell cell : cells) {
@@ -737,8 +837,15 @@ public class SetupStageView extends JPanel implements MouseListener {
         startAttackButton.addMouseListener(mouseListener);
     }
 
-    public void updateBoard(Board board) {
+    /**
+     *
+     * Method to update the board changing the water cells and the ships cells.
+     *
+     * @param board the board we want to update.
+     *
+     */
 
+    public void updateBoard(Board board) {
         Tile[][] tiles = board.getTiles();
 
         for (int i = 0; i < tiles.length; i++) {
@@ -752,11 +859,19 @@ public class SetupStageView extends JPanel implements MouseListener {
                 }
             }
         }
-
     }
 
-    private void replaceShipImage(ShipSegment shipSegment, int i, int j) {
+    /**
+     *
+     * Method to replace the water cell in the table with the ship image.
+     *
+     * @param shipSegment ship segment.
+     * @param i x position of the table.
+     * @param j y position of the table.
+     *
+     */
 
+    private void replaceShipImage(ShipSegment shipSegment, int i, int j) {
         Ship ship = shipSegment.getShip();
         ShipSegment[] shipSegments = ship.getShipSegments();
         float scale = 0.3F;
@@ -778,9 +893,23 @@ public class SetupStageView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     *
+     * Method to get the number of enemies.
+     *
+     * @return the number of enemies.
+     *
+     */
+
     public int getNumberOfEnemies() {
         return this.numberOfEnemies;
     }
+
+    /**
+     *
+     * Method to switch to the window game view.
+     *
+     */
 
     public void switchWindow() {
         mainView.switchPanel("game");

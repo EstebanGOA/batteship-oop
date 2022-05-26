@@ -42,7 +42,7 @@ public class Timer implements Runnable {
         start = false;
     }
 
-    private String generateString () {
+    public String generateString () {
         return formatTime(minutes) + ":" + formatTime(seconds);
     }
 

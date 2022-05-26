@@ -57,6 +57,12 @@ public class GameStageView extends JPanel implements MouseListener {
 
     }
 
+    /**
+     *
+     * Method to initialize the listeners of the view.
+     *
+     */
+
     public void initializeListeners() {
         endBattleBtn.addMouseListener(this);
     }
@@ -273,6 +279,16 @@ public class GameStageView extends JPanel implements MouseListener {
         return tableGrid;
     }
 
+    /**
+     *
+     * Method that creates the right panel with the JEnemies panels (enemy table and enemy ships status).
+     *
+     * @param numberOfEnemies number of enemies.
+     *
+     * @return the right panel of the view.
+     *
+     */
+
     public JPanel rightPanel(int numberOfEnemies) {
 
         JPanel rightPanel = new JPanel();
@@ -299,6 +315,17 @@ public class GameStageView extends JPanel implements MouseListener {
 
     }
 
+    /**
+     *
+     * Method to initialize the font of the window.
+     *
+     * @param fontPath path of the font.
+     * @param fontSize size of the font.
+     *
+     * @return the initialized font.
+     *
+     */
+
     public Font initializeFont(String fontPath, float fontSize) {
         Font font = null;
 
@@ -313,20 +340,52 @@ public class GameStageView extends JPanel implements MouseListener {
         return font;
     }
 
+    /**
+     *
+     * Method to check if the mouse has clicked an object of the view.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
     }
+
+    /**
+     *
+     * Method to check if the mouse has been pressed an object of the view.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
 
     @Override
     public void mousePressed(MouseEvent e) {
 
     }
 
+    /**
+     *
+     * Method to check if the mouse has been released an object of the view.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
+
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
+
+    /**
+     *
+     * Method to check if the mouse has entered an object of the view.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
 
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -339,6 +398,14 @@ public class GameStageView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     *
+     * Method to check if the mouse has exited an object of the view.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
+
     @Override
     public void mouseExited(MouseEvent e) {
         String event = ((JComponent) e.getSource()).getName();
@@ -349,6 +416,14 @@ public class GameStageView extends JPanel implements MouseListener {
                 break;
         }
     }
+
+    /**
+     *
+     * Method to add to the table the listeners.
+     *
+     * @param mouseListener listener that you want to add to the table cells.
+     *
+     */
 
     public void registerController(MouseListener mouseListener) {
 
@@ -362,6 +437,14 @@ public class GameStageView extends JPanel implements MouseListener {
 
     }
 
+    /**
+     *
+     * Method to paint the right panel in the view.
+     *
+     * @param numberOfEnemies number of enemies against we play.
+     *
+     */
+
     public void paintLayout(int numberOfEnemies) {
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -373,6 +456,15 @@ public class GameStageView extends JPanel implements MouseListener {
         add(backgound);
 
     }
+
+    /**
+     *
+     * Method to update the enemies panels.
+     * Update the enemies tables and the enemies ships status.
+     *
+     * @param players arraylist of the enemies.
+     *
+     */
 
     public void updateGame(ArrayList<Player> players) {
 
@@ -398,12 +490,28 @@ public class GameStageView extends JPanel implements MouseListener {
 
     }
 
+    /**
+     *
+     * Method to update the ships in the table.
+     *
+     * @param ships list with all the ships pieces.
+     *
+     */
+
     private void updateShips(Ship[] ships) {
         for (int i = 0; i < ships.length; i++) {
             shipsStatus[i].updateStatus(ships[i].isSunk());
             shipsStatusTable.repaint();
         }
     }
+
+    /**
+     *
+     * Method to update the table of the game.
+     *
+     * @param tiles the cell position in the table.
+     *
+     */
 
     private void updateBoard(Tile[][] tiles) {
 
@@ -422,6 +530,16 @@ public class GameStageView extends JPanel implements MouseListener {
         }
 
     }
+
+    /**
+     *
+     * Method to replace the water cell in the table with the ship image.
+     *
+     * @param shipSegment ship segment.
+     * @param i x position of the table.
+     * @param j y position of the table.
+     *
+     */
 
     private void replaceShipImage(ShipSegment shipSegment, int i, int j) {
 
@@ -445,9 +563,26 @@ public class GameStageView extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     *
+     * Method to update the current time of the game.
+     *
+     * @param time String of the time.
+     *
+     */
+
     public void updateTime(String time) {
         gameTime.setText(time);
     }
+
+    /**
+     *
+     * Method to update the attack status. If you can attack,
+     * or you have to wait your turn.
+     *
+     * @param recharging String text to show in the status.
+     *
+     */
 
     public void updatePhase(String recharging) {
         statusAttack.setText(recharging);

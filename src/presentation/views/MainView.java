@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Vista principal que se encargará de cambiar entre ventanas dependiendo de la interacción del usuario con el sistema.
+ * Main view that will take care of switching between windows depending on the user's interaction with the system.
  */
 public class MainView extends JFrame implements MouseListener {
 
@@ -22,7 +22,7 @@ public class MainView extends JFrame implements MouseListener {
     private CardLayout cardLayout;
 
     /**
-     * Cuando queramos cambiar entre ventanas tenemos que pasar el valor indicado por parámetro.
+     * When we want to switch between windows we have to pass the value indicated by parameter.
      */
     private final String LOGIN_WINDOW = "login";
     private final String REGISTER_WINDOW = "register";
@@ -32,13 +32,26 @@ public class MainView extends JFrame implements MouseListener {
     private final String GAME_STAGE_WINDOW = "game";
 
     /**
-     * Constructor de MainView.
+     * Constructor of the MainView
      */
     public MainView() {
         this.cardLayout = new CardLayout();
         this.rootPanel = new JPanel();
         initializeWindow();
     }
+
+    /**
+     *
+     * Method to assign the views.
+     *
+     * @param loginView the loginView
+     * @param registerView the registerView
+     * @param menuView the menuView
+     * @param settingsView the settingsView
+     * @param setupStageView the setupView
+     * @param gameStageView the gameView
+     *
+     */
 
     public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, SetupStageView setupStageView, GameStageView gameStageView) {
         this.loginView = loginView;
@@ -50,14 +63,14 @@ public class MainView extends JFrame implements MouseListener {
     }
 
     /**
-     * Se encargará de asignar las ventanas al CardLayout y cambiar la vista en caso de ser necesario.
+     * It will take care of assigning the windows to the CardLayout and changing the view if necessary.
      */
     public void run() {
 
-        /* Este JPanel es la base del contenido para el resto de ventanas */
+        /* This JPanel is the base of the content for the rest of the windows */
         rootPanel.setLayout(cardLayout);
 
-        /* Asignamos todas las ventanas del sistema al CardLayout */
+        /* We assign all system windows to the CardLayout */
         rootPanel.add(loginView, LOGIN_WINDOW);
         rootPanel.add(registerView, REGISTER_WINDOW);
         rootPanel.add(menuView, MENU_WINDOW);
@@ -75,7 +88,7 @@ public class MainView extends JFrame implements MouseListener {
     }
 
     /**
-     * Inicializará con valores por defecto la ventana.
+     * It will initialize the window with default values.
      */
     private void initializeWindow () {
         setSize(1280, 720);
@@ -87,7 +100,7 @@ public class MainView extends JFrame implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() instanceof JComponent) {
-            /*  Para cada evento asociado a una componente asignamos un nombre, dependiendo de su valor cambiaremos la ventana. */
+            /* For each event associated to a component we assign a name, depending on its value we will change the window. */
             switch (((JComponent) e.getSource()).getName()) {
                 case "login" -> switchPanel(MENU_WINDOW);
                 case "create_account" -> switchPanel(REGISTER_WINDOW);
@@ -99,20 +112,52 @@ public class MainView extends JFrame implements MouseListener {
         }
     }
 
+    /**
+     *
+     * Method to check if the mouse is pressed on a view object.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
+
     @Override
     public void mousePressed(MouseEvent e) {
 
     }
+
+    /**
+     *
+     * Method to check if the mouse is released on a view object.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
 
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
 
+    /**
+     *
+     * Method to check if the mouse is entered on a view object.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
+
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
+
+    /**
+     *
+     * Method to check if the mouse is exited on a view object.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
 
     @Override
     public void mouseExited(MouseEvent e) {

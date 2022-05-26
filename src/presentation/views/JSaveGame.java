@@ -1,5 +1,7 @@
 package presentation.views;
 
+import presentation.controllers.GameController;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -7,6 +9,7 @@ import java.awt.*;
 public class JSaveGame extends JFrame {
 
     public JSaveGame () {
+
         setLocationRelativeTo(null);
         setSize(new Dimension(250,50));
         setDefaultCloseOperation(EXIT_ON_CLOSE);

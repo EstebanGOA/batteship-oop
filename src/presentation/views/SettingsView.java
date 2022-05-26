@@ -20,6 +20,14 @@ public class SettingsView extends JPanel {
 
     private JImagePanel logoutButton;
 
+    /**
+     *
+     * Constructor of the settings view where we create all the view.
+     *
+     * @param mainView which controls the current view.
+     *
+     */
+
     public SettingsView(MainView mainView) {
 
         this.mainView = mainView;
@@ -110,9 +118,23 @@ public class SettingsView extends JPanel {
         setVisible(true);
     }
 
+    /**
+     *
+     * Method to initialize the window of the settings view.
+     *
+     */
+
     public void initializeWindow () {
         setSize(1280, 720);
     }
+
+    /**
+     *
+     * Method to initialize the font of the settings view.
+     *
+     * @return the initialized font.
+     *
+     */
 
     public Font initializeFont () {
         Font font = null;
@@ -128,6 +150,17 @@ public class SettingsView extends JPanel {
         return font;
     }
 
+    /**
+     *
+     * Method to create a separator between two panels.
+     *
+     * @param width width of the separator panel.
+     * @param height height of the separator panel.
+     *
+     * @return the separator panel.
+     *
+     */
+
     public JPanel addSeparator (int width, int height) {
         JPanel space = new JPanel();
         space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
@@ -138,9 +171,25 @@ public class SettingsView extends JPanel {
 
         return space;
     }
+
+    /**
+     *
+     * Method to switch to the login panel.
+     *
+     */
+
     public void viewLogin() {
         mainView.switchPanel("login");
     }
+
+    /**
+     *
+     * Method to add the mouse listener to the logout button.
+     *
+     * @param mouseListener the mouse listener that we want to add to the logout button.
+     *
+     */
+
     public void settingsController(MouseListener mouseListener) {
         logoutButton.addMouseListener(mouseListener);
     }
