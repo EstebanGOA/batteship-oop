@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class GameManager {
-
+    private String gameName = "Kevin";
     private SaveGameJSON saveGameJSON;
     private GameDAO gameDao;
     private ArrayList<Player> players;
@@ -22,7 +22,6 @@ public class GameManager {
 
     public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
         this.gameDao = sqlGameDAO;
-        this.saveGameJSON = new SaveGameJSON();
         this.players = new ArrayList<>();
         this.threads = new ArrayList<>();
     }
@@ -45,8 +44,10 @@ public class GameManager {
         for (Thread thread : threads) {
             thread.interrupt();
         }
+
+        this.saveGameJSON = new SaveGameJSON(gameName);
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        saveGameJSON.addUnfinishedGame(timer.toString(), date.format(LocalDateTime.now()), players);
+        saveGameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players);
     }
 
     public void startTimer() {
@@ -156,6 +157,9 @@ public class GameManager {
         if (count == players.size()-1) {
             stopGame();
             saveGame(players.get(winner));
+
+            //En el caso de haber terminado una partida previamente guardada, esta debe ser eliminada del programa.
+            saveGameJSON.deleteFile(gameName);
         }
     }
 
