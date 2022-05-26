@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SaveGameJSON {
     private static String path;
@@ -41,18 +40,25 @@ public class SaveGameJSON {
             JsonObject jsonObjectPlayer = new JsonObject();
             Player player = play.get(i);
 
-            jsonObjectPlayer.addProperty("recharging", player.isRecharging());
-            System.out.println(i);
+            if (i == 0) {
+                jsonObjectPlayer.addProperty("recharging", player.isRecharging());
+                jsonObjectPlayer.addProperty("number_attacks",  player.getNumberOfAttacks());
+            }
             jsonObjectPlayer.addProperty("is_alive", player.isAlive());
-            jsonObjectPlayer.addProperty("number_attacks",  player.getNumberOfAttacks());
-
 
             Ship[] ships = player.getShips();
             for (int j = 0; j < ships.length; j++) {
                 JsonObject jsonObjectShip = new JsonObject();
 
                 jsonObjectShip.addProperty("type", ships[j].getSize());
-                jsonObjectShip.addProperty("initial_position", Arrays.toString(ships[j].getPosition()));
+
+                int[] position = ships[j].getPosition();
+                JsonArray jsonArrayPosition = new JsonArray();
+                jsonArrayPosition.add(position[0]);
+                jsonArrayPosition.add(position[1]);
+
+                jsonObjectShip.add("initial_position", jsonArrayPosition);
+
                 jsonObjectShip.addProperty("orientation", ships[j].getOrientation());
 
                 jsonArrayShips.add(jsonObjectShip);
@@ -95,12 +101,13 @@ public class SaveGameJSON {
 
             JsonArray jsonArrayPlayers = jsonObjectGame.getAsJsonArray("players").getAsJsonArray();
             for (int i = 0; i < jsonArrayPlayers.size(); i++) {
-                play.add(playerFromJson(jsonArrayPlayers.get(i).getAsJsonObject(), i));
+                //play.add(playerFromJson(jsonArrayPlayers.get(i).getAsJsonObject(), i));
             }
         }
         return play;
     }
 
+    /*
     private Player playerFromJson(JsonObject player, int i) {
         boolean recharging = player.get("recharging").getAsBoolean();
         boolean isAlive = player.get("is_alive").getAsBoolean();
@@ -112,4 +119,5 @@ public class SaveGameJSON {
             //return new IA()
         }
     }
+     */
 }
