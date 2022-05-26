@@ -111,8 +111,9 @@ abstract public class Player implements Runnable {
         return flag;
     }
 
-    public void attack(Player player, int x, int y) {
-        player.getBoard().sendAttack(x, y);
+    public boolean attack(Player player, int x, int y) {
+        // recharging.set(true);
+        return player.getBoard().sendAttack(x, y);
     }
 
     public boolean isAttackedAlready(int x, int y) {

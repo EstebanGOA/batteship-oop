@@ -54,6 +54,7 @@ public class JShipStatus extends JPanel {
             status.setForeground(Color.RED);
         } else {
             status.setText("Alive");
+            status.setForeground(Color.WHITE);
         }
     }
 }

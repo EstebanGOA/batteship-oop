@@ -15,4 +15,8 @@ public enum TileType {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
 }

@@ -82,7 +82,6 @@ public class GameManager {
         String[] shipSelected = {"Boat", "Submarine1", "Submarine2", "Destructor", "Aircraft"};
         int x = 0;
         int y = 0;
-        int[] cords = {x, y};
         int orient = 0;
         String[] orientation = {"horizontal", "vertical"};
         for (int currentEnemy = 0; currentEnemy < numberOfEnemies; currentEnemy++) {
@@ -95,8 +94,7 @@ public class GameManager {
                     x = (int) (Math.random() * 15);
                     y = (int) (Math.random() * 15);
                     orient = (int) (Math.random() * 2);
-                    cords[0] = x;
-                    cords[1] = y;
+                    int[] cords = {x, y};
                     if (IA.insertShip(cords, shipSelected[currentBoat], orientation[orient]) != null) {
                         insert = true;
                     }
@@ -143,13 +141,15 @@ public class GameManager {
             }
         }
 
+        gameController.updateGame(players);
+
         if (count == players.size()-1) {
             stopGame();
-            saveGame(players.get(winner));
-            gameController.returnMenu(players.get(winner));
-            players.clear();
-        } else {
-            gameController.updateGame(players);
+            Player p = players.get(winner);
+            saveGame(p);
+            gameController.returnMenu(p);
+            players = new ArrayList<>();
+            threads = new ArrayList<>();
         }
     }
 
