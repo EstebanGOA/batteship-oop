@@ -2,7 +2,7 @@ package business;
 
 import business.entities.*;
 import persistance.GameDAO;
-import persistance.SaveAndLoadGameSON;
+import persistance.SaveAndLoadGameJSON;
 import persistance.sql.SQLGameDAO;
 import presentation.controllers.GameController;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class GameManager {
     private String gameName = "Kevin";
-    private SaveAndLoadGameSON saveAndLoadGameJSON;
+    private SaveAndLoadGameJSON saveAndLoadGameJSON;
     private GameDAO gameDao;
     private ArrayList<Player> players;
     private GameController gameController;
@@ -22,11 +22,6 @@ public class GameManager {
 
     public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
         this.gameDao = sqlGameDAO;
-        this.players = new ArrayList<>();
-        this.threads = new ArrayList<>();
-    }
-
-    public GameManager() throws IOException {
         this.players = new ArrayList<>();
         this.threads = new ArrayList<>();
     }
@@ -46,14 +41,15 @@ public class GameManager {
 
     public void stopGame() throws IOException {
         this.timer.stop();
+
+        this.saveAndLoadGameJSON = new SaveAndLoadGameJSON(gameName, this);
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        saveAndLoadGameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players);
+        this.players = saveAndLoadGameJSON.loadGame();
+
         for (Thread thread : threads) {
             thread.interrupt();
         }
-
-        this.saveAndLoadGameJSON = new SaveAndLoadGameSON(gameName);
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        saveAndLoadGameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players);
-        //saveAndLoadGameJSON.loadGame();
     }
 
     public void startTimer() {

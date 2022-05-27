@@ -12,16 +12,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SaveAndLoadGameSON {
+public class SaveAndLoadGameJSON {
     private static String path;
     private final Path p;
     private final Gson gson;
-    GameManager gameManager = new GameManager();
+    private GameManager gameManager;
 
-    public SaveAndLoadGameSON(String nameGame) throws IOException {
+    public SaveAndLoadGameJSON(String nameGame, GameManager gameManager) throws IOException {
         path = nameGame + ".json";
         p = Paths.get(path);
         gson = new GsonBuilder().setPrettyPrinting().create();
+        this.gameManager = gameManager;
 
         //Si no existe lo crea sino lo sobrescribe.
         if (!Files.exists(p)) {
@@ -150,7 +151,8 @@ public class SaveAndLoadGameSON {
             }
          }
 
-        JsonArray jsonArrayBoard = new JsonArray();
+        JsonArray jsonArrayBoard = player.get("board").getAsJsonArray();
+
         Board board = new Board();
         Tile[][] tiles = board.getTiles();
 
