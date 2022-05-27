@@ -17,8 +17,4 @@ public class ShipSegment extends Tile {
         return getTileType() == TileType.HIT;
     }
 
-    public void hit() {
-        super.setTileType(TileType.HIT);
-    }
-
 }

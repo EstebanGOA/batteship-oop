@@ -41,12 +41,13 @@ public class MenuController implements MouseListener {
 
     private void loadSavedGame(String gameName) {
 
+        gameStageView.reset();
         int numberOfEnemies = gameManager.loadGame(gameName);
         gameStageView.paintLayout(numberOfEnemies);
         ArrayList<Player> players = gameManager.getPlayers();
         gameManager.startGame();
         gameStageView.updateGame(players);
-        menuView.gameView();
+            menuView.gameView();
 
     }
 

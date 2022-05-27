@@ -1,11 +1,13 @@
 package business;
 
 import business.entities.*;
+import persistance.ConfigDAO;
 import persistance.GameDAO;
 import persistance.GameJSON;
 import persistance.sql.SQLGameDAO;
 import presentation.controllers.GameController;
 
+import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,10 +16,11 @@ import java.util.ArrayList;
 public class GameManager {
 
     private String gameName;
-    private GameJSON gameJSON;
+    private final GameJSON gameJSON;
 
     private GameController gameController;
-    private GameDAO gameDao;
+    private final GameDAO gameDao;
+    private final ConfigDAO configDAO;
 
     private ArrayList<Player> players;
     private ArrayList<Thread> threads;
@@ -28,6 +31,7 @@ public class GameManager {
     public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
         this.gameDao = sqlGameDAO;
         this.gameJSON = new GameJSON(this);
+        this.configDAO = new ConfigDAO();
         this.players = new ArrayList<>();
         this.threads = new ArrayList<>();
     }
@@ -37,7 +41,8 @@ public class GameManager {
      */
     public void createPlayer() {
         Board board = new Board();
-        Player player = new Human(board, this);
+        int delay = configDAO.getDelay();
+        Player player = new Human(board, delay, this);
         players.add(player);
     }
 
@@ -110,9 +115,10 @@ public class GameManager {
         int y = 0;
         int orient = 0;
         String[] orientation = {"horizontal", "vertical"};
+        Color[] colors = new Color[]{Color.RED, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE };
         for (int currentEnemy = 0; currentEnemy < numberOfEnemies; currentEnemy++) {
             Board board = new Board();
-            Player IA = new IA(board, this);
+            Player IA = new IA(board, colors[currentEnemy], this, configDAO.getDelay());
 
             for (int currentBoat = 0; currentBoat < 5; currentBoat++) {
                 boolean insert = false;
@@ -142,8 +148,8 @@ public class GameManager {
         }
     }
 
-    public void attack(Player player, int x, int y) throws IOException {
-        if (player.isAttackedAlready(x, y)) {
+    public void attack(Player player, int x, int y) {
+        if (!player.isAttackedAlready(x, y)) {
 
             for (Player objective : players) {
                 if (!objective.equals(player)) {
@@ -156,14 +162,13 @@ public class GameManager {
             updateGame();
 
         }
-
     }
 
     public void updatePhase(String status) {
         gameController.updatePhase(status);
     }
 
-    public void updateGame() throws IOException {
+    public void updateGame()  {
 
         int count = 0, winner = 0;
         for (int i = 0; i < players.size(); i++) {
@@ -204,11 +209,11 @@ public class GameManager {
         gameDao.addFinishedGame(isWinner, winner.getNumberOfAttacks().get());
     }
 
-    public void saveUnfinishedGame(String gameName) {
+    public void saveUnfinishedGame(String filename) {
         try {
-            gameJSON.create(gameName);
+            gameJSON.create(filename);
             DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            gameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players, gameName);
+            gameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players, filename);
             reset();
         } catch (IOException e) {
             throw new RuntimeException(e);

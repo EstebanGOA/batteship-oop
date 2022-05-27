@@ -25,11 +25,11 @@ public class GameController implements MouseListener {
     }
 
     public void updateTimer(String time) {
-        this.gameStageView.updateTime(time);
+        SwingUtilities.invokeLater(()->this.gameStageView.updateTime(time));
     }
 
     public void updateGame(ArrayList<Player> players) {
-        this.gameStageView.updateGame(players);
+        SwingUtilities.invokeLater(()->this.gameStageView.updateGame(players));
     }
 
     @Override
@@ -41,12 +41,8 @@ public class GameController implements MouseListener {
                 int y = cell.getCoordinates()[1];
                 Player player = gameManager.getPlayers().get(0);
                 if (!player.isRecharging()) {
-                    try {
-                        gameManager.attack(player, x, y);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    gameStageView.updateGame(gameManager.getPlayers());
+                   gameManager.attack(player, x, y);
+                   gameStageView.updateGame(gameManager.getPlayers());
                 }
             }
             case "endBattleBtn" -> {

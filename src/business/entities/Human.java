@@ -2,7 +2,7 @@ package business.entities;
 
 import business.GameManager;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.awt.*;
 
 /**
  * Clase que se encargará de manejar toda la lógica referente al jugador y sus movimientos.
@@ -13,11 +13,13 @@ public class Human extends Player {
 
     /**
      * Constructor de Human.
-     * @param board Board donde están colocadas los barcos del jugador.
+     *
+     * @param board       Board donde están colocadas los barcos del jugador.
+     * @param delay
      * @param gameManager GameManager which controls the game status.
      */
-    public Human(Board board, GameManager gameManager) {
-        super(board);
+    public Human(Board board, int delay, GameManager gameManager) {
+        super(board, Color.WHITE, delay);
         this.gameManager = gameManager;
     }
 
@@ -32,8 +34,8 @@ public class Human extends Player {
      * @param board Board where the ships are placed.
      * @param gameManager GameManger which controls the game status.
      */
-    public Human(boolean alive, boolean recharging, int numberOfAttacks, Board board, GameManager gameManager){
-        super(board, recharging, alive, numberOfAttacks);
+    public Human(boolean alive, boolean recharging, int numberOfAttacks, Board board, boolean[][] attacked, GameManager gameManager, int delay){
+        super(board, recharging, alive, numberOfAttacks, attacked, Color.WHITE, delay);
         this.gameManager = gameManager;
 
     }
@@ -43,7 +45,7 @@ public class Human extends Player {
         while (isAlive()) {
             try {
                 if (isRecharging()) {
-                    Thread.sleep(1000);
+                    Thread.sleep(getDelay());
                     setRecharging(false);
                     gameManager.updatePhase("Attack");
                 }

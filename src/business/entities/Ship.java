@@ -8,10 +8,10 @@ public abstract class Ship {
     private final int size;
     private final String orientation;
     private final int[] position;
-    private ShipSegment[] shipSegments;
+    private final ShipSegment[] shipSegments;
 
     /**
-     * Constructor de Ship
+     * Constructor of Ship
      *
      * @param orientation Orientación del barco.
      * @param position Posición del barco.
@@ -46,10 +46,19 @@ public abstract class Ship {
         return size;
     }
 
+    /**
+     * Method that will return the ship fragments.
+     *
+     * @return Array of ship fragments.
+     */
     public ShipSegment[] getShipSegments() {
         return shipSegments;
     }
 
+    /**
+     * Method that will check if the boat is sunk, if so it will return true, otherwise it will return false.
+     * @return It will return true if the boat is sunk, otherwise it will return false.
+     */
     public boolean isSunk() {
         int counter = 0;
         for (ShipSegment segment : shipSegments) {
@@ -60,6 +69,10 @@ public abstract class Ship {
         return counter == size;
     }
 
+    /**
+     * Method that will assign a mew ship segment to the array.
+     * @param shipSegment ShipSegment that will be added to the array.
+     */
     public void addSegment(ShipSegment shipSegment) {
         for (int i = 0; i < this.shipSegments.length; i++) {
             if (this.shipSegments[i] == null) {

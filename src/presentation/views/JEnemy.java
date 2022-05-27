@@ -6,6 +6,7 @@ import business.entities.Tile;
 import business.entities.TileType;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -77,7 +78,11 @@ public class JEnemy extends JPanel {
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
                 table[i][j] = new Cell(j, i, SpritePath.WATER);
+                table[i][j].setBackground(Color.BLUE);
                 tableGrid.add(table[i][j]);
+                Border border = BorderFactory.createLineBorder(Color.BLACK);
+                table[i][j].setBorder(border);
+
             }
         }
 
@@ -127,14 +132,10 @@ public class JEnemy extends JPanel {
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
-                TileType status = tiles[i][j].getTileType();
-                if (status == TileType.SHIP) {
-                    table[i][j].switchImage(SpritePath.BOAT);
-                } else if (status == TileType.HIT) {
-                    table[i][j].switchImage(SpritePath.HIT);
-                } else if (status == TileType.MISS) {
-                    table[i][j].switchImage(SpritePath.MISS);
-                }
+
+                Tile tile = tiles[i][j];
+                table[i][j].setBackground(tile.getColor());
+
             }
         }
 

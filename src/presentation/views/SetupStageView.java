@@ -3,6 +3,8 @@ package presentation.views;
 import business.entities.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -241,8 +243,11 @@ public class SetupStageView extends JPanel implements MouseListener {
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
                 table[i][j] = new Cell(j, i, SpritePath.WATER);
+                Border border = BorderFactory.createLineBorder(Color.BLACK);
+                table[i][j].setBorder(border);
                 tableGrid.add(table[i][j]);
                 table[i][j].setName("cell");
+                table[i][j].setBackground(Color.BLUE);
                 // Nos interesa que el evento se active con el controlador.
                 // table[i][j].addMouseListener(this);
             }
@@ -850,47 +855,11 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
-                TileType tile = tiles[i][j].getTileType();
-                if (tile == TileType.SHIP) {
-                    ShipSegment shipSegment = (ShipSegment) tiles[i][j];
-                    replaceShipImage(shipSegment, i, j);
-                } else if (tile == TileType.WATER) {
-                    table[i][j].switchImage(SpritePath.WATER);
-                }
+                Tile tile = tiles[i][j];
+                table[i][j].setBackground(tile.getColor());
             }
         }
-    }
 
-    /**
-     *
-     * Method to replace the water cell in the table with the ship image.
-     *
-     * @param shipSegment ship segment.
-     * @param i x position of the table.
-     * @param j y position of the table.
-     *
-     */
-
-    private void replaceShipImage(ShipSegment shipSegment, int i, int j) {
-        Ship ship = shipSegment.getShip();
-        ShipSegment[] shipSegments = ship.getShipSegments();
-        float scale = 0.3F;
-
-        for (int piece = 0; piece < shipSegments.length; piece++) {
-            ShipSegment segment = shipSegments[piece];
-            if (segment.equals(shipSegment)) {
-                if (ship instanceof Boat) {
-                    table[i][j].switchImage(SpritePath.BOAT_PIECES, piece, scale, ship.getOrientation());
-                } else if (ship instanceof Submarine) {
-                    table[i][j].switchImage(SpritePath.SUBMARINE_PIECES, piece, scale, ship.getOrientation());
-                } else if (ship instanceof Destroyer) {
-                    table[i][j].switchImage(SpritePath.DESTRUCTOR_PIECES, piece, scale, ship.getOrientation());
-                } else if (ship instanceof AircraftCarrier) {
-                    table[i][j].switchImage(SpritePath.AIRCRAFT_PIECES, piece, scale, ship.getOrientation());
-                }
-            }
-
-        }
     }
 
     /**
@@ -915,11 +884,10 @@ public class SetupStageView extends JPanel implements MouseListener {
         mainView.switchPanel("game");
     }
 
+
     public void reset() {
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table.length; j++) {
-                table[i][j].switchImage(SpritePath.WATER);
-            }
-        }
+        for (Cell[] cells : table)
+            for (Cell cell : cells)
+                cell.setBackground(Color.BLUE);
     }
 }

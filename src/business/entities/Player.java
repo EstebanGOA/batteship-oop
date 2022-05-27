@@ -1,5 +1,6 @@
 package business.entities;
 
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -16,27 +17,35 @@ abstract public class Player implements Runnable {
     private AtomicBoolean recharging;
     private AtomicBoolean alive;
     private AtomicInteger numberOfAttacks;
+    private int delay;
+
+    /* It will be used to identify the players on the board */
+    private Color color;
 
     /**
      * Constructor de Player.
      * @param board Board donde estarán los barcos del jugador.
      */
-    public Player(Board board) {
+    public Player(Board board, Color color, int delay) {
         this.board = board;
         this.ships = new Ship[5];
         this.recharging = new AtomicBoolean(false);
         this.alive = new AtomicBoolean(true);
         this.numberOfAttacks = new AtomicInteger(0);
         this.attacked = new boolean[15][15];
+        this.color = color;
+        this.delay = delay;
     }
 
-    public Player(Board board, boolean recharging, boolean alive, int numberOfAttacks) {
+    public Player(Board board, boolean recharging, boolean alive, int numberOfAttacks, boolean[][] attacked, Color color, int delay) {
         this.board = board;
         this.ships = new Ship[5];
         this.recharging = new AtomicBoolean(recharging);
         this.alive = new AtomicBoolean(alive);
         this.numberOfAttacks = new AtomicInteger(numberOfAttacks);
-        this.attacked = new boolean[15][15];
+        this.attacked = attacked;
+        this.color = color;
+        this.delay = delay;
     }
 
     /**
@@ -49,6 +58,14 @@ abstract public class Player implements Runnable {
 
     public boolean[][] getAttacked() {
         return attacked;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public int getDelay() {
+        return delay;
     }
 
     /**
@@ -124,16 +141,16 @@ abstract public class Player implements Runnable {
 
     public boolean attack(Player player, int x, int y) {
         // recharging.set(true);
-        return player.getBoard().sendAttack(x, y);
+        return player.getBoard().sendAttack(this, x, y);
     }
 
     public boolean isAttackedAlready(int x, int y) {
         if (!attacked[x][y]) {
             attacked[x][y] = true;
             numberOfAttacks.incrementAndGet();
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 

@@ -1,5 +1,7 @@
 package business.entities;
 
+import java.awt.*;
+
 public class Board {
 
     private Tile[][] tiles;
@@ -77,6 +79,7 @@ public class Board {
                 tiles[y+i][x] = new ShipSegment(ship);
                 ship.addSegment((ShipSegment) tiles[y+i][x]);
                 tiles[y+i][x].setTileType(TileType.SHIP);
+                tiles[y+i][x].changeColor(Color.GREEN);
             }
 
             return result;
@@ -106,6 +109,7 @@ public class Board {
                 tiles[y][x+i] = new ShipSegment(ship);
                 ship.addSegment((ShipSegment) tiles[y][x+i]);
                 tiles[y][x+i].setTileType(TileType.SHIP);
+                tiles[y][x+i].changeColor(Color.GREEN);
             }
 
             return result;
@@ -131,9 +135,10 @@ public class Board {
         }
     }
 
-    public boolean sendAttack(int x, int y) {
+    public boolean sendAttack(Player attacker, int x, int y) {
 
         TileType tileType = tiles[y][x].getTileType();
+        tiles[y][x].changeColor(attacker.getColor());
 
         if (tileType == TileType.HIT || tileType == TileType.MISS) {
             // Casilla donde ya se ha disparado anteriormente.

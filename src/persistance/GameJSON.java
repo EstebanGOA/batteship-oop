@@ -5,6 +5,7 @@ import business.GameManager;
 import business.entities.*;
 import com.google.gson.*;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,22 +16,25 @@ public class GameJSON {
 
     private final Gson gson;
     private GameManager gameManager;
+    private ConfigDAO configDAO;
+    private String PATH = "saves/";
 
     public GameJSON(GameManager gameManager) {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.gameManager = gameManager;
+        this.configDAO = new ConfigDAO();
     }
 
-    public void create(String nameGame) throws IOException {
-        Path p = getPath(nameGame);
+    public void create(String filename) throws IOException {
+        Path p = getPath(filename);
         //Si no existe lo crea sino lo sobrescribe.
         if (!Files.exists(p)) {
             Files.createFile(p);
         }
     }
 
-    public Path getPath(String path) {
-        String format = path + ".json";
+    public Path getPath(String filename) {
+        String format = PATH + filename + ".json";
         return Paths.get(format);
     }
 
@@ -39,10 +43,10 @@ public class GameJSON {
         return Files.exists(path);
     }
 
-    public void addUnfinishedGame(Timer timer, String date, ArrayList<Player> players, String path) throws IOException {
+    public void addUnfinishedGame(Timer timer, String date, ArrayList<Player> players, String filename) throws IOException {
 
         ArrayList<Player> play = players;
-        FileWriter writer = new FileWriter(path + ".json");
+        FileWriter writer = new FileWriter(PATH + filename + ".json");
         JsonObject jsonObjectGame = new JsonObject();
 
         jsonObjectGame.addProperty("date", date);
@@ -80,17 +84,39 @@ public class GameJSON {
             jsonObjectPlayer.add("ships", jsonArrayShips);
 
             Board board = player.getBoard();
-            JsonArray jsonArrayBoard = new JsonArray();
+            JsonArray jsonArrayCells = new JsonArray();
+
+            boolean[][] attacked = player.getAttacked();
+            JsonArray jsonArrayAttacked = new JsonArray();
+
             int x = 0, y = 0;
             while (x < 15) {
+                JsonArray jsonArrayCell = new JsonArray();
+                JsonArray jsonArrayAttack = new JsonArray();
                 while (y < 15) {
-                    jsonArrayBoard.add(String.valueOf(board.getTile(x, y)));
+                    Tile[][] tiles = board.getTiles();
+
+                    JsonObject jsonObjectTile = new JsonObject();
+                    jsonObjectTile.addProperty("tileType", tiles[x][y].getTileType().getValue());
+                    Color color = tiles[x][y].getColor();
+                    jsonObjectTile.addProperty("color", String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue()));
+                    jsonArrayCell.add(jsonObjectTile);
+                    JsonObject jsonObjectAttack = new JsonObject();
+                    jsonObjectAttack.addProperty("isAttack", attacked[x][y]);
+                    jsonArrayAttack.add(jsonObjectAttack);
+
                     y++;
                 }
+                jsonArrayCells.add(jsonArrayCell);
+                jsonArrayAttacked.add(jsonArrayAttack);
+
                 y = 0;
                 x++;
             }
-            jsonObjectPlayer.add("board", jsonArrayBoard);
+
+            jsonObjectPlayer.add("board", jsonArrayCells);
+            jsonObjectPlayer.add("attacked", jsonArrayAttacked);
+
             jsonArrayPlayers.add(jsonObjectPlayer);
         }
         jsonObjectGame.add("players", jsonArrayPlayers);
@@ -99,16 +125,16 @@ public class GameJSON {
         writer.close();
     }
 
-    public void deleteFile(String gameName) {
-        if (exist(gameName)) {
-            new File(gameName + ".json").delete();
+    public void deleteFile(String filename) {
+        if (exist(filename)) {
+            new File(PATH + filename + ".json").delete();
         }
     }
 
-    public ArrayList<Player> loadGame(String gameName) throws IOException {
+    public ArrayList<Player> loadGame(String filename) throws IOException {
 
         ArrayList<Player> players = new ArrayList<>();
-        Path path = getPath(gameName);
+        Path path = getPath(filename);
 
         if (Files.exists(path)) {
             JsonObject jsonObjectGame = JsonParser.parseString(Files.readString(path)).getAsJsonObject();
@@ -128,23 +154,26 @@ public class GameJSON {
 
         // Auxiliar Player where all data is going to be stored.
         Player p = null;
+        Color[] colors = new Color[]{Color.RED, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE };
 
         JsonArray jsonArrayBoard = player.get("board").getAsJsonArray();
 
         Board board = new Board();
         Tile[][] tiles = board.getTiles();
+        boolean[][] attacked = new boolean[15][15];
 
         boolean alive = player.get("is_alive").getAsBoolean();
+        int delay = configDAO.getDelay();
 
         if (i == 0) {
             //Cargamos al Human
             boolean recharging = player.get("recharging").getAsBoolean();
             int numberAttacks = player.get("number_attacks").getAsInt();
-            p = new Human(alive, recharging, numberAttacks, board, gameManager);
+            p = new Human(alive, recharging, numberAttacks, board, attacked, gameManager, delay);
 
         } else {
             //Cargamos al IA
-            p = new IA(alive, board, gameManager);
+            p = new IA(alive, board, attacked, colors[i-1], gameManager, delay);
         }
 
         JsonArray jsonArrayShips = player.get("ships").getAsJsonArray();
@@ -182,21 +211,36 @@ public class GameJSON {
             }
          }
 
-        int counter = 0;
+        JsonArray jsonArrayAttacked = player.get("attacked").getAsJsonArray();
+
         for (int x = 0; x < 15; x++) {
             for (int y = 0; y < 15; y++) {
-                switch (jsonArrayBoard.get(counter++).getAsString()) {
-                    case "WATER":
-                        tiles[y][x].setTileType(TileType.WATER);
+
+                JsonObject jsonObjectAttack = jsonArrayAttacked.get(x).getAsJsonArray().get(y).getAsJsonObject();
+                boolean attack = jsonObjectAttack.get("isAttack").getAsBoolean();
+                attacked[x][y] = attack;
+
+                JsonObject jsonObjectTile = jsonArrayBoard.get(x).getAsJsonArray().get(y).getAsJsonObject();
+                int tileType = jsonObjectTile.get("tileType").getAsInt();
+                String hexColor = jsonObjectTile.get("color").getAsString();
+                Color color = Color.decode(hexColor);
+
+                switch (tileType) {
+                    case 0:
+                        tiles[x][y].setTileType(TileType.WATER);
+                        tiles[x][y].changeColor(color);
                         break;
-                    case "SHIP":
-                        tiles[y][x].setTileType(TileType.SHIP);
+                    case 1:
+                        tiles[x][y].setTileType(TileType.SHIP);
+                        tiles[x][y].changeColor(color);
                         break;
-                    case "HIT":
-                        tiles[y][x].setTileType(TileType.HIT);
+                    case 2:
+                        tiles[x][y].setTileType(TileType.HIT);
+                        tiles[x][y].changeColor(color);
                         break;
-                    case "MISS":
-                        tiles[y][x].setTileType(TileType.MISS);
+                    case 4:
+                        tiles[x][y].setTileType(TileType.MISS);
+                        tiles[x][y].changeColor(color);
                         break;
                 }
             }

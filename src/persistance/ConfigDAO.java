@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class DatabaseConfigDAO {
+public class ConfigDAO {
 
     private String username;
     private String password;
@@ -17,7 +17,7 @@ public class DatabaseConfigDAO {
 
     private static final String CONFIG_JSON_PATH = "resources/config.json";
 
-    public DatabaseConfigDAO() {
+    public ConfigDAO() {
         JsonObject jsonConfig = null;
         try {
             jsonConfig = JsonParser.parseString(Files.readString(Paths.get(CONFIG_JSON_PATH))).getAsJsonObject();

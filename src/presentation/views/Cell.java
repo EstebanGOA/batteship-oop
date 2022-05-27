@@ -1,6 +1,8 @@
 package presentation.views;
 
-public class Cell extends JImagePanel {
+import javax.swing.*;
+
+public class Cell extends JPanel {
 
     private final int x;
     private final int y;
@@ -16,10 +18,12 @@ public class Cell extends JImagePanel {
      */
 
     public Cell (int x, int y, SpritePath img) {
-        super(img);
+        super();
         this.x = x;
         this.y = y;
     }
+
+
 
     /**
      *

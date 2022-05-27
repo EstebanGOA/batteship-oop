@@ -3,6 +3,7 @@ package presentation.views;
 import business.entities.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,6 +29,7 @@ public class GameStageView extends JPanel implements MouseListener {
 
     private Cell[][] table = new Cell[15][15];
     private ArrayList<JEnemy> enemies = new ArrayList<>();
+    private JPanel enemiesPanel;
     private JShipStatus[] shipsStatus = new JShipStatus[5];
     private JTable shipsStatusTable;
 
@@ -264,6 +266,7 @@ public class GameStageView extends JPanel implements MouseListener {
      */
 
     public JPanel table() {
+
         JPanel tableGrid = new JPanel();
         tableGrid.setLayout(new GridLayout(15, 15));
         tableGrid.setPreferredSize(new Dimension(450, 450));
@@ -272,7 +275,10 @@ public class GameStageView extends JPanel implements MouseListener {
             for (int j = 0; j < 15; j++) {
                 table[i][j] = new Cell(j, i, SpritePath.WATER);
                 tableGrid.add(table[i][j]);
+                Border border = BorderFactory.createLineBorder(Color.BLACK);
+                table[i][j].setBorder(border);
                 table[i][j].setName("cell");
+                table[i][j].setBackground(Color.BLUE);
             }
         }
 
@@ -291,9 +297,9 @@ public class GameStageView extends JPanel implements MouseListener {
 
     public JPanel rightPanel(int numberOfEnemies) {
 
-        JPanel rightPanel = new JPanel();
-        rightPanel.setLayout(new GridBagLayout());
-        rightPanel.setOpaque(false);
+        enemiesPanel = new JPanel();
+        enemiesPanel.setLayout(new GridBagLayout());
+        enemiesPanel.setOpaque(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -303,15 +309,15 @@ public class GameStageView extends JPanel implements MouseListener {
             gbc.gridy = i;
 
             JEnemy jEnemy = new JEnemy();
-            rightPanel.add(jEnemy, gbc);
+            enemiesPanel.add(jEnemy, gbc);
             enemies.add(jEnemy);
 
             gbc.gridx = 0;
             gbc.gridy = (i + 1);
-            rightPanel.add(new JSeparator(0, 5), gbc);
+            enemiesPanel.add(new JSeparator(0, 5), gbc);
 
         }
-        return rightPanel;
+        return enemiesPanel;
 
     }
 
@@ -473,17 +479,20 @@ public class GameStageView extends JPanel implements MouseListener {
 
             Board board = p.getBoard();
             Ship[] ships = p.getShips();
+            boolean[][] attacked = p.getAttacked();
 
             Tile[][] tiles = board.getTiles();
 
             if (p instanceof Human) {
 
-                updateBoard(tiles);
+                updateBoard(tiles, attacked);
                 updateShips(ships);
 
             } else {
+
                 JEnemy jEnemy = enemies.get(i - 1);
                 jEnemy.updateEnemy(board, ships);
+
             }
 
         }
@@ -506,61 +515,26 @@ public class GameStageView extends JPanel implements MouseListener {
     }
 
     /**
-     *
      * Method to update the table of the game.
      *
-     * @param tiles the cell position in the table.
-     *
+     * @param tiles Board tiles.
+     * @param attacked Attacked tiles.
      */
 
-    private void updateBoard(Tile[][] tiles) {
+    private void updateBoard(Tile[][] tiles, boolean[][] attacked) {
 
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles.length; j++) {
-                TileType status = tiles[i][j].getTileType();
-                if (status == TileType.SHIP) {
-                    ShipSegment shipSegment = (ShipSegment) tiles[i][j];
-                    replaceShipImage(shipSegment, i, j);
-                } else if (status == TileType.HIT) {
-                    table[i][j].switchImage(SpritePath.HIT);
-                } else if (status == TileType.MISS) {
-                    table[i][j].switchImage(SpritePath.MISS);
+                Tile tile = tiles[i][j];
+                table[i][j].setBackground(tile.getColor());
+
+                if (attacked[j][i]) {
+                    table[i][j].setBackground(table[i][j].getBackground().darker().darker());
                 }
+
             }
         }
 
-    }
-
-    /**
-     *
-     * Method to replace the water cell in the table with the ship image.
-     *
-     * @param shipSegment ship segment.
-     * @param i x position of the table.
-     * @param j y position of the table.
-     *
-     */
-
-    private void replaceShipImage(ShipSegment shipSegment, int i, int j) {
-
-        Ship ship = shipSegment.getShip();
-        ShipSegment[] shipSegments = ship.getShipSegments();
-        float scale = 0.2F;
-
-        for (int piece = 0; piece < shipSegments.length; piece++) {
-            ShipSegment segment = shipSegments[piece];
-            if (segment.equals(shipSegment)) {
-                if (ship instanceof Boat) {
-                    table[i][j].switchImage(SpritePath.BOAT_PIECES, piece, scale, ship.getOrientation());
-                } else if (ship instanceof Submarine) {
-                    table[i][j].switchImage(SpritePath.SUBMARINE_PIECES, piece, scale, ship.getOrientation());
-                } else if (ship instanceof Destroyer) {
-                    table[i][j].switchImage(SpritePath.DESTRUCTOR_PIECES, piece, scale, ship.getOrientation());
-                } else if (ship instanceof AircraftCarrier) {
-                    table[i][j].switchImage(SpritePath.AIRCRAFT_PIECES, piece, scale, ship.getOrientation());
-                }
-            }
-        }
     }
 
     /**
@@ -590,10 +564,13 @@ public class GameStageView extends JPanel implements MouseListener {
 
     public void reset() {
 
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                table[i][j].switchImage(SpritePath.WATER);
-            }
+        for (Cell[] cells : table)
+            for (Cell cell : cells)
+                cell.setBackground(Color.BLUE);
+
+        if (enemiesPanel != null) {
+            backgound.remove(enemiesPanel);
+            enemies = new ArrayList<>();
         }
 
     }
@@ -602,8 +579,5 @@ public class GameStageView extends JPanel implements MouseListener {
         mainView.switchPanel("menu");
     }
 
-    public String getGameName() {
-        return "Kevin";
-    }
 }
 

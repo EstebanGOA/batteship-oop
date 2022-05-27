@@ -1,6 +1,6 @@
 package persistance.sql;
 
-import persistance.DatabaseConfigDAO;
+import persistance.ConfigDAO;
 
 import java.sql.*;
 
@@ -16,18 +16,18 @@ public class SQLConnector {
 
     public static SQLConnector getInstance() {
         if (instance == null) {
-            DatabaseConfigDAO databaseConfigDAO = new DatabaseConfigDAO();
-            instance = new SQLConnector(databaseConfigDAO);
+            ConfigDAO configDAO = new ConfigDAO();
+            instance = new SQLConnector(configDAO);
             instance.connect();
         }
         return instance;
     }
 
     // Parametrized constructor
-    public SQLConnector(DatabaseConfigDAO databaseConfigDAO) {
-        this.username = databaseConfigDAO.getUsername();
-        this.password = databaseConfigDAO.getPassword();
-        this.url = "jdbc:mysql://" + databaseConfigDAO.getIp() + ":" + databaseConfigDAO.getPort() + "/" + databaseConfigDAO.getDatabase();
+    public SQLConnector(ConfigDAO configDAO) {
+        this.username = configDAO.getUsername();
+        this.password = configDAO.getPassword();
+        this.url = "jdbc:mysql://" + configDAO.getIp() + ":" + configDAO.getPort() + "/" + configDAO.getDatabase();
     }
 
 
