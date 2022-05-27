@@ -159,4 +159,8 @@ abstract public class Player implements Runnable {
     public AtomicInteger getNumberOfAttacks() {
         return numberOfAttacks;
     }
+
+    public void setNumberOfAttacks(AtomicInteger numberOfAttacks) {
+        this.numberOfAttacks = numberOfAttacks;
+    }
 }

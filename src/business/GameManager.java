@@ -2,7 +2,7 @@ package business;
 
 import business.entities.*;
 import persistance.GameDAO;
-import persistance.SaveGameJSON;
+import persistance.SaveAndLoadGameSON;
 import persistance.sql.SQLGameDAO;
 import presentation.controllers.GameController;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class GameManager {
     private String gameName = "Kevin";
-    private SaveGameJSON saveGameJSON;
+    private SaveAndLoadGameSON saveAndLoadGameJSON;
     private GameDAO gameDao;
     private ArrayList<Player> players;
     private GameController gameController;
@@ -22,6 +22,11 @@ public class GameManager {
 
     public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
         this.gameDao = sqlGameDAO;
+        this.players = new ArrayList<>();
+        this.threads = new ArrayList<>();
+    }
+
+    public GameManager() throws IOException {
         this.players = new ArrayList<>();
         this.threads = new ArrayList<>();
     }
@@ -45,9 +50,10 @@ public class GameManager {
             thread.interrupt();
         }
 
-        this.saveGameJSON = new SaveGameJSON(gameName);
+        this.saveAndLoadGameJSON = new SaveAndLoadGameSON(gameName);
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        saveGameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players);
+        saveAndLoadGameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players);
+        //saveAndLoadGameJSON.loadGame();
     }
 
     public void startTimer() {
@@ -161,7 +167,7 @@ public class GameManager {
             threads = new ArrayList<>();
 
             //En el caso de haber terminado una partida previamente guardada, esta debe ser eliminada del programa.
-            saveGameJSON.deleteFile(gameName);
+            saveAndLoadGameJSON.deleteFile(gameName);
         }
     }
 
