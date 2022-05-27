@@ -34,8 +34,8 @@ public abstract class Ship {
 
     /**
      * Functions that returns the coordinates where the ship is located/placed.
-     * The cordinates where the ship is located, in the first position we have the coordinate regarding the X
-     * and the second coordiante regarding the Y.
+     * The coordinates where the ship is located, in the first position we have the coordinate regarding the X
+     * and the second coordinate regarding the Y.
      *
      * @return Returns an int[] with the position of the ship.
      */
