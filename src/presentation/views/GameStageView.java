@@ -598,8 +598,12 @@ public class GameStageView extends JPanel implements MouseListener {
 
     }
 
-    public void returnMenu(String menu) {
-        mainView.switchPanel(menu);
+    public void returnMenu() {
+        mainView.switchPanel("menu");
+    }
+
+    public String getGameName() {
+        return "Kevin";
     }
 }
 

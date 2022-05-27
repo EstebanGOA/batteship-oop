@@ -2,8 +2,6 @@ package presentation.views;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -53,7 +51,7 @@ public class MainView extends JFrame implements MouseListener {
      *
      */
 
-    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, SetupStageView setupStageView, GameStageView gameStageView) {
+    public void assignViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, SetupStageView setupStageView, GameStageView gameStageView) {
         this.loginView = loginView;
         this.registerView = registerView;
         this.menuView = menuView;

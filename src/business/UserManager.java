@@ -24,6 +24,11 @@ public class UserManager {
 
     public boolean isLogin(String login, String password) {
         User user = userDao.getUser(login);
+
+        if (user == null) {
+            return false;
+        }
+
         if (user.getPassword().equals(password)) {
             this.user = user;
             return true;

@@ -8,38 +8,28 @@ public class Timer implements Runnable {
     private int seconds;
     private int minutes;
     private GameManager gameManager;
-    private boolean start;
 
     public Timer (GameManager gameManager) {
         seconds = 0;
         minutes = 0;
-        start = false;
         this.gameManager = gameManager;
     }
 
     @Override
     public void run() {
-        while (start) {
             try {
-                Thread.sleep(DELAY);
-                seconds++;
-                if (seconds == 60) {
-                    minutes++;
-                    seconds = 0;
+                while (true) {
+                    Thread.sleep(DELAY);
+                    seconds++;
+                    if (seconds == 60) {
+                        minutes++;
+                        seconds = 0;
+                    }
+                    gameManager.updateTimer(generateString());
                 }
-                gameManager.updateTimer(generateString());
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                /* We catch the interrupted exception but don't show any kind of message. */
             }
-        }
-    }
-
-    public void resume() {
-        start = true;
-    }
-
-    public void stop() {
-        start = false;
     }
 
     public String generateString () {

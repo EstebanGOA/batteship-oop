@@ -24,6 +24,7 @@ public class SQLUserDAO implements UserDAO {
         String query = "DELETE FROM User WHERE name = '" + code + "';";
         return SQLConnector.getInstance().deleteQuery(query);
     }
+
     public User getUser(String string) {
         String query;
 

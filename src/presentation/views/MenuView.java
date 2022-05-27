@@ -1,7 +1,6 @@
 package presentation.views;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -14,6 +13,7 @@ public class MenuView extends JPanel {
     private String username = "";
 
     private JImagePanel settingsButton;
+    private JImagePanel loadGameButton;
 
     /**
      *
@@ -81,9 +81,10 @@ public class MenuView extends JPanel {
             newBattleButton.setName("new_game");
             newBattleButton.addMouseListener(mainView);
 
-        JImagePanel loadBattleButton = new JImagePanel(SpritePath.LOAD_BATTLE_BUTTON);
-            loadBattleButton.setPreferredSize(new Dimension(350,125));
-            loadBattleButton.setOpaque(false);
+        loadGameButton = new JImagePanel(SpritePath.LOAD_BATTLE_BUTTON);
+        loadGameButton.setPreferredSize(new Dimension(350,125));
+        loadGameButton.setOpaque(false);
+        loadGameButton.setName("loadGame");
 
         gbcMidColumn.gridx = 0; gbcMidColumn.gridy = 0;
         midColumn.add(newBattleButton, gbcMidColumn);
@@ -92,7 +93,7 @@ public class MenuView extends JPanel {
         midColumn.add(addSeparator(0,50), gbcMidColumn);
 
         gbcMidColumn.gridx = 0; gbcMidColumn.gridy = 2;
-        midColumn.add(loadBattleButton, gbcMidColumn);
+        midColumn.add(loadGameButton, gbcMidColumn);
 
         // --------------------------- Right Column -------------------------- //
 
@@ -220,6 +221,7 @@ public class MenuView extends JPanel {
 
     public void menuController(MouseListener mouseListener) {
         settingsButton.addMouseListener(mouseListener);
+        loadGameButton.addMouseListener(mouseListener);
     }
 
     /**
@@ -240,5 +242,9 @@ public class MenuView extends JPanel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void gameView() {
+        mainView.switchPanel("game");
     }
 }

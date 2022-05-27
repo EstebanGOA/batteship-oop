@@ -1,6 +1,5 @@
 import business.GameManager;
 import business.UserManager;
-import business.entities.Timer;
 import persistance.sql.SQLGameDAO;
 import presentation.controllers.*;
 import presentation.views.*;
@@ -29,12 +28,12 @@ public class Main {
         LoginController loginController = new LoginController(loginView, userManager);
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
-        MenuController menuController = new MenuController(userManager, menuView);
+        MenuController menuController = new MenuController(userManager, gameManager, menuView, gameStageView);
         SetupStageController setupStageController = new SetupStageController(setupStageView, gameStageView, gameManager);
         GameController gameController = new GameController(gameStageView, gameManager);
 
-        gameManager.asigneController(gameController);
-        mainView.asigneViews(loginView, registerView, menuView, settingsView, setupStageView, gameStageView);
+        gameManager.assignController(gameController);
+        mainView.assignViews(loginView, registerView, menuView, settingsView, setupStageView, gameStageView);
 
         /* Asignamos los listeners de las vistas a la vista principal */
         loginView.registerMasterView(mainView);
