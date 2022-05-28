@@ -22,6 +22,46 @@ public class RegisterController implements MouseListener {
         this.registerView = registerView;
     }
 
+
+    public boolean isValidEmailAddress(String email) {
+        String emailPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        return (email.trim().matches(emailPattern));
+    }
+
+    public boolean isValidPassword(String password) {
+        boolean isValid = true;
+        if (password.length() > 15 || password.length() < 8) {
+            registerView.popupMessage("Password must be less than 20 and more than 8 characters in length.");
+            isValid = false;
+        }
+        String upperCaseChars = "(.*[A-Z].*)";
+        if (!password.matches(upperCaseChars)) {
+            registerView.popupMessage("Password must have at least one uppercase character");
+            isValid = false;
+        }
+        String lowerCaseChars = "(.*[a-z].*)";
+        if (!password.matches(lowerCaseChars)) {
+            registerView.popupMessage("Password must have at least one lowercase character");
+            isValid = false;
+        }
+        String numbers = "(.*[0-9].*)";
+        if (!password.matches(numbers)) {
+            registerView.popupMessage("Password must have at least one number");
+            isValid = false;
+        }
+        String specialChars = "(.*[@,#,$,%].*$)";
+        if (!password.matches(specialChars)) {
+            registerView.popupMessage("Password must have at least one special character among @#$%");
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    public boolean isValidName(String name) {
+        String namePattern = "[a-zA-Z]+";
+        return (name.trim().matches(namePattern));
+    }
+
     /**
      * Recogerá la información de la vista, comprobará la información introducida e informará al usuario si ha ocurrido algún error,
      * en caso de que no ocurra cambiará la vista, ya que se habrá completado el registro.
@@ -32,28 +72,40 @@ public class RegisterController implements MouseListener {
         if (data.get("username").isEmpty() || data.get("email").isEmpty() || data.get("password").isEmpty() || data.get("password_verify").isEmpty()) {
             registerView.cleanPassword();
             registerView.popupMessage("Error, todos los campos son obligatorios.");
-            return;
-        }
-
-        if (!data.get("password").equals(data.get("password_verify"))) {
-            registerView.cleanPassword();
-            registerView.popupMessage("Error, las contraseñas no coinciden.");
-            return;
-        }
-
-        String username = data.get("username");
-        String email = data.get("email");
-        String password = data.get("password");
-
-        registerView.cleanFormulary();
-
-        if (userManager.addUser(username, email, password)) {
-            registerView.popupMessage("Account created successfully!");
-            registerView.registerCompleted();
         } else {
-            registerView.popupMessage("Error, ya existe un usuario con los datos introducidos.");
-        }
+            if (isValidName(data.get("username"))) {
+                if (isValidEmailAddress(data.get("email"))) {
+                    if (isValidPassword(data.get("password"))) {
+                        if (data.get("password").equals(data.get("password_verify"))) {
+                            String username = data.get("username");
+                            String email = data.get("email");
+                            String password = data.get("password");
 
+                            registerView.cleanFormulary();
+
+                            if (userManager.addUser(username, email, password)) {
+                                registerView.popupMessage("Account created successfully!");
+                                registerView.registerCompleted();
+                            } else {
+                                registerView.popupMessage("Error, ya existe un usuario con los datos introducidos.");
+                            }
+                        } else {
+                            registerView.cleanPassword();
+                            registerView.popupMessage("Error, las contraseñas no coinciden.");
+                        }
+                    } else {
+                        registerView.cleanPassword();
+                    }
+                } else {
+                    registerView.cleanEmail();
+                    registerView.popupMessage("Error, el formato del email es incorrecto.");
+                }
+            } else {
+                registerView.cleanName();
+                registerView.popupMessage("Error, el formato del nombre es incorrecto.");
+            }
+
+        }
     }
 
     @Override
