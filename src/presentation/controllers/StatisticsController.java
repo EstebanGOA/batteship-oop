@@ -53,7 +53,10 @@ public class StatisticsController implements MouseListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
             String name = statisticsView.getStringSelected();
             statisticsView.updatePieChart(userManager.getWinrate(name));
-            userManager.getAttacks(name);
+
+            statisticsView.addBars(userManager.getAttacks(name));
+
+
 
             System.out.println(name);
 

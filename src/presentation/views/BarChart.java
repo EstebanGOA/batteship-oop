@@ -5,15 +5,26 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+/**
+ * BarChart class extends a JPanel, and it's used to create the barchart in the Statistics View
+ */
 public class BarChart extends JPanel {
 
     private ArrayList<Integer> bars = new ArrayList<>();
 
+    /**
+     * Function that adds a bar in the barchart .
+     * @param value the value of the bar.
+     */
     public void addBar( int value) {
         bars.add( value);
         repaint();
     }
 
+    /**
+     * Function that paints the bar chart
+     * @param g
+     */
     @Override
     protected void paintComponent(Graphics g) {
         int max = Integer.MIN_VALUE;
@@ -23,7 +34,10 @@ public class BarChart extends JPanel {
             max = Math.max(max, value);
         }
 
-        int width = (getWidth() / bars.size()) - 2;
+        int width = 0;
+        if (bars.size() > 0) {
+            width = (getWidth() / bars.size()) - 2;
+        }
 
         int x = 1;
         int bar = 0;
@@ -42,15 +56,22 @@ public class BarChart extends JPanel {
 
 
 
-            g.drawString("Attacks", x + width /4,  getHeight() - height - 30);
+            g.drawString(value +" Attacks", x + width /4,  getHeight() - height - 30);
 
-            g.drawString("Game X", x + width /4,  getHeight() - 5);
+            g.drawString("Game " + (bar + 1), x + width /4,  getHeight() - 5);
 
             x += (width + 2);
             bar++;
 
         }
 
+    }
+
+    /**
+     * Function that removes all the bars.
+     */
+    public void clearBars() {
+        bars.clear();
     }
 
 }

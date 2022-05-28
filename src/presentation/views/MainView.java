@@ -106,7 +106,6 @@ public class MainView extends JFrame implements MouseListener {
                 statisticsView.addItem(user);
             }
 
-            statisticsView.addBars(10);
     }
 
     /**

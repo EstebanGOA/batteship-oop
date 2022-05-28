@@ -63,7 +63,7 @@ public class SQLUserDAO implements UserDAO {
 
         try {
             //Comprobamos si el usuario existe.
-            if (result.next()) {
+
 
 
                 while(result.next()) {
@@ -71,7 +71,6 @@ public class SQLUserDAO implements UserDAO {
 
                 }
 
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -140,14 +139,13 @@ public class SQLUserDAO implements UserDAO {
 
         try {
             //Comprobamos si el usuario existe.
-            if (result.next()) {
 
 
                 while(result.next()) {
                     num_attacks.add(result.getInt("number_of_attacks"));
                 }
 
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

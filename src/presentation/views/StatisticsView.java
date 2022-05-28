@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class StatisticsView extends JPanel {
@@ -191,18 +192,21 @@ public class StatisticsView extends JPanel {
         userList.addItem(s);
     }
 
-    public void addBars(int i) {
-        barChart.addBar(i);
+    public void addBars(ArrayList<Integer> num_attacks) {
+        barChart.clearBars();
+        for (int i : num_attacks) {
+            barChart.addBar(i);
+        }
     }
+
+
 
     public void updatePieChart(int[] stats) {
         pieChart.setWinrate(stats);
         pieChart.repaint();
     }
 
-    public void updateBarChar(){
 
-    }
 
     public String getStringSelected() {
         return userList.getItemAt(userList.getSelectedIndex()).toString();
