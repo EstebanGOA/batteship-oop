@@ -48,7 +48,6 @@ public class Human extends Player implements Runnable {
                     Thread.sleep(getDelay());
                     setRecharging(false);
                     gameManager.updatePhase("Attack");
-                    System.out.println("Human");
                 }
             } catch (InterruptedException e) {
                 /* We catch the interrupted exception but don't show any kind of message. */

@@ -48,14 +48,8 @@ public class StatisticsController implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-            String name = statisticsView.getStringSelected();
-            statisticsView.updatePieChart(userManager.getWinrate(name));
-
-            statisticsView.addBars(userManager.getAttacks(name));
-
-
-
-            System.out.println(name);
-
+        String name = statisticsView.getStringSelected();
+        statisticsView.updatePieChart(userManager.getWinrate(name));
+        statisticsView.addBars(userManager.getAttacks(name));
     }
 }

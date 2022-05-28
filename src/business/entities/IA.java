@@ -99,11 +99,8 @@ public class IA extends Player implements Runnable {
                 }
                 this.setCheckHit(check);
                 gameManager.updateGame(this);
-                System.out.println("IA");
-
             } catch (InterruptedException e) {
                 /* We catch the interrupted exception but don't show any kind of message. */
-                e.printStackTrace();
             }
         }
 

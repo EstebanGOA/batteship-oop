@@ -23,7 +23,6 @@ public class SettingsView extends JPanel {
     private JImagePanel deleteAccountButton;
     private JImagePanel backButton;
 
-
     /**
      * Constructor of the settings view where we create all the view.
      *
@@ -34,47 +33,6 @@ public class SettingsView extends JPanel {
         this.mainView = mainView;
 
         initializeWindow();
-
-        Font font = initializeFont();
-
-        // Top Panel include the space, the back button and the title of the window.
-
-
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BorderLayout());
-        topPanel.setOpaque(false);
-
-        // Box Layout to add space on the left of the back button
-
-        JPanel spaceAndBackButton = new JPanel();
-        spaceAndBackButton.setOpaque(false);
-        spaceAndBackButton.setLayout(new BoxLayout(spaceAndBackButton, BoxLayout.X_AXIS));
-
-        // Back Button Image
-
-        backButton = new JImagePanel(SpritePath.BACK_BUTTON);
-        backButton.setPreferredSize(new Dimension(75, 0));
-        backButton.setOpaque(false);
-        backButton.setName("back");
-
-        // Window Title
-
-        JLabel jLabel = new JLabel();
-        jLabel.setLayout(new BorderLayout());
-        jLabel.setFont(font);
-        jLabel.setOpaque(false);
-        jLabel.setText("Settings");
-        jLabel.setForeground(Color.white);
-        jLabel.setBorder(BorderFactory.createEmptyBorder());
-        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        jLabel.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
-
-
-        spaceAndBackButton.add(addSeparator(75, 0));
-        spaceAndBackButton.add(backButton);
-
-        jLabel.add(spaceAndBackButton, BorderLayout.WEST);
-        topPanel.add(jLabel, BorderLayout.CENTER);
 
         // ------------------------ Initializing Buttons ------------------------ //
 
@@ -146,9 +104,10 @@ public class SettingsView extends JPanel {
 
         // Back Button Image
 
-        JImagePanel backButton = new JImagePanel(SpritePath.BACK_BUTTON);
+        backButton = new JImagePanel(SpritePath.BACK_BUTTON);
         backButton.setPreferredSize(new Dimension(75, 0));
         backButton.setOpaque(false);
+        backButton.setName("back");
 
         // Window Title
 
