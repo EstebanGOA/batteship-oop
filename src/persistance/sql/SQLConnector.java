@@ -14,19 +14,20 @@ public class SQLConnector {
     private final String url;
     private Connection conn;
 
-    public static persistance.sql.SQLConnector getInstance() {
+    public static SQLConnector getInstance() {
         if (instance == null) {
-            instance = new persistance.sql.SQLConnector(DatabaseConfigDAO.getUsername(), DatabaseConfigDAO.getPassword(), DatabaseConfigDAO.getIp(), DatabaseConfigDAO.getPort(), DatabaseConfigDAO.getDatabaseName());
+            DatabaseConfigDAO databaseConfigDAO = new DatabaseConfigDAO();
+            instance = new SQLConnector(databaseConfigDAO);
             instance.connect();
         }
         return instance;
     }
 
     // Parametrized constructor
-    public SQLConnector(String username, String password, String ip, int port, String database) {
-        this.username = username;
-        this.password = password;
-        this.url = "jdbc:mysql://" + ip + ":" + port + "/" + database;
+    public SQLConnector(DatabaseConfigDAO databaseConfigDAO) {
+        this.username = databaseConfigDAO.getUsername();
+        this.password = databaseConfigDAO.getPassword();
+        this.url = "jdbc:mysql://" + databaseConfigDAO.getIp() + ":" + databaseConfigDAO.getPort() + "/" + databaseConfigDAO.getDatabase();
     }
 
 
@@ -120,4 +121,5 @@ public class SQLConnector {
             System.err.println("Problem when closing the connection --> " + e.getSQLState() + " (" + e.getMessage() + ")");
         }
     }
+
 }

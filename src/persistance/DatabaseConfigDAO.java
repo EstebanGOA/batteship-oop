@@ -8,56 +8,50 @@ import java.nio.file.Paths;
 
 public class DatabaseConfigDAO {
 
+    private String username;
+    private String password;
+    private String ip;
+    private int port;
+    private String database;
+    private int delay;
+
     private static final String CONFIG_JSON_PATH = "resources/config.json";
 
-    /**
-     *  Funciones para leer el fichero config.json, donde hay los parametros username, password, ip, port y database.
-     *
-     * @return
-     */
-
-    public static String getUsername() {
+    public DatabaseConfigDAO() {
+        JsonObject jsonConfig = null;
         try {
-            JsonObject jsonConfig = JsonParser.parseString(Files.readString(Paths.get(CONFIG_JSON_PATH))).getAsJsonObject();
-            return jsonConfig.get("username").getAsString();
+            jsonConfig = JsonParser.parseString(Files.readString(Paths.get(CONFIG_JSON_PATH))).getAsJsonObject();
+            username = jsonConfig.get("username").getAsString();
+            password = jsonConfig.get("password").getAsString();
+            ip = jsonConfig.get("ip").getAsString();
+            port = jsonConfig.get("port").getAsInt();
+            database = jsonConfig.get("database").getAsString();
+            delay = jsonConfig.get("delay").getAsInt();
         } catch (IOException e) {
-            return "";
+            System.out.println("Couldn't read data from config.json");
         }
     }
 
-    public static String getPassword() {
-        try {
-            JsonObject jsonConfig = JsonParser.parseString(Files.readString(Paths.get(CONFIG_JSON_PATH))).getAsJsonObject();
-            return jsonConfig.get("password").getAsString();
-        } catch (IOException e) {
-            return "";
-        }
+    public String getUsername() {
+        return username;
     }
 
-    public static String getIp() {
-        try {
-            JsonObject jsonConfig = JsonParser.parseString(Files.readString(Paths.get(CONFIG_JSON_PATH))).getAsJsonObject();
-            return jsonConfig.get("ip").getAsString();
-        } catch (IOException e) {
-            return "";
-        }
+    public String getPassword() {
+        return password;
+    }
+    public String getIp() {
+        return ip;
+    }
+    public int getPort() {
+        return port;
     }
 
-    public static int getPort() {
-        try {
-            JsonObject jsonConfig = JsonParser.parseString(Files.readString(Paths.get(CONFIG_JSON_PATH))).getAsJsonObject();
-            return jsonConfig.get("port").getAsInt();
-        } catch (IOException e) {
-            return 0;
-        }
+    public String getDatabase() {
+        return database;
     }
 
-    public static String getDatabaseName() {
-        try {
-            JsonObject jsonConfig = JsonParser.parseString(Files.readString(Paths.get(CONFIG_JSON_PATH))).getAsJsonObject();
-            return jsonConfig.get("database").getAsString();
-        } catch (IOException e) {
-            return "";
-        }
+    public int getDelay() {
+        return delay;
     }
+
 }

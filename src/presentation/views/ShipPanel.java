@@ -12,15 +12,26 @@ public class ShipPanel extends JPanel {
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";
     private final JImagePanel shipPanel;
 
-    public ShipPanel(String shipName, String shipPath, String panelBg, int imageWidth, int imageHeight) {
+    /**
+     *
+     * Constructor to draw a ShipPanel for the game stage view
+     *
+     * @param shipName name of the ship
+     * @param shipPath image of the ship
+     * @param panelBg background of the ship
+     * @param imageWidth image width
+     * @param imageHeight image height
+     * @param widthShipPanel width of the panel
+     *
+     */
+
+    public ShipPanel(String shipName, SpritePath shipPath, SpritePath panelBg, int imageWidth, int imageHeight, int widthShipPanel) {
         Font font = initializeFont(FONT_BOLD, 15F);
 
         shipPanel = new JImagePanel(panelBg);
-        shipPanel.setPreferredSize(new Dimension(250, 125));
+        shipPanel.setPreferredSize(new Dimension(widthShipPanel, 125));
         shipPanel.setLayout(new GridBagLayout());
         shipPanel.setOpaque(false);
-        //shipPanel.setName("ship_panel");
-        //shipPanel.addMouseListener(this);
 
         JLabel shipNameText = new JLabel();
         shipNameText.setText(shipName);
@@ -46,6 +57,17 @@ public class ShipPanel extends JPanel {
         add(shipPanel);
     }
 
+    /**
+     *
+     * Method to initialize the font.
+     *
+     * @param fontPath font path.
+     * @param fontSize font size.
+     *
+     * @return the font initialized.
+     *
+     */
+
     public Font initializeFont(String fontPath, float fontSize) {
         Font font = null;
 
@@ -59,6 +81,14 @@ public class ShipPanel extends JPanel {
 
         return font;
     }
+
+    /**
+     *
+     * Method to get the background panel of the ship panel.
+     *
+     * @return the background panel.
+     *
+     */
 
     public JImagePanel getBackgroundPanel () {
         return shipPanel;

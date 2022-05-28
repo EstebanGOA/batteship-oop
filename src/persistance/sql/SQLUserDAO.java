@@ -25,7 +25,7 @@ public class SQLUserDAO implements UserDAO {
         return SQLConnector.getInstance().deleteQuery(query);
     }
 
-    public String getPassword(String string) {
+    public User getUser(String string) {
         String query;
 
         if (string.contains("@")) {
@@ -40,11 +40,15 @@ public class SQLUserDAO implements UserDAO {
             //Comprobamos si el usuario existe.
             if (result.next()) {
                 //Accedemos a la cuarta columna de la tabla User, es decir, retornamos la constraseña asociada al usuario.
-                return result.getString(4);
+                int id = result.getInt(1);
+                String username = result.getString(2);
+                String email = result.getString(3);
+                String password = result.getString(4);
+                return new User(id, username, email, password);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 }

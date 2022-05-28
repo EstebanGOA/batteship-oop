@@ -1,13 +1,21 @@
 package business.entities;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Clase abstracta con las variables comunes entre los jugadores.
  */
-abstract public class Player {
+abstract public class Player implements Runnable {
 
-    Board board;
+    private Board board;
+    private boolean attacked[][];
 
-    Ship[] ships;
+    private Ship[] ships;
+
+    private AtomicBoolean recharging;
+    private AtomicBoolean alive;
+    private AtomicInteger numberOfAttacks;
 
     /**
      * Constructor de Player.
@@ -16,6 +24,19 @@ abstract public class Player {
     public Player(Board board) {
         this.board = board;
         this.ships = new Ship[5];
+        this.recharging = new AtomicBoolean(false);
+        this.alive = new AtomicBoolean(true);
+        this.numberOfAttacks = new AtomicInteger(0);
+        this.attacked = new boolean[15][15];
+    }
+
+    public Player(Board board, boolean recharging, boolean alive, int numberOfAttacks) {
+        this.board = board;
+        this.ships = new Ship[5];
+        this.recharging = new AtomicBoolean(recharging);
+        this.alive = new AtomicBoolean(alive);
+        this.numberOfAttacks = new AtomicInteger(numberOfAttacks);
+        this.attacked = new boolean[15][15];
     }
 
     /**
@@ -24,6 +45,18 @@ abstract public class Player {
      */
     public Board getBoard() {
         return board;
+    }
+
+    public boolean[][] getAttacked() {
+        return attacked;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Ship[] getShips() {
+        return ships;
     }
 
     public Board insertShip(int[] cords, String shipSelected, String orientation) {
@@ -89,4 +122,56 @@ abstract public class Player {
         return flag;
     }
 
+    public boolean attack(Player player, int x, int y) {
+        // recharging.set(true);
+        return player.getBoard().sendAttack(x, y);
+    }
+
+    public boolean isAttackedAlready(int x, int y) {
+        if (!attacked[x][y]) {
+            attacked[x][y] = true;
+            numberOfAttacks.incrementAndGet();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setRecharging(boolean recharging) {
+        this.recharging.set(recharging);
+    }
+
+    public boolean isRecharging() {
+        return recharging.get();
+    }
+
+    public boolean isAlive() {
+        return alive.get();
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive.set(alive);
+    }
+
+    /**
+     * Method that will check if the player still has a ship alive.
+     * @return It will return true if so, otherwise returns false.
+     */
+    public boolean status() {
+        int count = 0;
+        for (Ship ship : getShips()) {
+            if (ship.isSunk()) {
+                count++;
+            }
+        }
+        return count != 5;
+    }
+
+    public AtomicInteger getNumberOfAttacks() {
+        return numberOfAttacks;
+    }
+
+    public void setNumberOfAttacks(AtomicInteger numberOfAttacks) {
+        this.numberOfAttacks = numberOfAttacks;
+    }
 }

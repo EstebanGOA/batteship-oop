@@ -9,5 +9,5 @@ public interface UserDAO {
 
     boolean deleteUser(String code);
 
-    String getPassword(String string);
+    User getUser(String string);
 }

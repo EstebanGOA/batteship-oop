@@ -2,34 +2,34 @@ package presentation.controllers;
 
 import business.GameManager;
 import business.entities.Board;
+import business.entities.Player;
 import presentation.views.Cell;
+import presentation.views.GameStageView;
 import presentation.views.JPopup;
 import presentation.views.SetupStageView;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class SetupStageController implements MouseListener {
 
     private SetupStageView setupStageView;
+    private GameStageView gameStageView;
     private GameManager gameManager;
 
-    private final String BOAT = "Boat";
-    private final String SUBMARINE = "Submarine";
-    private final String DESTRUCTOR = "Destructor";
-    private final String AIRCRAFT = "Aircraft";
-
-    public SetupStageController(SetupStageView setupStageView, GameManager gameManager) {
+    public SetupStageController(SetupStageView setupStageView, GameStageView gameStageView, GameManager gameManager) {
         this.setupStageView = setupStageView;
+        this.gameStageView = gameStageView;
         this.gameManager = gameManager;
-
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
 
         switch (((JComponent) e.getSource()).getName()) {
+
             case "cell" -> {
                 Cell cell = (Cell) e.getSource();
                 processShipPlacement(cell);
@@ -44,11 +44,20 @@ public class SetupStageController implements MouseListener {
 
     private void isSetupStageReady() {
         int numberOfEnemies = setupStageView.getNumberOfEnemies();
+
         if (gameManager.isSetupStageReady()) {
             gameManager.createIA(numberOfEnemies);
-            // setupStageView.switchWindow();
-            // gameManager.playGame();
+            gameStageView.paintLayout(numberOfEnemies);
+            ArrayList<Player> players = gameManager.getPlayers();
+            gameStageView.updateGame(players);
+            gameManager.startGame();
+            setupStageView.switchWindow();
+            setupStageView.reset();
+
+        } else {
+            new JPopup("Error, all ships must be placed");
         }
+
     }
 
     private void processShipPlacement(Cell cell) {
@@ -60,7 +69,7 @@ public class SetupStageController implements MouseListener {
         Board board = gameManager.insertShip(coords, shipSelected, orientation);
 
         if (board != null) {
-            setupStageView.paintShip(board);
+            setupStageView.updateBoard(board);
         } else {
             new JPopup("Error, ship can not be placed there!");
         }

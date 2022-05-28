@@ -1,7 +1,6 @@
 package presentation.views;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -14,41 +13,72 @@ public class MenuView extends JPanel {
     private String username = "";
 
     private JImagePanel settingsButton;
+    private JImagePanel loadGameButton;
+
+    private final Font font = initializeFont();
+
+    /**
+     *
+     * Constructor of the menuView.
+     *
+     * @param mainView which controls the menuView.
+     *
+     */
 
     public MenuView(MainView mainView) {
 
         this.mainView = mainView;
 
-        Font font = initializeFont();
-
         // ------------------------ Background Image ------------------------ //
         // ---------- Grid layout to divide the window in 3 columns --------- //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/background_main_menu_v2.png");
+        JImagePanel backgroundPanel = new JImagePanel(SpritePath.MENU_BACKGROUND);
             backgroundPanel.setPreferredSize(new Dimension(1280, 720));
             backgroundPanel.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // --------------------------- Left Column -------------------------- //
+        // ------------------------ Display Objects ------------------------ //
 
+        gbc.gridx = 0; gbc.gridy = 0;
+        backgroundPanel.add(createLeftColumn(), gbc);
+
+        gbc.gridx = 1; gbc.gridy = 0;
+        backgroundPanel.add(createMidColumn(), gbc);
+
+        gbc.gridx = 2; gbc.gridy = 0;
+        backgroundPanel.add(createRightColumn(), gbc);
+
+        add(backgroundPanel);
+    }
+
+    // --------------------------- Left Column -------------------------- //
+
+    /**
+     * Method to create the left column of the menu view.
+     *
+     * @return the left column of the menu view.
+     *
+     */
+
+    public JPanel createLeftColumn () {
         JPanel leftColumn = new JPanel (new GridBagLayout());
-            leftColumn.setOpaque(false);
+        leftColumn.setOpaque(false);
 
         System.out.println(username);
         GridBagConstraints gbcLeftColumn = new GridBagConstraints();
 
-            JPanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
-                nameBackgroundPanel.setOpaque(false);
-                nameBackgroundPanel.setLayout(new BorderLayout());
-                nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
+        JPanel nameBackgroundPanel = new JImagePanel(SpritePath.TITLE_MENU);
+        nameBackgroundPanel.setOpaque(false);
+        nameBackgroundPanel.setLayout(new BorderLayout());
+        nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
 
-                    JLabel usernameLabel = new JLabel(username);
-                    usernameLabel.setFont(font);
-                    usernameLabel.setForeground(Color.white);
-                    usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
+        JLabel usernameLabel = new JLabel(username);
+        usernameLabel.setFont(font);
+        usernameLabel.setForeground(Color.white);
+        usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
 
-            nameBackgroundPanel.add(usernameLabel);
+        nameBackgroundPanel.add(usernameLabel);
 
         gbcLeftColumn.gridx = 0; gbcLeftColumn.gridy = 0;
         gbcLeftColumn.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -60,22 +90,35 @@ public class MenuView extends JPanel {
         gbcLeftColumn.gridx = 0; gbcLeftColumn.gridy = 1;
         leftColumn.add(addSeparator(0,570), gbcLeftColumn);
 
-        // --------------------------- Mid Column -------------------------- //
+        return leftColumn;
+    }
 
+    // --------------------------- Mid Column -------------------------- //
+
+    /**
+     *
+     * Method to create the mid-column of the menu view.
+     *
+     * @return the mid-column for the menu view.
+     *
+     */
+
+    public JPanel createMidColumn () {
         JPanel midColumn = new JPanel (new GridBagLayout());
-            midColumn.setOpaque(false);
+        midColumn.setOpaque(false);
 
         GridBagConstraints gbcMidColumn = new GridBagConstraints();
 
-        JImagePanel newBattleButton = new JImagePanel("sprites/new_battle_button.png");
-            newBattleButton.setPreferredSize(new Dimension(350,125));
-            newBattleButton.setOpaque(false);
-            newBattleButton.setName("new_game");
-            newBattleButton.addMouseListener(mainView);
+        JImagePanel newBattleButton = new JImagePanel(SpritePath.NEW_BATTLE_BUTTON);
+        newBattleButton.setPreferredSize(new Dimension(350,125));
+        newBattleButton.setOpaque(false);
+        newBattleButton.setName("new_game");
+        newBattleButton.addMouseListener(mainView);
 
-        JImagePanel loadBattleButton = new JImagePanel("sprites/load_battle_button.png");
-            loadBattleButton.setPreferredSize(new Dimension(350,125));
-            loadBattleButton.setOpaque(false);
+        loadGameButton = new JImagePanel(SpritePath.LOAD_BATTLE_BUTTON);
+        loadGameButton.setPreferredSize(new Dimension(350,125));
+        loadGameButton.setOpaque(false);
+        loadGameButton.setName("loadGame");
 
         gbcMidColumn.gridx = 0; gbcMidColumn.gridy = 0;
         midColumn.add(newBattleButton, gbcMidColumn);
@@ -84,48 +127,46 @@ public class MenuView extends JPanel {
         midColumn.add(addSeparator(0,50), gbcMidColumn);
 
         gbcMidColumn.gridx = 0; gbcMidColumn.gridy = 2;
-        midColumn.add(loadBattleButton, gbcMidColumn);
+        midColumn.add(loadGameButton, gbcMidColumn);
 
-        // --------------------------- Right Column -------------------------- //
+        return midColumn;
+    }
 
+    // --------------------------- Right Column -------------------------- //
+
+    /**
+     *
+     * Method to create the right column of the menu view.
+     *
+     * @return the right column for the menu view.
+     *
+     */
+
+    public JPanel createRightColumn () {
         JPanel rightColumn = new JPanel (new GridBagLayout());
-            rightColumn.setOpaque(false);
+        rightColumn.setOpaque(false);
 
         GridBagConstraints gbcRightColumn = new GridBagConstraints();
 
-        // Trophies Panel
-
-        JImagePanel trophiesBackground = new JImagePanel("sprites/trophies_background.png");
-            trophiesBackground.setOpaque(false);
-            trophiesBackground.setLayout(new BorderLayout());
-            trophiesBackground.setPreferredSize(new Dimension(200, 75));
-
-            JLabel trophiesLabel = new JLabel("0");
-                trophiesLabel.setFont(font);
-                trophiesLabel.setForeground(Color.white);
-                trophiesLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
-
-             trophiesBackground.add(trophiesLabel);
-
         // Settings Button
 
-            settingsButton = new JImagePanel("sprites/settings_button.png");
-            settingsButton.setPreferredSize(new Dimension(75,75));
-            settingsButton.setOpaque(false);
-            settingsButton.setName("settings");
+        settingsButton = new JImagePanel(SpritePath.SETTINGS_BUTTON);
+        settingsButton.setPreferredSize(new Dimension(75,75));
+        settingsButton.setOpaque(false);
+        settingsButton.setName("settings");
 
         // Statistics Button
 
-        JImagePanel statisticsButton = new JImagePanel("sprites/statistics_button.png");
-            statisticsButton.setPreferredSize(new Dimension(75,75));
-            statisticsButton.setOpaque(false);
+        JImagePanel statisticsButton = new JImagePanel(SpritePath.STATISTICS_BUTTON);
+        statisticsButton.setPreferredSize(new Dimension(75,75));
+        statisticsButton.setOpaque(false);
 
         gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 0;
         rightColumn.add(addSeparator(200,0), gbcRightColumn);
 
         gbcRightColumn.gridx = 1; gbcRightColumn.gridy = 0;
         gbcRightColumn.anchor = GridBagConstraints.FIRST_LINE_START;
-        rightColumn.add(trophiesBackground, gbcRightColumn);
+        rightColumn.add(createTrophiesPanel(), gbcRightColumn);
 
         gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 1;
         rightColumn.add(addSeparator(0,15), gbcRightColumn);
@@ -144,19 +185,39 @@ public class MenuView extends JPanel {
         gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 5;
         rightColumn.add(addSeparator(0, 375), gbcRightColumn);
 
-        // ------------------------ Display Objects ------------------------ //
-
-        gbc.gridx = 0; gbc.gridy = 0;
-        backgroundPanel.add(leftColumn, gbc);
-
-        gbc.gridx = 1; gbc.gridy = 0;
-        backgroundPanel.add(midColumn, gbc);
-
-        gbc.gridx = 2; gbc.gridy = 0;
-        backgroundPanel.add(rightColumn, gbc);
-
-        add(backgroundPanel);
+        return rightColumn;
     }
+
+    /**
+     *
+     * Method to create the trophies' panel in the menu view.
+     *
+     * @return the trophies' panel.
+     *
+     */
+
+    public JPanel createTrophiesPanel () {
+        JImagePanel trophiesBackground = new JImagePanel(SpritePath.TROPHIES_BACKGROUND);
+        trophiesBackground.setOpaque(false);
+        trophiesBackground.setLayout(new BorderLayout());
+        trophiesBackground.setPreferredSize(new Dimension(200, 75));
+
+        JLabel trophiesLabel = new JLabel("0");
+        trophiesLabel.setFont(font);
+        trophiesLabel.setForeground(Color.white);
+        trophiesLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
+
+        trophiesBackground.add(trophiesLabel);
+        return trophiesBackground;
+    }
+
+    /**
+     *
+     * Method to initialize the font for the texts.
+     *
+     * @return the initialized font.
+     *
+     */
 
     public Font initializeFont () {
         Font font = null;
@@ -172,6 +233,17 @@ public class MenuView extends JPanel {
         return font;
     }
 
+    /**
+     *
+     * Method to add a separator panel between two panels of the view.
+     *
+     * @param width of the separator panel.
+     * @param height of the separator panel.
+     *
+     * @return the separator panel.
+     *
+     */
+
     public JPanel addSeparator (int width, int height) {
         JPanel space = new JPanel();
         space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
@@ -183,15 +255,46 @@ public class MenuView extends JPanel {
         return space;
     }
 
+    /**
+     *
+     * Method to assign the listener to the settings button.
+     *
+     * @param mouseListener the mouse listener of the view.
+     *
+     */
+
     public void menuController(MouseListener mouseListener) {
         settingsButton.addMouseListener(mouseListener);
+        loadGameButton.addMouseListener(mouseListener);
     }
+
+    /**
+     * Method to switch the panel of the settings view.
+     */
 
     public void settingsView() {
         mainView.switchPanel("settings");
     }
 
+    /**
+     *
+     * Method to set the username of the player.
+     *
+     * @param username username of the player.
+     *
+     */
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     *
+     * Method to switch to the game view.
+     *
+     */
+
+    public void gameView() {
+        mainView.switchPanel("game");
     }
 }
