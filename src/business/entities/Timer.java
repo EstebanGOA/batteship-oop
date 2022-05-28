@@ -15,6 +15,12 @@ public class Timer implements Runnable {
         this.gameManager = gameManager;
     }
 
+    public Timer(int minutes, int seconds, GameManager gameManager) {
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.gameManager = gameManager;
+    }
+
     @Override
     public void run() {
             try {

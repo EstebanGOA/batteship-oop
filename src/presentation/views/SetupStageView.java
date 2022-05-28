@@ -242,14 +242,12 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
-                table[i][j] = new Cell(j, i, SpritePath.WATER);
+                table[i][j] = new Cell(j, i);
                 Border border = BorderFactory.createLineBorder(Color.BLACK);
                 table[i][j].setBorder(border);
                 tableGrid.add(table[i][j]);
                 table[i][j].setName("cell");
                 table[i][j].setBackground(Color.BLUE);
-                // Nos interesa que el evento se active con el controlador.
-                // table[i][j].addMouseListener(this);
             }
         }
 

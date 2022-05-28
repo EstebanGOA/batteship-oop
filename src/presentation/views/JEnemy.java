@@ -77,7 +77,7 @@ public class JEnemy extends JPanel {
 
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
-                table[i][j] = new Cell(j, i, SpritePath.WATER);
+                table[i][j] = new Cell(j, i);
                 table[i][j].setBackground(Color.BLUE);
                 tableGrid.add(table[i][j]);
                 Border border = BorderFactory.createLineBorder(Color.BLACK);
