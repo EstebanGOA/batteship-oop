@@ -5,10 +5,12 @@ import presentation.views.MenuView;
 import presentation.views.StatisticsView;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class StatisticsController implements MouseListener {
+public class StatisticsController implements MouseListener, ActionListener {
 
     private UserManager userManager;
     private StatisticsView statisticsView;
@@ -21,6 +23,8 @@ public class StatisticsController implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         switch (((JComponent) e.getSource()).getName()) {
             case "back" -> statisticsView.menuView();
+
+
 
         }
     }
@@ -42,6 +46,16 @@ public class StatisticsController implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+            String name = statisticsView.getStringSelected();
+            statisticsView.updatePieChart(userManager.getWinrate(name));
+            userManager.getAttacks(name);
+
+            System.out.println(name);
 
     }
 }

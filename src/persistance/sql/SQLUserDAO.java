@@ -26,8 +26,7 @@ public class SQLUserDAO implements UserDAO {
         String query = "DELETE FROM User WHERE name = '" + code + "';";
         return SQLConnector.getInstance().deleteQuery(query);
     }
-
-    public String getPassword(String string) {
+    public User getUser(String string) {
         String query;
 
         if (string.contains("@")) {
@@ -42,12 +41,16 @@ public class SQLUserDAO implements UserDAO {
             //Comprobamos si el usuario existe.
             if (result.next()) {
                 //Accedemos a la cuarta columna de la tabla User, es decir, retornamos la constraseña asociada al usuario.
-                return result.getString(4);
+                int id = result.getInt(1);
+                String username = result.getString(2);
+                String email = result.getString(3);
+                String password = result.getString(4);
+                return new User(id, username, email, password);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
     public ArrayList<String> getUsersName() {
@@ -75,5 +78,81 @@ public class SQLUserDAO implements UserDAO {
 
 
         return users;
+    }
+
+    @Override
+    public int[] getStats(String user) {
+        String query;
+        int games_played = 0;
+        int games_won = 0;
+
+        query = "SELECT COUNT(g.id) FROM game AS g " +
+                "JOIN user AS u " +
+                "WHERE u.id = g.player_id AND u.name LIKE '%" +user +"%';";
+
+        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+
+        try {
+            //Comprobamos si el usuario existe.
+            if (result.next()) {
+                //Accedemos a la cuarta columna de la tabla User, es decir, retornamos la constraseña asociada al usuario.
+               games_played  = result.getInt(1);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        query = "SELECT COUNT(g.id) FROM game AS g " +
+                "JOIN user AS u " +
+                "WHERE u.id = g.player_id AND g.win = 1 AND u.name LIKE '%" +user +"%';";
+
+        result = SQLConnector.getInstance().selectQuery(query);
+
+        try {
+            //Comprobamos si el usuario existe.
+            if (result.next()) {
+                //Accedemos a la cuarta columna de la tabla User, es decir, retornamos la constraseña asociada al usuario.
+               games_won  = result.getInt(1);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new int[] {games_won, games_played};
+
+
+    }
+
+    @Override
+    public ArrayList<Integer> getNumAttacks(String string) {
+        String query = "SELECT g.number_of_attacks " +
+                "FROM user AS u " +
+                "JOIN game AS g ON u.id = g.player_id " +
+                "WHERE u.name LIKE '%" + string +"%' " +
+                "ORDER BY g.id DESC " +
+                "LIMIT 5;";
+
+        ArrayList<Integer> num_attacks = new ArrayList<>();
+
+
+        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+
+        try {
+            //Comprobamos si el usuario existe.
+            if (result.next()) {
+
+
+                while(result.next()) {
+                    num_attacks.add(result.getInt("number_of_attacks"));
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return num_attacks;
+
     }
 }

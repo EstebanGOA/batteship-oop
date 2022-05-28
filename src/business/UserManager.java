@@ -11,8 +11,6 @@ public class UserManager {
     private final UserDAO userDao;
     private User user;
 
-    private String username;
-
     public UserManager() {
         userDao = new SQLUserDAO();
     }
@@ -22,19 +20,20 @@ public class UserManager {
         return userDao.addUser(user);
     }
 
-    public void deleteUser(String code) {
+    public void delete(String code) {
         userDao.deleteUser(code);
     }
 
-    public boolean checkLogin(String login, String password) {
-        if (password.equals(userDao.getPassword(login))) {
-         username = login;
-
-         return true;
+    public boolean isLogin(String login, String password) {
+        User user = userDao.getUser(login);
+        if (user.getPassword().equals(password)) {
+            this.user = user;
+            return true;
         }
         return false;
     }
-    public void logoutUser() {
+
+    public void logout() {
         user = null;
     }
 
@@ -42,7 +41,18 @@ public class UserManager {
         return userDao.getUsersName();
     }
 
-    public String getUsername() {
-        return username;
+
+    public User getUser() {
+        return user;
     }
+
+    public int[] getWinrate(String name) {
+        int[] stats = userDao.getStats(name);
+
+        return stats;
+    }
+    public ArrayList<Integer> getAttacks(String name) {
+        return userDao.getNumAttacks(name);
+    }
+
 }

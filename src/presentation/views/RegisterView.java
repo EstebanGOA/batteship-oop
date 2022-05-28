@@ -1,11 +1,8 @@
 package presentation.views;
 
-import presentation.controllers.RegisterController;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +25,13 @@ public class RegisterView extends JPanel {
     private JImagePanel jImageButton;
     private JLabel jLoginLabel;
 
+    /**
+     *
+     * Constructor method of the register view.
+     *
+     * @param mainView which controls the current view.
+     *
+     */
 
     public RegisterView(MainView mainView) {
 
@@ -42,7 +46,7 @@ public class RegisterView extends JPanel {
 
         // ------------------------ Background Image ------------------------ //
 
-        JImagePanel backgroundPanel = new JImagePanel("sprites/login_background.png");
+        JImagePanel backgroundPanel = new JImagePanel(SpritePath.LOGIN_BACKGROUND);
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
         backgroundPanel.setLayout(new GridBagLayout());
 
@@ -56,6 +60,16 @@ public class RegisterView extends JPanel {
     }
 
     // ------------------------ Display Objects ------------------------ //
+
+    /**
+     *
+     * Method to display all the object in the register view.
+     *
+     * @param backgroundPanel background panel.
+     * @param gbc GridBagConstraints of the register view.
+     * @param font font of the view.
+     *
+     */
 
     public void displayObjects (JPanel backgroundPanel, GridBagConstraints gbc, Font font) {
         gbc.gridx = 0; gbc.gridy = 0;
@@ -97,13 +111,21 @@ public class RegisterView extends JPanel {
 
     // ------------------------ Login Button ------------------------ //
 
+    /**
+     *
+     * Method to create the register button.
+     *
+     * @return the register button.
+     *
+     */
+
     public JPanel buttonPanel () {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.setPreferredSize(new Dimension(200,100));
         buttonPanel.setOpaque(false);
 
-        this.jImageButton = new JImagePanel("sprites/register_button.png");
+        this.jImageButton = new JImagePanel(SpritePath.REGISTER_BUTTON);
         this.jImageButton.setPreferredSize(new Dimension(100,100));
         this.jImageButton.setOpaque(false);
         this.jImageButton.setName("register");
@@ -115,6 +137,16 @@ public class RegisterView extends JPanel {
 
     // ---------------- Label to change to the login view -------------- //
 
+    /**
+     *
+     * Method to set the login label in the view.
+     *
+     * @param font font for the text.
+     *
+     * @return the login label.
+     *
+     */
+
     public JLabel loginLabel (Font font) {
         this.jLoginLabel = new JLabel("Already registered? Log in");
         this.jLoginLabel.setFont(font);
@@ -125,13 +157,23 @@ public class RegisterView extends JPanel {
         return this.jLoginLabel;
     }
 
+    /**
+     *
+     * Method to set the email input panel.
+     *
+     * @param font the font for the text.
+     *
+     * @return the input email panel.
+     *
+     */
+
     public JPanel emailPanel (Font font) {
         JPanel emailPanel = new JPanel();
         emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.X_AXIS));
         emailPanel.setPreferredSize(new Dimension(350, 35));
         emailPanel.setOpaque(false);
 
-        JImagePanel emailIco = new JImagePanel("sprites/email_ico.png");
+        JImagePanel emailIco = new JImagePanel(SpritePath.EMAIL_ICON);
         emailIco.setOpaque(false);
         emailIco.setPreferredSize(new Dimension(35,0));
 
@@ -150,13 +192,24 @@ public class RegisterView extends JPanel {
         return emailPanel;
     }
 
+    /**
+     *
+     * Method to create the input password panel.
+     *
+     * @param font font for the password input.
+     * @param jPasswordField password input field.
+     *
+     * @return the password input panel.
+     *
+     */
+
     public JPanel passwordPanel (Font font, JPasswordField jPasswordField) {
         JPanel passwordPanel = new JPanel();
         passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.X_AXIS));
         passwordPanel.setPreferredSize(new Dimension(350, 35));
         passwordPanel.setOpaque(false);
 
-        JImagePanel passwordIco = new JImagePanel("sprites/lock_ico.png");
+        JImagePanel passwordIco = new JImagePanel(SpritePath.PASSWORD_ICON);
         passwordIco.setOpaque(false);
         passwordIco.setPreferredSize(new Dimension(35,0));
 
@@ -173,13 +226,23 @@ public class RegisterView extends JPanel {
         return passwordPanel;
     }
 
+    /**
+     *
+     * Method to create the username input panel.
+     *
+     * @param font font for the text.
+     *
+     * @return the username input panel.
+     *
+     */
+
     public JPanel usernamePanel (Font font) {
         JPanel usernamePanel = new JPanel();
         usernamePanel.setOpaque(false);
         usernamePanel.setPreferredSize(new Dimension(350, 35));
         usernamePanel.setLayout(new BoxLayout(usernamePanel, BoxLayout.X_AXIS));
 
-        JImagePanel userIco = new JImagePanel("sprites/user_ico.png");
+        JImagePanel userIco = new JImagePanel(SpritePath.USER_ICON);
         userIco.setOpaque(false);
         userIco.setPreferredSize(new Dimension(35,0));
 
@@ -198,11 +261,29 @@ public class RegisterView extends JPanel {
         return usernamePanel;
     }
 
+    /**
+     *
+     * Method to add the bottom border for the inputs fields.
+     *
+     * @param text input text field where we want to add the border.
+     *
+     * @return the border added to the text input.
+     *
+     */
+
     public Border addBottomBorder (JTextField text) {
         Border oldBorder = text.getBorder();
         Border whiteBorder = BorderFactory.createMatteBorder(0, 0, 3, 0, Color.WHITE);
         return BorderFactory.createCompoundBorder(whiteBorder, oldBorder);
     }
+
+    /**
+     *
+     * Method to initialize the font.
+     *
+     * @return the initialized font.
+     *
+     */
 
     public Font initializeFont () {
         Font font = null;
@@ -216,6 +297,17 @@ public class RegisterView extends JPanel {
 
         return font;
     }
+
+    /**
+     *
+     * Method to add a separator panel between two panels.
+     *
+     * @param width width of the separator panel.
+     * @param height height of the separator panel.
+     *
+     * @return the separator panel.
+     *
+     */
 
     public JPanel addSeparator (int width, int height) {
         JPanel space = new JPanel();

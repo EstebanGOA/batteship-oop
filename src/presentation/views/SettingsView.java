@@ -10,12 +10,6 @@ public class SettingsView extends JPanel {
 
     private MainView mainView;
 
-    // Images Paths
-
-    private final String BACK_BUTTON_IMAGE    = "sprites/back_button.png";
-    private final String DELETE_ACCOUNT_IMAGE = "sprites/delete_account_button.png";
-    private final String LOGOUT_BUTTON        = "sprites/logout_button.png";
-
     // Background Color
 
     private final Color BACKGROUND_COLOR = new Color(39,152,213);
@@ -24,8 +18,17 @@ public class SettingsView extends JPanel {
 
     private final String FONT = "fonts/Poppins-Bold.ttf";
 
-    JImagePanel logoutButton;
-    JImagePanel backButton;
+    private JImagePanel logoutButton;
+    private JImagePanel backButton;
+
+
+    /**
+     *
+     * Constructor of the settings view where we create all the view.
+     *
+     * @param mainView which controls the current view.
+     *
+     */
 
     public SettingsView(MainView mainView) {
 
@@ -50,7 +53,7 @@ public class SettingsView extends JPanel {
 
                 // Back Button Image
 
-                    backButton = new JImagePanel(BACK_BUTTON_IMAGE);
+                    backButton = new JImagePanel(SpritePath.BACK_BUTTON);
                     backButton.setPreferredSize(new Dimension(75, 0));
                     backButton.setOpaque(false);
                     backButton.setName("back");
@@ -76,11 +79,11 @@ public class SettingsView extends JPanel {
 
         // ------------------------ Initializing Buttons ------------------------ //
 
-        JImagePanel deleteAccountButton = new JImagePanel(DELETE_ACCOUNT_IMAGE);
+        JImagePanel deleteAccountButton = new JImagePanel(SpritePath.DELETE_ACCOUNT_BUTTON);
             deleteAccountButton.setPreferredSize(new Dimension(250,75));
             deleteAccountButton.setOpaque(false);
 
-            logoutButton = new JImagePanel(LOGOUT_BUTTON);
+            logoutButton = new JImagePanel(SpritePath.LOGOUT_BUTTON);
             logoutButton.setPreferredSize(new Dimension(250,75));
             logoutButton.setOpaque(false);
             logoutButton.setName("logout");
@@ -118,9 +121,23 @@ public class SettingsView extends JPanel {
         setVisible(true);
     }
 
+    /**
+     *
+     * Method to initialize the window of the settings view.
+     *
+     */
+
     public void initializeWindow () {
         setSize(1280, 720);
     }
+
+    /**
+     *
+     * Method to initialize the font of the settings view.
+     *
+     * @return the initialized font.
+     *
+     */
 
     public Font initializeFont () {
         Font font = null;
@@ -136,6 +153,17 @@ public class SettingsView extends JPanel {
         return font;
     }
 
+    /**
+     *
+     * Method to create a separator between two panels.
+     *
+     * @param width width of the separator panel.
+     * @param height height of the separator panel.
+     *
+     * @return the separator panel.
+     *
+     */
+
     public JPanel addSeparator (int width, int height) {
         JPanel space = new JPanel();
         space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
@@ -146,6 +174,13 @@ public class SettingsView extends JPanel {
 
         return space;
     }
+
+    /**
+     *
+     * Method to switch to the login panel.
+     *
+     */
+
     public void viewLogin() {
         mainView.switchPanel("login");
     }
@@ -153,6 +188,15 @@ public class SettingsView extends JPanel {
     public void viewMenu() {
         mainView.switchPanel("menu");
     }
+
+    /**
+     *
+     * Method to add the mouse listener to the logout button.
+     *
+     * @param mouseListener the mouse listener that we want to add to the logout button.
+     *
+     */
+
     public void settingsController(MouseListener mouseListener) {
         logoutButton.addMouseListener(mouseListener);
         backButton.addMouseListener(mouseListener);

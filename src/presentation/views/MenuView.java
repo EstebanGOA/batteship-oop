@@ -19,6 +19,14 @@ public class MenuView extends JPanel {
 
     JLabel usernameLabel;
 
+    /**
+     *
+     * Constructor of the menuView.
+     *
+     * @param mainView which controls the menuView.
+     *
+     */
+
     public MenuView(MainView mainView) {
 
         this.mainView = mainView;
@@ -28,7 +36,7 @@ public class MenuView extends JPanel {
         // ------------------------ Background Image ------------------------ //
         // ---------- Grid layout to divide the window in 3 columns --------- //
 
-        JPanel backgroundPanel = new JPanel();
+        JImagePanel backgroundPanel = new JImagePanel(SpritePath.MENU_BACKGROUND);
             backgroundPanel.setPreferredSize(new Dimension(1280, 720));
             backgroundPanel.setLayout(new GridBagLayout());
 
@@ -39,9 +47,10 @@ public class MenuView extends JPanel {
         JPanel leftColumn = new JPanel (new GridBagLayout());
             leftColumn.setOpaque(false);
 
+        System.out.println(username);
         GridBagConstraints gbcLeftColumn = new GridBagConstraints();
 
-            JPanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
+            JPanel nameBackgroundPanel = new JImagePanel(SpritePath.TITLE_MENU);
                 nameBackgroundPanel.setOpaque(false);
                 nameBackgroundPanel.setLayout(new BorderLayout());
                 nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
@@ -70,11 +79,13 @@ public class MenuView extends JPanel {
 
         GridBagConstraints gbcMidColumn = new GridBagConstraints();
 
-        JImagePanel newBattleButton = new JImagePanel("sprites/new_battle_button.png");
+        JImagePanel newBattleButton = new JImagePanel(SpritePath.NEW_BATTLE_BUTTON);
             newBattleButton.setPreferredSize(new Dimension(350,125));
             newBattleButton.setOpaque(false);
+            newBattleButton.setName("new_game");
+            newBattleButton.addMouseListener(mainView);
 
-        JImagePanel loadBattleButton = new JImagePanel("sprites/load_battle_button.png");
+        JImagePanel loadBattleButton = new JImagePanel(SpritePath.LOAD_BATTLE_BUTTON);
             loadBattleButton.setPreferredSize(new Dimension(350,125));
             loadBattleButton.setOpaque(false);
 
@@ -96,7 +107,7 @@ public class MenuView extends JPanel {
 
         // Trophies Panel
 
-        JImagePanel trophiesBackground = new JImagePanel("sprites/trophies_background.png");
+        JImagePanel trophiesBackground = new JImagePanel(SpritePath.TROPHIES_BACKGROUND);
             trophiesBackground.setOpaque(false);
             trophiesBackground.setLayout(new BorderLayout());
             trophiesBackground.setPreferredSize(new Dimension(200, 75));
@@ -110,14 +121,14 @@ public class MenuView extends JPanel {
 
         // Settings Button
 
-            settingsButton = new JImagePanel("sprites/settings_button.png");
+            settingsButton = new JImagePanel(SpritePath.SETTINGS_BUTTON);
             settingsButton.setPreferredSize(new Dimension(75,75));
             settingsButton.setOpaque(false);
             settingsButton.setName("settings");
 
         // Statistics Button
 
-            statisticsButton = new JImagePanel("sprites/statistics_button.png");
+            statisticsButton = new JImagePanel(SpritePath.STATISTICS_BUTTON);
             statisticsButton.setPreferredSize(new Dimension(75,75));
             statisticsButton.setOpaque(false);
             statisticsButton.setName("statistics");
@@ -158,13 +169,15 @@ public class MenuView extends JPanel {
         backgroundPanel.add(rightColumn, gbc);
 
         add(backgroundPanel);
-
-        //setVisible(true);
     }
 
-    public void initializeWindow () {
-        setSize(1280, 720);
-    }
+    /**
+     *
+     * Method to initialize the font for the texts.
+     *
+     * @return the initialized font.
+     *
+     */
 
     public Font initializeFont () {
         Font font = null;
@@ -180,6 +193,17 @@ public class MenuView extends JPanel {
         return font;
     }
 
+    /**
+     *
+     * Method to add a separator panel between two panels of the view.
+     *
+     * @param width of the separator panel.
+     * @param height of the separator panel.
+     *
+     * @return the separator panel.
+     *
+     */
+
     public JPanel addSeparator (int width, int height) {
         JPanel space = new JPanel();
         space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
@@ -191,10 +215,23 @@ public class MenuView extends JPanel {
         return space;
     }
 
+    /**
+     *
+     * Method to assign the listener to the settings button.
+     *
+     * @param mouseListener the mouse listener of the view.
+     *
+     */
+
     public void menuController(MouseListener mouseListener) {
         settingsButton.addMouseListener(mouseListener);
         statisticsButton.addMouseListener(mouseListener);
     }
+
+    /**
+     * Method to switch the panel of the settings view.
+     */
+
     public void settingsView() {
         mainView.switchPanel("settings");
     }
@@ -204,6 +241,13 @@ public class MenuView extends JPanel {
         mainView.setStatisticsData(users);
     }
 
+    /**
+     *
+     * Method to set the username of the player.
+     *
+     * @param username username of the player.
+     *
+     */
 
     public void setUsername(String username) {
         this.usernameLabel.setText("Username: " + username);

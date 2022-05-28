@@ -47,7 +47,7 @@ public class MenuController implements MouseListener {
     }
 
     public void showUsername() {
-        menuView.setUsername(userManager.getUsername());
+        menuView.setUsername(userManager.getUser().getName());
     }
 
 }

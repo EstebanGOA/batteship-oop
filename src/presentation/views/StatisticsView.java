@@ -1,19 +1,12 @@
 package presentation.views;
 
 
-import com.sun.tools.javac.Main;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
+
+import presentation.controllers.StatisticsController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
@@ -23,18 +16,17 @@ public class StatisticsView extends JPanel {
 
     private MainView mainView;
 
-    private final String BACK_BUTTON_IMAGE    = "sprites/back_button.png";
 
     private final Color BACKGROUND_COLOR = new Color(39,152,213);
 
-
-
+    // Change this
     private final String FONT = "fonts/Poppins-Bold.ttf";
 
     private JImagePanel backButton;
 
     private JComboBox userList;
 
+    private PieChart pieChart;
     private BarChart barChart;
 
     public StatisticsView(MainView mainView) {
@@ -59,7 +51,7 @@ public class StatisticsView extends JPanel {
 
         // Back Button Image
 
-        backButton = new JImagePanel(BACK_BUTTON_IMAGE);
+        backButton = new JImagePanel(SpritePath.BACK_BUTTON);
         backButton.setPreferredSize(new Dimension(75, 0));
         backButton.setOpaque(false);
         backButton.setName("back");
@@ -89,8 +81,7 @@ public class StatisticsView extends JPanel {
         backgroundPanel.setLayout(new BorderLayout());
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
 
-        // Must change the data on pieChart and BarChart
-        PieChart pieChart = new PieChart(0);
+        pieChart = new PieChart();
         pieChart.setPreferredSize(new Dimension(400, 400));
 
         barChart = new BarChart();
@@ -99,7 +90,7 @@ public class StatisticsView extends JPanel {
 
 
 
-        JPanel nameBackgroundPanel = new JImagePanel("sprites/name_background.png");
+        JPanel nameBackgroundPanel = new JPanel();
         nameBackgroundPanel.setOpaque(false);
         nameBackgroundPanel.setLayout(new BorderLayout());
         nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
@@ -114,6 +105,7 @@ public class StatisticsView extends JPanel {
 
 
         userList = new JComboBox();
+        userList.setName("users");
 
 
         JPanel grid = new JPanel();
@@ -183,8 +175,10 @@ public class StatisticsView extends JPanel {
         setSize(1280, 720);
     }
 
-    public void menuController(MouseListener mouseListener) {
-        backButton.addMouseListener(mouseListener);
+    public void menuController(StatisticsController statisticsController) {
+        backButton.addMouseListener(statisticsController);
+        userList.addActionListener(statisticsController);
+
 
     }
 
@@ -201,6 +195,17 @@ public class StatisticsView extends JPanel {
         barChart.addBar(i);
     }
 
+    public void updatePieChart(int[] stats) {
+        pieChart.setWinrate(stats);
+        pieChart.repaint();
+    }
 
+    public void updateBarChar(){
+
+    }
+
+    public String getStringSelected() {
+        return userList.getItemAt(userList.getSelectedIndex()).toString();
+    }
 
 }
