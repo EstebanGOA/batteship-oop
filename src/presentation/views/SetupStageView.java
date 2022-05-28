@@ -712,7 +712,6 @@ public class SetupStageView extends JPanel implements MouseListener {
             }
             case "rotate" -> {
                 shipImage.rotateImage();
-                System.out.println(shipImage.getWidth() + ", " + shipImage.getHeight());
                 if (orientation.equals("vertical")) {
                     orientation = "horizontal";
                 } else {
