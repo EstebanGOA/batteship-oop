@@ -1,0 +1,8 @@
+{
+  "username": "root",
+  "password": "",
+  "ip": "localhost",
+  "port": 3306,
+  "database": "battleship",
+  "delay":500
+}
