@@ -55,7 +55,6 @@ public class SettingsView extends JPanel {
         backButton = new JImagePanel(SpritePath.BACK_BUTTON);
         backButton.setPreferredSize(new Dimension(75, 0));
         backButton.setOpaque(false);
-        backButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         backButton.setName("back");
 
         // Window Title
@@ -187,17 +186,16 @@ public class SettingsView extends JPanel {
      */
 
     public Font initializeFont() {
-        Font font = null;
 
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File(FONT)).deriveFont(30f);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(FONT)).deriveFont(30f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(FONT)));
+            return font;
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-
-        return font;
+        return null;
     }
 
     /**

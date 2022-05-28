@@ -417,4 +417,9 @@ public class LoginView extends JPanel implements MouseListener {
                 break;
         }
     }
+
+    public void reset() {
+        jEmailInput.setText("Username or Email");
+        jPasswordInput.setText("Password");
+    }
 }

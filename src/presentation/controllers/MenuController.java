@@ -39,7 +39,9 @@ public class MenuController implements MouseListener {
                 filenames.add(file.getName().split("\\.")[0]);
             }
             String game = (String) JOptionPane.showInputDialog(null, "Which game do you want to load?", "Select a game", JOptionPane.QUESTION_MESSAGE, null, filenames.toArray(), filenames.get(0));
-            loadSavedGame(game);
+            if(game != null && !game.isEmpty()) {
+                loadSavedGame(game);
+            }
         }
     }
 
