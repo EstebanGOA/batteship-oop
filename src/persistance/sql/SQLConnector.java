@@ -1,19 +1,32 @@
 package persistance.sql;
 
-import persistance.Config;
+import persistance.DatabaseConfigDAO;
 import java.sql.*;
 
 public class SQLConnector {
+
+    private static SQLConnector instance = null;
+
     // Attributes to connect to the database.
     private final String username;
     private final String password;
     private final String url;
-    private static Connection conn;
+    private Connection conn;
 
-    public SQLConnector(Config config) {
-        this.username = config.getUsername();
-        this.password = config.getPassword();
-        this.url = "jdbc:mysql://" + config.getIp() + ":" + config.getPort() + "/" + config.getDatabase();
+    public static SQLConnector getInstance() {
+        if (instance == null) {
+            DatabaseConfigDAO databaseConfigDAO = new DatabaseConfigDAO();
+            instance = new SQLConnector(databaseConfigDAO);
+            instance.connect();
+        }
+        return instance;
+    }
+
+    // Parametrized constructor
+    public SQLConnector(DatabaseConfigDAO databaseConfigDAO) {
+        this.username = databaseConfigDAO.getUsername();
+        this.password = databaseConfigDAO.getPassword();
+        this.url = "jdbc:mysql://" + databaseConfigDAO.getIp() + ":" + databaseConfigDAO.getPort() + "/" + databaseConfigDAO.getDatabase();
     }
 
     /**
@@ -106,4 +119,5 @@ public class SQLConnector {
             System.err.println("Problem when closing the connection --> " + e.getSQLState() + " (" + e.getMessage() + ")");
         }
     }
+
 }
