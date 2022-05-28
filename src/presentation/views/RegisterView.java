@@ -380,4 +380,12 @@ public class RegisterView extends JPanel {
         jVerifyPasswordField.setText("");
         jPasswordField.setText("");
     }
+
+    public void cleanEmail() {
+        jEmailField.setText("");
+    }
+
+    public void cleanName() {
+        jUserField.setText("");
+    }
 }
