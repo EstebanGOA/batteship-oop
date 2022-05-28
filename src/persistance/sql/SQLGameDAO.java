@@ -27,12 +27,10 @@ public class SQLGameDAO implements GameDAO {
      */
     @Override
     public void addGame(Game game) {
-        String query = "INSERT INTO Game(player_id, number_of_attacks, win, game_saved) VALUES (" +
+        String query = "INSERT INTO Game(player_id, number_of_attacks, win  ) VALUES (" +
                 game.getPlayerId() + ", " +
                 game.getNumberOfAttacks() + ", " +
-                game.isWin() + ", '" +
-                game.getPath() +
-                "');";
+                game.isWin() + ");";
 
         SQLConnector.getInstance().insertQuery(query);
 

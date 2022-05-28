@@ -5,15 +5,16 @@ import business.GameManager;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class IA extends Player {
+public class IA extends Player implements Runnable {
 
     private GameManager gameManager;
 
     /* Auxiliar variables to manage IA intelligence */
-    private int checkHit;
-    private int[] coords = new int[2];
-    private int[] coordsAux = new int[2];
-    private boolean orientation;
+    /* Declared volatile so, they are not stored in cache */
+    private volatile int checkHit;
+    private volatile int[] coords = new int[2];
+    private volatile int[] coordsAux = new int[2];
+    private volatile boolean orientation;
 
     public IA(Board board, Color color, GameManager gameManager, int delay) {
         super(board, color, delay);
@@ -81,26 +82,31 @@ public class IA extends Player {
 
     @Override
     public void run() {
-        try {
-            while(isAlive()) {
+
+        while(!isStop() && isAlive()) {
+
+            try {
                 boolean check = false;
                 Thread.sleep(getDelay());
                 int[] coords = generateAttack();
                 ArrayList<Player> players = gameManager.getPlayers();
                 for (Player objective : players) {
                     if (!objective.equals(this)) {
-                        if(this.attack(objective, coords[0], coords[1])) {
+                        if (this.attack(objective, coords[0], coords[1])) {
                             check = true;
                         }
-                   }
+                    }
                 }
                 this.setCheckHit(check);
-                gameManager.updateGame();
-            }
+                gameManager.updateGame(this);
+                System.out.println("IA");
 
-        } catch (InterruptedException e) {
-            /* We catch the interrupted exception but don't show any kind of message. */
+            } catch (InterruptedException e) {
+                /* We catch the interrupted exception but don't show any kind of message. */
+                e.printStackTrace();
+            }
         }
+
     }
 
     public void setCheckHit(boolean hit) {

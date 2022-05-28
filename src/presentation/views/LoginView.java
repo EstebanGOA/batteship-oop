@@ -16,12 +16,14 @@ public class LoginView extends JPanel implements MouseListener {
      */
     private final MainView mainView;
 
-    private final JImagePanel jLoginButton;
-    private final JTextField jEmailInput;
-    private final JPasswordField jPasswordInput;
-    private final JLabel jRegisterAccount;
+    private JImagePanel jLoginButton;
+    private JTextField jEmailInput;
+    private JPasswordField jPasswordInput;
+    private JLabel jRegisterAccount;
 
     private final JImagePanel backgroundPanel;
+
+    private final Font font = initializeFont();
 
     /**
      *
@@ -32,10 +34,7 @@ public class LoginView extends JPanel implements MouseListener {
      */
 
     public LoginView(MainView mainView) {
-
         this.mainView = mainView;
-
-        Font font = initializeFont();
 
         // ------------------------ Background Image ------------------------ //
 
@@ -44,8 +43,45 @@ public class LoginView extends JPanel implements MouseListener {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // ------------------------ Login Button ------------------------ //
+        // ------------------------ Display Objects ------------------------ //
 
+        gbc.gridx = 0; gbc.gridy = 0;
+        backgroundPanel.add(new JSeparator(0,150), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1;
+        backgroundPanel.add(emailPanel(), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2;
+        backgroundPanel.add(new JSeparator(0,50), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 3;
+        backgroundPanel.add(passwordPanel(), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 4;
+        backgroundPanel.add(new JSeparator(0,75), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 5;
+        backgroundPanel.add(loginButton(), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 6;
+        backgroundPanel.add(new JSeparator(0,50), gbc);
+
+        gbc.gridx = 0; gbc.gridy = 7;
+        backgroundPanel.add(registerAccountLabel(), gbc);
+
+        this.add(backgroundPanel);
+
+        initializeListeners();
+    }
+
+    /**
+     *
+     * Method to create the login button.
+     *
+     * @return the login button.
+     */
+
+    public JPanel loginButton () {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BorderLayout());
         buttonPanel.setPreferredSize(new Dimension(200,100));
@@ -57,9 +93,17 @@ public class LoginView extends JPanel implements MouseListener {
         jLoginButton.setName("login");
 
         buttonPanel.add(jLoginButton);
+        return buttonPanel;
+    }
 
-        // ------------------------ Email Box Layout ------------------------ //
+    /**
+     *
+     * Method to create the email input panel.
+     *
+     * @return th email input panel.
+     */
 
+    public JPanel emailPanel () {
         JPanel emailPanel = new JPanel();
         emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.X_AXIS));
         emailPanel.setPreferredSize(new Dimension(350, 35));
@@ -85,7 +129,17 @@ public class LoginView extends JPanel implements MouseListener {
         emailPanel.add(emailIco);
         emailPanel.add(new JSeparator(15,0));
         emailPanel.add(jEmailInput);
+        return emailPanel;
+    }
 
+    /**
+     *
+     * Method to create the password input panel.
+     *
+     * @return the password input panel.
+     */
+
+    public JPanel passwordPanel () {
         // ------------------------ Password Box Layout ------------------------ //
 
         JPanel passwordPanel = new JPanel();
@@ -114,44 +168,23 @@ public class LoginView extends JPanel implements MouseListener {
         passwordPanel.add(passwordIco);
         passwordPanel.add(new JSeparator(15,0));
         passwordPanel.add(jPasswordInput);
+        return passwordPanel;
+    }
 
-        // ----------------- Label to create a new account ----------------- //
+    /**
+     *
+     * Method to create the register account text.
+     *
+     * @return the register account text.
+     */
 
+    public JLabel registerAccountLabel () {
         jRegisterAccount = new JLabel();
         jRegisterAccount.setText("Not registered? Create an account");
         jRegisterAccount.setFont(font);
         jRegisterAccount.setForeground(new Color(200,200,200));
         jRegisterAccount.setName("create_account");
-
-        // ------------------------ Display Objects ------------------------ //
-
-        gbc.gridx = 0; gbc.gridy = 0;
-        backgroundPanel.add(new JSeparator(0,150), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 1;
-        backgroundPanel.add(emailPanel, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 2;
-        backgroundPanel.add(new JSeparator(0,50), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 3;
-        backgroundPanel.add(passwordPanel, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 4;
-        backgroundPanel.add(new JSeparator(0,75), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 5;
-        backgroundPanel.add(buttonPanel, gbc);
-
-        gbc.gridx = 0; gbc.gridy = 6;
-        backgroundPanel.add(new JSeparator(0,50), gbc);
-
-        gbc.gridx = 0; gbc.gridy = 7;
-        backgroundPanel.add(jRegisterAccount, gbc);
-
-        this.add(backgroundPanel);
-
-        initializeListeners();
+        return jRegisterAccount;
     }
 
     /**
@@ -221,8 +254,9 @@ public class LoginView extends JPanel implements MouseListener {
      *
      */
 
-    public void menuView() {
+    public void menuView(String username) {
         mainView.switchPanel("menu");
+        mainView.setUsername(username);
     }
 
     /**

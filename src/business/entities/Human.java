@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Clase que se encargará de manejar toda la lógica referente al jugador y sus movimientos.
  */
-public class Human extends Player {
+public class Human extends Player implements Runnable {
 
     private GameManager gameManager;
 
@@ -42,18 +42,21 @@ public class Human extends Player {
 
     @Override
     public void run() {
-        while (isAlive()) {
+        while (!isStop() && isAlive()) {
             try {
                 if (isRecharging()) {
                     Thread.sleep(getDelay());
                     setRecharging(false);
                     gameManager.updatePhase("Attack");
+                    System.out.println("Human");
                 }
             } catch (InterruptedException e) {
                 /* We catch the interrupted exception but don't show any kind of message. */
             }
         }
-        gameManager.updatePhase("Dead");
+        if (!isAlive()) {
+            gameManager.updatePhase("Dead");
+        }
         setRecharging(true);
     }
 }

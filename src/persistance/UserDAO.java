@@ -2,6 +2,8 @@ package persistance;
 
 import business.entities.User;
 
+import java.util.ArrayList;
+
 /**
  * Interface UserDAO
  */
@@ -27,4 +29,25 @@ public interface UserDAO {
      * @return The user with that name or email.
      */
     User getUser(String string);
+
+    /**
+     * Function used to retrieve all usernames from database.
+     * @return It will return all usernames from database stored inside the array.
+     */
+    ArrayList<String> getUsersName();
+
+    /**
+     * Function used to retrieve statistics of a player from database.
+     * @param string Username.
+     * @return Array that it will contain statistics from the user.
+     */
+    int[] getStats(String string);
+
+    /**
+     * Function used to retrieve statistics of a player from database.
+     * @param string Username.
+     * @return Array that it will contain statistics from the user.
+     */
+    ArrayList<Integer> getNumAttacks(String string);
+
 }

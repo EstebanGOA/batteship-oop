@@ -10,13 +10,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 abstract public class Player implements Runnable {
 
     private Board board;
+    private Ship[] ships;
     private boolean attacked[][];
 
-    private Ship[] ships;
-
-    private AtomicBoolean recharging;
-    private AtomicBoolean alive;
-    private AtomicInteger numberOfAttacks;
+    /* This variables are declared volatile because are changed inside threads so, they are not stored on cache */
+    private volatile boolean recharging;
+    private volatile boolean alive;
+    private volatile int numberOfAttacks;
+    private volatile boolean stop;
     private int delay;
 
     /* It will be used to identify the players on the board */
@@ -29,23 +30,25 @@ abstract public class Player implements Runnable {
     public Player(Board board, Color color, int delay) {
         this.board = board;
         this.ships = new Ship[5];
-        this.recharging = new AtomicBoolean(false);
-        this.alive = new AtomicBoolean(true);
-        this.numberOfAttacks = new AtomicInteger(0);
+        this.recharging = false;
+        this.alive = true;
+        this.numberOfAttacks = 0;
         this.attacked = new boolean[15][15];
         this.color = color;
         this.delay = delay;
+        this.stop = false;
     }
 
     public Player(Board board, boolean recharging, boolean alive, int numberOfAttacks, boolean[][] attacked, Color color, int delay) {
         this.board = board;
         this.ships = new Ship[5];
-        this.recharging = new AtomicBoolean(recharging);
-        this.alive = new AtomicBoolean(alive);
-        this.numberOfAttacks = new AtomicInteger(numberOfAttacks);
+        this.recharging = recharging;
+        this.alive = alive;
+        this.numberOfAttacks = numberOfAttacks;
         this.attacked = attacked;
         this.color = color;
         this.delay = delay;
+        this.stop = false;
     }
 
     /**
@@ -66,6 +69,14 @@ abstract public class Player implements Runnable {
 
     public int getDelay() {
         return delay;
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
     }
 
     /**
@@ -147,7 +158,7 @@ abstract public class Player implements Runnable {
     public boolean isAttackedAlready(int x, int y) {
         if (!attacked[x][y]) {
             attacked[x][y] = true;
-            numberOfAttacks.incrementAndGet();
+            numberOfAttacks++;
             return false;
         } else {
             return true;
@@ -155,19 +166,19 @@ abstract public class Player implements Runnable {
     }
 
     public void setRecharging(boolean recharging) {
-        this.recharging.set(recharging);
+        this.recharging = recharging;
     }
 
     public boolean isRecharging() {
-        return recharging.get();
+        return recharging;
     }
 
     public boolean isAlive() {
-        return alive.get();
+        return alive;
     }
 
     public void setAlive(boolean alive) {
-        this.alive.set(alive);
+        this.alive = alive;
     }
 
     /**
@@ -184,11 +195,12 @@ abstract public class Player implements Runnable {
         return count != 5;
     }
 
-    public AtomicInteger getNumberOfAttacks() {
+    /**
+     * Method that will return the number of attacks.
+     * @return It will return an integer with the number of attacks. 
+     */
+    public int getNumberOfAttacks() {
         return numberOfAttacks;
     }
 
-    public void setNumberOfAttacks(AtomicInteger numberOfAttacks) {
-        this.numberOfAttacks = numberOfAttacks;
-    }
 }

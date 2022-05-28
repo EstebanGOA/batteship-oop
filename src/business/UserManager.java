@@ -4,26 +4,32 @@ import business.entities.User;
 import persistance.UserDAO;
 import persistance.sql.SQLUserDAO;
 
+import java.util.ArrayList;
+
 public class UserManager {
 
-    private final UserDAO userDao;
+    private SQLUserDAO userDAO;
     private User user;
 
-    public UserManager() {
-        userDao = new SQLUserDAO();
+    public UserManager(SQLUserDAO sqlUserDAO) {
+        this.userDAO = sqlUserDAO;
     }
 
     public boolean addUser(String username, String email, String password) {
         this.user = new User(username, email, password);
-        return userDao.addUser(user);
+        return userDAO.addUser(user);
     }
 
-    public void delete(String code) {
-        userDao.deleteUser(code);
+    public boolean delete() {
+        if (user != null) {
+            userDAO.deleteUser(user.getName());
+            return true;
+        }
+        return false;
     }
 
     public boolean isLogin(String login, String password) {
-        User user = userDao.getUser(login);
+        User user = userDAO.getUser(login);
 
         if (user == null) {
             return false;
@@ -40,8 +46,22 @@ public class UserManager {
         user = null;
     }
 
+    public ArrayList<String> getUsersName(){
+        return userDAO.getUsersName();
+    }
+
+
     public User getUser() {
         return user;
+    }
+
+    public int[] getWinrate(String name) {
+        int[] stats = userDAO.getStats(name);
+
+        return stats;
+    }
+    public ArrayList<Integer> getAttacks(String name) {
+        return userDAO.getNumAttacks(name);
     }
 
 }

@@ -14,20 +14,37 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * GameController class that implements a MouseListener.
+ * The GameController is responsible to communicate between the GameManager and the GameStageView.
+ */
 public class GameController implements MouseListener {
 
     private GameStageView gameStageView;
     private GameManager gameManager;
 
+    /**
+     * Constructor of GameController
+     * @param gameStageView The GameStageView  that controls the view of the game.
+     * @param gameManager The GameManager that controls the logic of the game.
+     */
     public GameController(GameStageView gameStageView, GameManager gameManager) {
         this.gameStageView = gameStageView;
         this.gameManager = gameManager;
     }
 
+    /**
+     * Function that updates the time of the game.
+     * @param time A string with the time.
+     */
     public void updateTimer(String time) {
         SwingUtilities.invokeLater(()->this.gameStageView.updateTime(time));
     }
 
+    /**
+     * Function that updates the players of the game.
+     * @param players An array of all the players that are playing
+     */
     public void updateGame(ArrayList<Player> players) {
         SwingUtilities.invokeLater(()->this.gameStageView.updateGame(players));
     }
@@ -85,8 +102,14 @@ public class GameController implements MouseListener {
         gameStageView.updatePhase(recharging);
     }
 
-    public void returnMenu(Player player) {
-        boolean isWinner = player instanceof Human;
+    /**
+     * A function that returns to the menu when the game ends, also pops up a message regarding the game.
+     * This message can be either "You have won!" or "You have lost" depending on the outcome of the game.
+     * @param winner The position on the array of the player that win the game..
+     */
+    public void returnMenu(int winner) {
+
+        boolean isWinner = winner == 0;
 
         if (isWinner)
             new JPopup("You have won!");

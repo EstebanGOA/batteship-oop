@@ -11,6 +11,7 @@ public class Timer implements Runnable {
     private final int DELAY = 1000;
     private int seconds;
     private int minutes;
+    private boolean stop;
     private GameManager gameManager;
 
     /**
@@ -21,6 +22,7 @@ public class Timer implements Runnable {
         seconds = 0;
         minutes = 0;
         this.gameManager = gameManager;
+        stop = false;
     }
 
 
@@ -28,6 +30,7 @@ public class Timer implements Runnable {
         this.minutes = minutes;
         this.seconds = seconds;
         this.gameManager = gameManager;
+        stop = false;
     }
 
     /**
@@ -36,19 +39,28 @@ public class Timer implements Runnable {
      */
     @Override
     public void run() {
+        while (!isStop()) {
             try {
-                while (true) {
-                    Thread.sleep(DELAY);
-                    seconds++;
-                    if (seconds == 60) {
-                        minutes++;
-                        seconds = 0;
-                    }
-                    gameManager.updateTimer(generateString());
+                Thread.sleep(DELAY);
+                seconds++;
+                if (seconds == 60) {
+                    minutes++;
+                    seconds = 0;
                 }
+                gameManager.updateTimer(generateString());
+
             } catch (InterruptedException e) {
                 /* We catch the interrupted exception but don't show any kind of message. */
             }
+        }
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
     }
 
     /**

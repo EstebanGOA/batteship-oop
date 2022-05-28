@@ -20,12 +20,12 @@ import java.util.ArrayList;
  */
 public class GameManager {
 
+    private ConfigDAO configDAO;
     private String gameName;
-    private final GameJSON gameJSON;
+    private GameJSON gameJSON;
 
     private GameController gameController;
-    private final GameDAO gameDao;
-    private final ConfigDAO configDAO;
+    private GameDAO gameDao;
 
     private ArrayList<Player> players;
     private ArrayList<Thread> threads;
@@ -36,9 +36,8 @@ public class GameManager {
     /**
      * Constructor of GameManager.
      * @param sqlGameDAO A SQLGameDAO to persist the information or read it.
-     * @throws IOException An IOException
      */
-    public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
+    public GameManager(SQLGameDAO sqlGameDAO) {
         this.gameDao = sqlGameDAO;
         this.gameJSON = new GameJSON(this);
         this.configDAO = new ConfigDAO();
@@ -68,10 +67,11 @@ public class GameManager {
      * Function that stops the game, all the threats are interrupt.
      */
     public void stopGame() {
-        for (Thread thread : threads) {
-            thread.interrupt();
+
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).setStop(true);
         }
-        timerThread.interrupt();
+        timer.setStop(true);
     }
 
     /**
@@ -81,6 +81,7 @@ public class GameManager {
         if (timer == null) {
             timer = new Timer(this);
         }
+        timer.setStop(false);
         timerThread = new Thread(timer);
         timerThread.start();
     }
@@ -132,7 +133,9 @@ public class GameManager {
      * This function creates threads for all the players and starts them alongside the timer .
      */
     public void startGame() {
+        threads = new ArrayList<>();
         for (Player p : players) {
+            p.setStop(false);
             Thread thread = new Thread(p);
             threads.add(thread);
             thread.start();
@@ -208,7 +211,7 @@ public class GameManager {
 
             player.setRecharging(true);
             updatePhase("Recharging");
-            updateGame();
+            updateGame(player);
 
         }
     }
@@ -224,7 +227,7 @@ public class GameManager {
     /**
      * Function that updates the game
      */
-    public void updateGame()  {
+    public void updateGame(Player player)  {
 
         int count = 0, winner = 0;
         for (int i = 0; i < players.size(); i++) {
@@ -239,12 +242,12 @@ public class GameManager {
 
         gameController.updateGame(players);
 
-        if (count == players.size()-1) {
+
+        if (count == players.size()-1 && player.equals(players.get(winner))) {
 
             stopGame();
-            Player p = players.get(winner);
-            saveGame(p);
-            gameController.returnMenu(p);
+            saveGame(winner);
+            gameController.returnMenu(winner);
             reset();
 
             /* In some cases we will be playing a saved game so, if gameName is not null it means that the game was loaded so, we need to delete the file
@@ -252,6 +255,7 @@ public class GameManager {
             if (gameName != null) {
                 gameJSON.deleteFile(gameName);
             }
+
         }
 
     }
@@ -268,9 +272,10 @@ public class GameManager {
      * Function that persists the finished game in the database.
      * @param winner The player that has won the game.
      */
-    private void saveGame(Player winner) {
-        boolean isWinner = winner instanceof Human;
-        gameDao.addFinishedGame(isWinner, winner.getNumberOfAttacks().get());
+    private void saveGame(int winner) {
+        Player p = players.get(0);
+        boolean isWinner = winner == 0;
+        gameDao.addFinishedGame(isWinner, p.getNumberOfAttacks());
     }
 
     /**
@@ -315,6 +320,10 @@ public class GameManager {
         return gameJSON.exist(name);
     }
 
+    /**
+     * Functions that get all files from the directory "saves"
+     * @return It will return an array with all the Files inside the directory.
+     */
     public File[] getFiles() {
         return gameJSON.getFiles();
     }

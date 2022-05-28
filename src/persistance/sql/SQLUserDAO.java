@@ -5,12 +5,19 @@ import business.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Class SQLUserDAO that implements UserDAO.
  * This class is responsible to communicate with the database, on all the matters regarding the user.
  */
 public class SQLUserDAO implements UserDAO {
+
+    private final SQLConnector sqlConnector;
+
+    public SQLUserDAO() {
+        this.sqlConnector = SQLConnector.getInstance();
+    }
 
     /**
      * Function used to add a user in the database.
@@ -25,7 +32,7 @@ public class SQLUserDAO implements UserDAO {
                 user.getPassword() +
                 "');";
 
-        return SQLConnector.getInstance().insertQuery(query);
+        return sqlConnector.insertQuery(query);
     }
 
     /**
@@ -36,7 +43,8 @@ public class SQLUserDAO implements UserDAO {
     @Override
     public boolean deleteUser(String code) {
         String query = "DELETE FROM User WHERE name = '" + code + "';";
-        return SQLConnector.getInstance().deleteQuery(query);
+
+        return sqlConnector.deleteQuery(query);
     }
 
     /**
@@ -54,7 +62,7 @@ public class SQLUserDAO implements UserDAO {
             query = "SELECT * FROM User WHERE name = '" + string + "';";
         }
 
-        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+        ResultSet result = sqlConnector.selectQuery(query);
 
         try {
             //Comprobamos si el usuario existe.
@@ -70,5 +78,113 @@ public class SQLUserDAO implements UserDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Function that will get all usernames from the database.
+     * @return Array with all the username saved on the databse.
+     */
+    public ArrayList<String> getUsersName() {
+        String query = "SELECT name FROM User";
+
+        ArrayList<String> users = new ArrayList<>();
+
+
+        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+
+        try {
+            //Comprobamos si el usuario existe.
+
+
+
+                while(result.next()) {
+                    users.add(result.getString("name"));
+
+                }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return users;
+    }
+
+    /**
+     * Function that will get the statistics from one user.
+     * @param user Username.
+     * @return Array with the statistics data inside.
+     */
+    @Override
+    public int[] getStats(String user) {
+        String query;
+        int games_played = 0;
+        int games_won = 0;
+
+        query = "SELECT COUNT(g.id) FROM game AS g " +
+                "JOIN user AS u " +
+                "WHERE u.id = g.player_id AND u.name LIKE '%" +user +"%';";
+
+        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+
+        try {
+            //Comprobamos si el usuario existe.
+            if (result.next()) {
+                //Accedemos a la cuarta columna de la tabla User, es decir, retornamos la constraseña asociada al usuario.
+               games_played  = result.getInt(1);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        query = "SELECT COUNT(g.id) FROM game AS g " +
+                "JOIN user AS u " +
+                "WHERE u.id = g.player_id AND g.win = 1 AND u.name LIKE '%" +user +"%';";
+
+        result = SQLConnector.getInstance().selectQuery(query);
+
+        try {
+            //Comprobamos si el usuario existe.
+            if (result.next()) {
+                //Accedemos a la cuarta columna de la tabla User, es decir, retornamos la constraseña asociada al usuario.
+               games_won  = result.getInt(1);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new int[] {games_won, games_played};
+
+
+    }
+
+    /**
+     * Function that will get the number of attacks made from one user.
+     * @param string Username.
+     * @return Array with the statistics data inside.
+     */
+    @Override
+    public ArrayList<Integer> getNumAttacks(String string) {
+
+        String query = "SELECT g.number_of_attacks " +
+                "FROM user AS u " +
+                "JOIN game AS g ON u.id = g.player_id " +
+                "WHERE u.name LIKE '%" + string +"%' " +
+                "ORDER BY g.id DESC " +
+                "LIMIT 5;";
+
+        ArrayList<Integer> num_attacks = new ArrayList<>();
+        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+
+        try {
+            //Comprobamos si el usuario existe.
+                while(result.next()) {
+                    num_attacks.add(result.getInt("number_of_attacks"));
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return num_attacks;
     }
 }
