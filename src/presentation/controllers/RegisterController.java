@@ -70,39 +70,47 @@ public class RegisterController implements MouseListener {
         HashMap<String, String> data = registerView.getData();
 
         if (data.get("username").isEmpty() || data.get("email").isEmpty() || data.get("password").isEmpty() || data.get("password_verify").isEmpty()) {
+
             registerView.cleanPassword();
             registerView.popupMessage("Error, todos los campos son obligatorios.");
+
         } else {
-            if (isValidName(data.get("username"))) {
-                if (isValidEmailAddress(data.get("email"))) {
-                    if (isValidPassword(data.get("password"))) {
-                        if (data.get("password").equals(data.get("password_verify"))) {
-                            String username = data.get("username");
-                            String email = data.get("email");
-                            String password = data.get("password");
 
-                            registerView.cleanFormulary();
-
-                            if (userManager.addUser(username, email, password)) {
-                                registerView.popupMessage("Account created successfully!");
-                                registerView.registerCompleted();
-                            } else {
-                                registerView.popupMessage("Error, ya existe un usuario con los datos introducidos.");
-                            }
-                        } else {
-                            registerView.cleanPassword();
-                            registerView.popupMessage("Error, las contraseñas no coinciden.");
-                        }
-                    } else {
-                        registerView.cleanPassword();
-                    }
-                } else {
-                    registerView.cleanEmail();
-                    registerView.popupMessage("Error, el formato del email es incorrecto.");
-                }
-            } else {
+            if (!isValidName(data.get("username"))) {
                 registerView.cleanName();
                 registerView.popupMessage("Error, el formato del nombre es incorrecto.");
+                return;
+            }
+
+            if (!isValidEmailAddress(data.get("email"))) {
+                registerView.cleanEmail();
+                registerView.popupMessage("Error, el formato del email es incorrecto.");
+                return;
+            }
+
+            if (!isValidPassword(data.get("password"))) {
+                registerView.cleanPassword();
+                return;
+            }
+
+            if (data.get("password").equals(data.get("password_verify"))) {
+
+                String username = data.get("username");
+                String email = data.get("email");
+                String password = data.get("password");
+                registerView.cleanFormulary();
+                if (userManager.addUser(username, email, password)) {
+                    registerView.popupMessage("Account created successfully!");
+                    registerView.registerCompleted();
+                } else {
+                    registerView.popupMessage("Error, ya existe un usuario con los datos introducidos.");
+                }
+
+            } else {
+
+                registerView.cleanPassword();
+                registerView.popupMessage("Error, las contraseñas no coinciden.");
+
             }
 
         }

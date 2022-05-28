@@ -55,6 +55,7 @@ public class StatisticsView extends JPanel {
         backButton = new JImagePanel(SpritePath.BACK_BUTTON);
         backButton.setPreferredSize(new Dimension(75, 0));
         backButton.setOpaque(false);
+        backButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         backButton.setName("back");
 
 
