@@ -12,6 +12,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Class SaveAndLoadGameSON.
+ * This class is used to save and load games when a user wants to end or start the game respectively.
+ */
 public class SaveAndLoadGameSON {
     private static String path;
     private final Path p;

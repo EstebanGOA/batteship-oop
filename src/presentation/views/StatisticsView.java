@@ -188,7 +188,6 @@ public class StatisticsView extends JPanel {
     }
 
     public void addItem(String s) {
-
         userList.addItem(s);
     }
 
