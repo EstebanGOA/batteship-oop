@@ -1,17 +1,16 @@
 import business.GameManager;
 import business.UserManager;
 import persistance.sql.SQLGameDAO;
+import persistance.sql.SQLUserDAO;
 import presentation.controllers.*;
 import presentation.views.*;
 
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         MainView mainView = new MainView();
-
-
 
         LoginView loginView = new LoginView(mainView);
         RegisterView registerView = new RegisterView(mainView);
@@ -21,7 +20,8 @@ public class Main {
         GameStageView gameStageView = new GameStageView(mainView);
 
 
-        UserManager userManager = new UserManager();
+        SQLUserDAO sqlUserDAO = new SQLUserDAO();
+        UserManager userManager = new UserManager(sqlUserDAO);
         SQLGameDAO sqlGameDAO = new SQLGameDAO(userManager);
         GameManager gameManager = new GameManager(sqlGameDAO);
 

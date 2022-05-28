@@ -25,7 +25,7 @@ public class GameManager {
     private Timer timer;
     private Thread timerThread;
 
-    public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
+    public GameManager(SQLGameDAO sqlGameDAO) {
         this.gameDao = sqlGameDAO;
         this.gameJSON = new GameJSON(this);
         this.players = new ArrayList<>();

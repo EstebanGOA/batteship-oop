@@ -20,6 +20,7 @@ public class SettingsView extends JPanel {
     private final Font font = initializeFont();
 
     private JImagePanel logoutButton;
+    private JImagePanel deleteAccountButton;
 
     /**
      *
@@ -28,17 +29,18 @@ public class SettingsView extends JPanel {
      * @param mainView which controls the current view.
      *
      */
-
     public SettingsView(MainView mainView) {
+
         this.mainView = mainView;
 
         initializeWindow();
 
         // ------------------------ Initializing Buttons ------------------------ //
 
-        JImagePanel deleteAccountButton = new JImagePanel(SpritePath.DELETE_ACCOUNT_BUTTON);
-            deleteAccountButton.setPreferredSize(new Dimension(250,75));
-            deleteAccountButton.setOpaque(false);
+        deleteAccountButton = new JImagePanel(SpritePath.DELETE_ACCOUNT_BUTTON);
+        deleteAccountButton.setPreferredSize(new Dimension(250,75));
+        deleteAccountButton.setOpaque(false);
+        deleteAccountButton.setName("delete");
 
         logoutButton = new JImagePanel(SpritePath.LOGOUT_BUTTON);
             logoutButton.setPreferredSize(new Dimension(250,75));
@@ -201,5 +203,6 @@ public class SettingsView extends JPanel {
 
     public void settingsController(MouseListener mouseListener) {
         logoutButton.addMouseListener(mouseListener);
+        deleteAccountButton.addMouseListener(mouseListener);
     }
 }

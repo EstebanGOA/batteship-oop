@@ -1,12 +1,11 @@
 package persistance.sql;
 
 import persistance.DatabaseConfigDAO;
-
 import java.sql.*;
 
 public class SQLConnector {
 
-    private static persistance.sql.SQLConnector instance = null;
+    private static SQLConnector instance = null;
 
     // Attributes to connect to the database.
     private final String username;
@@ -29,7 +28,6 @@ public class SQLConnector {
         this.password = databaseConfigDAO.getPassword();
         this.url = "jdbc:mysql://" + databaseConfigDAO.getIp() + ":" + databaseConfigDAO.getPort() + "/" + databaseConfigDAO.getDatabase();
     }
-
 
     /**
      * Method that starts the inner connection to the database. Ideally, users would disconnect after

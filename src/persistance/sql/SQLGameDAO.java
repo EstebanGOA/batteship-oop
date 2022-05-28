@@ -1,12 +1,17 @@
 package persistance.sql;
 
-import business.GameManager;
 import business.UserManager;
 import business.entities.User;
 import persistance.GameDAO;
 import business.entities.Game;
 
 public class SQLGameDAO implements GameDAO {
+
+    private SQLConnector sqlConnector;
+
+    public SQLGameDAO() {
+        this.sqlConnector = SQLConnector.getInstance();
+    }
 
     private UserManager userManager;
 
@@ -23,7 +28,7 @@ public class SQLGameDAO implements GameDAO {
                 game.getPath() +
                 "');";
 
-        SQLConnector.getInstance().insertQuery(query);
+        sqlConnector.insertQuery(query);
 
     }
 
