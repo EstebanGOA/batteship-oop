@@ -4,6 +4,8 @@ import business.entities.User;
 import persistance.UserDAO;
 import persistance.sql.SQLUserDAO;
 
+import java.util.ArrayList;
+
 public class UserManager {
 
     private SQLUserDAO userDAO;
@@ -44,8 +46,22 @@ public class UserManager {
         user = null;
     }
 
+    public ArrayList<String> getUsersName(){
+        return userDAO.getUsersName();
+    }
+
+
     public User getUser() {
         return user;
+    }
+
+    public int[] getWinrate(String name) {
+        int[] stats = userDAO.getStats(name);
+
+        return stats;
+    }
+    public ArrayList<Integer> getAttacks(String name) {
+        return userDAO.getNumAttacks(name);
     }
 
 }

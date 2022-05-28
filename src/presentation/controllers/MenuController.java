@@ -54,6 +54,8 @@ public class MenuController implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         switch (((JComponent) e.getSource()).getName()) {
             case "settings" -> menuView.settingsView();
+
+            case "statistics" -> menuView.statisticsView(userManager.getUsersName());
             case "loadGame" -> getFilename();
         }
     }

@@ -3,6 +3,7 @@ import business.UserManager;
 import persistance.sql.SQLGameDAO;
 import persistance.sql.SQLUserDAO;
 import presentation.controllers.*;
+import presentation.controllers.*;
 import presentation.views.*;
 
 import java.io.IOException;
@@ -24,16 +25,18 @@ public class Main {
         UserManager userManager = new UserManager(sqlUserDAO);
         SQLGameDAO sqlGameDAO = new SQLGameDAO(userManager);
         GameManager gameManager = new GameManager(sqlGameDAO);
+        StatisticsView statisticsView = new StatisticsView(mainView);
 
         LoginController loginController = new LoginController(loginView, userManager);
         RegisterController registerController = new RegisterController(userManager, registerView);
         SettingsController settingsController = new SettingsController(userManager, settingsView);
         MenuController menuController = new MenuController(userManager, gameManager, menuView, gameStageView);
+        StatisticsController statisticsController = new StatisticsController(userManager, statisticsView);
         SetupStageController setupStageController = new SetupStageController(setupStageView, gameStageView, gameManager);
         GameController gameController = new GameController(gameStageView, gameManager);
 
         gameManager.assignController(gameController);
-        mainView.assignViews(loginView, registerView, menuView, settingsView, setupStageView, gameStageView);
+        mainView.assignViews(loginView, registerView, menuView, settingsView, statisticsView,  setupStageView, gameStageView);
 
         /* Asignamos los listeners de las vistas a la vista principal */
         loginView.registerMasterView(mainView);
@@ -44,6 +47,7 @@ public class Main {
         loginView.registerController(loginController);
         setupStageView.registerController(setupStageController);
         gameStageView.registerController(gameController);
+        statisticsView.menuController(statisticsController);
 
         mainView.run();
 

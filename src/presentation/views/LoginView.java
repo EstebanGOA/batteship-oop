@@ -254,8 +254,9 @@ public class LoginView extends JPanel implements MouseListener {
      *
      */
 
-    public void menuView() {
+    public void menuView(String username) {
         mainView.switchPanel("menu");
+        mainView.setUsername(username);
     }
 
     /**

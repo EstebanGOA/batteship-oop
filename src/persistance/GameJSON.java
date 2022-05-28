@@ -11,6 +11,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Class GameJSON.
+ * This class is used to save and load games when a user wants to end or start the game respectively.
+ */
 public class GameJSON {
 
     private final Gson gson;

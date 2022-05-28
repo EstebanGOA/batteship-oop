@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MenuView extends JPanel {
 
@@ -16,6 +17,9 @@ public class MenuView extends JPanel {
     private JImagePanel loadGameButton;
 
     private final Font font = initializeFont();
+    private JImagePanel statisticsButton;
+
+    private JLabel usernameLabel;
 
     /**
      *
@@ -73,7 +77,7 @@ public class MenuView extends JPanel {
         nameBackgroundPanel.setLayout(new BorderLayout());
         nameBackgroundPanel.setPreferredSize(new Dimension(350,75));
 
-        JLabel usernameLabel = new JLabel(username);
+        usernameLabel = new JLabel(username);
         usernameLabel.setFont(font);
         usernameLabel.setForeground(Color.white);
         usernameLabel.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
@@ -149,17 +153,16 @@ public class MenuView extends JPanel {
         GridBagConstraints gbcRightColumn = new GridBagConstraints();
 
         // Settings Button
-
         settingsButton = new JImagePanel(SpritePath.SETTINGS_BUTTON);
         settingsButton.setPreferredSize(new Dimension(75,75));
         settingsButton.setOpaque(false);
         settingsButton.setName("settings");
 
         // Statistics Button
-
-        JImagePanel statisticsButton = new JImagePanel(SpritePath.STATISTICS_BUTTON);
+        statisticsButton = new JImagePanel(SpritePath.STATISTICS_BUTTON);
         statisticsButton.setPreferredSize(new Dimension(75,75));
         statisticsButton.setOpaque(false);
+        statisticsButton.setName("statistics");
 
         gbcRightColumn.gridx = 0; gbcRightColumn.gridy = 0;
         rightColumn.add(addSeparator(200,0), gbcRightColumn);
@@ -266,6 +269,7 @@ public class MenuView extends JPanel {
     public void menuController(MouseListener mouseListener) {
         settingsButton.addMouseListener(mouseListener);
         loadGameButton.addMouseListener(mouseListener);
+        statisticsButton.addMouseListener(mouseListener);
     }
 
     /**
@@ -277,6 +281,16 @@ public class MenuView extends JPanel {
     }
 
     /**
+     * Method that will switch to the statistics view and load the users' data in it.
+     * @param users Arraylist with the username of all users.
+     */
+
+    public void statisticsView(ArrayList<String> users) {
+        mainView.switchPanel("statistics");
+        mainView.setStatisticsData(users);
+    }
+
+    /**
      *
      * Method to set the username of the player.
      *
@@ -285,7 +299,7 @@ public class MenuView extends JPanel {
      */
 
     public void setUsername(String username) {
-        this.username = username;
+        this.usernameLabel.setText("Username: " + username);
     }
 
     /**
@@ -297,4 +311,5 @@ public class MenuView extends JPanel {
     public void gameView() {
         mainView.switchPanel("game");
     }
+
 }

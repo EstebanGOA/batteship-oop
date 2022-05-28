@@ -1,9 +1,12 @@
 package presentation.views;
 
+import business.entities.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 /**
  * Main view that will take care of switching between windows depending on the user's interaction with the system.
@@ -14,6 +17,7 @@ public class MainView extends JFrame implements MouseListener {
     private RegisterView registerView;
     private MenuView menuView;
     private SettingsView settingsView;
+    private StatisticsView statisticsView;
     private SetupStageView setupStageView;
     private GameStageView gameStageView;
     private JPanel rootPanel;
@@ -27,6 +31,7 @@ public class MainView extends JFrame implements MouseListener {
     private final String MENU_WINDOW = "menu";
     private final String SETUP_STAGE_WINDOW = "setup";
     private final String SETTINGS_WINDOW = "settings";
+    private final String STATISTICS_WINDOW = "statistics";
     private final String GAME_STAGE_WINDOW = "game";
 
     /**
@@ -51,11 +56,12 @@ public class MainView extends JFrame implements MouseListener {
      *
      */
 
-    public void assignViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, SetupStageView setupStageView, GameStageView gameStageView) {
+    public void assignViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, StatisticsView statisticsView, SetupStageView setupStageView, GameStageView gameStageView) {
         this.loginView = loginView;
         this.registerView = registerView;
         this.menuView = menuView;
         this.settingsView = settingsView;
+        this.statisticsView = statisticsView;
         this.setupStageView = setupStageView;
         this.gameStageView = gameStageView;
     }
@@ -75,6 +81,7 @@ public class MainView extends JFrame implements MouseListener {
         rootPanel.add(setupStageView, SETUP_STAGE_WINDOW);
         rootPanel.add(settingsView, SETTINGS_WINDOW);
         rootPanel.add(gameStageView, GAME_STAGE_WINDOW);
+        rootPanel.add(statisticsView, STATISTICS_WINDOW);
 
         this.add(rootPanel);
         pack();
@@ -83,6 +90,26 @@ public class MainView extends JFrame implements MouseListener {
 
     public void switchPanel(String windowName) {
         cardLayout.show(rootPanel, windowName);
+
+    }
+
+    /**
+     * Function that adds all the users in the system to the ComboBox.
+     * @param users An array of the name of the users.
+     */
+    public void setStatisticsData(ArrayList<String> users){
+            for(String user : users){
+                statisticsView.addItem(user);
+            }
+
+    }
+
+    /**
+     * Function that sets the name of the user that has logged in, in the menu view.
+     * @param username A string with the name of the user.
+     */
+    public void setUsername(String username) {
+        menuView.setUsername(username);
     }
 
     /**

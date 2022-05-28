@@ -27,14 +27,16 @@ public class SettingsController implements MouseListener {
                 userManager.logout();
                 new JPopup("Logout successfully");
             }
-
             case "delete" -> {
                 settingsView.viewLogin();
                 if (userManager.delete())
                     new JPopup("User account deleted successfully");
                 else
                     new JPopup("Error, user cannot be deleted.");
+
+
             }
+            case "back" -> settingsView.viewMenu();
 
         }
     }

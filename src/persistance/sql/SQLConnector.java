@@ -69,7 +69,7 @@ public class SQLConnector {
             s.executeUpdate(query);
         } catch (SQLException e) {
             System.err.println(query);
-            System.err.println("Problema when updating --> " + e.getSQLState() + " (" + e.getMessage() + ")");
+            System.err.println("Problem when updating --> " + e.getSQLState() + " (" + e.getMessage() + ")");
         }
     }
 
