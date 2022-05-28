@@ -8,6 +8,7 @@ import persistance.sql.SQLGameDAO;
 import presentation.controllers.GameController;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -82,6 +83,10 @@ public class GameManager {
         }
         timerThread = new Thread(timer);
         timerThread.start();
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 
     /**
@@ -308,5 +313,9 @@ public class GameManager {
      */
     public boolean fileExist(String name) {
         return gameJSON.exist(name);
+    }
+
+    public File[] getFiles() {
+        return gameJSON.getFiles();
     }
 }

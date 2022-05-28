@@ -1,11 +1,13 @@
 package presentation.views;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Cell extends JPanel {
 
     private final int x;
     private final int y;
+    private JLabel text;
 
     /**
      *
@@ -13,17 +15,20 @@ public class Cell extends JPanel {
      *
      * @param x x coordinate of the cell.
      * @param y y coordinate of the cell.
-     * @param img image of the cell.
      *
      */
 
-    public Cell (int x, int y, SpritePath img) {
+    public Cell (int x, int y) {
         super();
+        text = new JLabel();
+        add(text, BorderLayout.CENTER);
         this.x = x;
         this.y = y;
     }
 
-
+    public void updateText(String text) {
+        this.text.setText(text);
+    }
 
     /**
      *

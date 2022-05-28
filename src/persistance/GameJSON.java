@@ -67,6 +67,16 @@ public class GameJSON {
     }
 
     /**
+     * Function that returns all the files saved.
+     * @return Array of files.
+     */
+    public File[] getFiles() {
+        File directory = new File("saves/");
+        File[] files = directory.listFiles();
+        return files;
+    }
+
+    /**
      * Function that writes the game information.
      * @param timer The timer of the game.
      * @param date A string with the date when the game was last played.
@@ -179,8 +189,11 @@ public class GameJSON {
 
         if (Files.exists(path)) {
             JsonObject jsonObjectGame = JsonParser.parseString(Files.readString(path)).getAsJsonObject();
-            String time = jsonObjectGame.get("date").getAsString();
-            gameManager.updateTimer(time);
+            String[] time = jsonObjectGame.get("time").getAsString().split(":");
+            int minutes = Integer.parseInt(time[0]);
+            int seconds = Integer.parseInt(time[1]);
+            Timer timer = new Timer(minutes, seconds, gameManager);
+            gameManager.setTimer(timer);
 
             JsonArray jsonArrayPlayers = jsonObjectGame.getAsJsonArray("players").getAsJsonArray();
             for (int i = 0; i < jsonArrayPlayers.size(); i++) {

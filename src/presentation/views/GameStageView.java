@@ -273,7 +273,7 @@ public class GameStageView extends JPanel implements MouseListener {
 
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
-                table[i][j] = new Cell(j, i, SpritePath.WATER);
+                table[i][j] = new Cell(j, i);
                 tableGrid.add(table[i][j]);
                 Border border = BorderFactory.createLineBorder(Color.BLACK);
                 table[i][j].setBorder(border);
@@ -528,6 +528,16 @@ public class GameStageView extends JPanel implements MouseListener {
                 Tile tile = tiles[i][j];
                 table[i][j].setBackground(tile.getColor());
 
+                if (Color.RED.equals(tile.getColor())) {
+                    table[i][j].updateText("1");
+                } else if (Color.LIGHT_GRAY.equals(tile.getColor())) {
+                    table[i][j].updateText("2");
+                } else if (Color.MAGENTA.equals(tile.getColor())) {
+                    table[i][j].updateText("3");
+                } else if (Color.ORANGE.equals(tile.getColor())) {
+                    table[i][j].updateText("4");
+                }
+
                 if (attacked[j][i]) {
                     table[i][j].setBackground(table[i][j].getBackground().darker().darker());
                 }
@@ -564,9 +574,12 @@ public class GameStageView extends JPanel implements MouseListener {
 
     public void reset() {
 
-        for (Cell[] cells : table)
-            for (Cell cell : cells)
+        for (Cell[] cells : table) {
+            for (Cell cell : cells) {
                 cell.setBackground(Color.BLUE);
+                cell.updateText("");
+            }
+        }
 
         if (enemiesPanel != null) {
             backgound.remove(enemiesPanel);

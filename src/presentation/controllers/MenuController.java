@@ -10,6 +10,8 @@ import presentation.views.MenuView;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MenuController implements MouseListener {
@@ -27,15 +29,17 @@ public class MenuController implements MouseListener {
     }
 
     private void getFilename() {
-        String name = JOptionPane.showInputDialog("Enter the filename to load: ");
-        if (name == null || name.isEmpty()) {
-            new JPopup("You must enter a valid name!");
+        File[] files = gameManager.getFiles();
+
+        if (files.length <= 0) {
+            new JPopup("There are no saved games!");
         } else {
-            if (gameManager.fileExist(name)) {
-                loadSavedGame(name);
-            } else {
-                new JPopup("There is no game with the specified name.");
+            ArrayList<String> filenames = new ArrayList<>();
+            for (File file : files) {
+                filenames.add(file.getName().split("\\.")[0]);
             }
+            String game = (String) JOptionPane.showInputDialog(null, "Which game do you want to load?", "Select a game", JOptionPane.QUESTION_MESSAGE, null, filenames.toArray(), filenames.get(0));
+            loadSavedGame(game);
         }
     }
 
@@ -47,7 +51,7 @@ public class MenuController implements MouseListener {
         ArrayList<Player> players = gameManager.getPlayers();
         gameManager.startGame();
         gameStageView.updateGame(players);
-            menuView.gameView();
+        menuView.gameView();
 
     }
 

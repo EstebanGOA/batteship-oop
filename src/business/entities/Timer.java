@@ -23,6 +23,13 @@ public class Timer implements Runnable {
         this.gameManager = gameManager;
     }
 
+
+    public Timer(int minutes, int seconds, GameManager gameManager) {
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.gameManager = gameManager;
+    }
+
     /**
      * Function that starts running when the game is started and keeps running until the game ends or the user ends the game.
      * While running the game counts the time that has passed since the game started.
