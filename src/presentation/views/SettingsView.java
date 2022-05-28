@@ -17,6 +17,7 @@ public class SettingsView extends JPanel {
     // Font Path
 
     private final String FONT = "fonts/Poppins-Bold.ttf";
+    private final Font font = initializeFont();
 
     private JImagePanel logoutButton;
 
@@ -29,50 +30,9 @@ public class SettingsView extends JPanel {
      */
 
     public SettingsView(MainView mainView) {
-
         this.mainView = mainView;
 
         initializeWindow();
-
-        Font font = initializeFont();
-
-        // Top Panel include the space, the back button and the title of the window.
-
-
-        JPanel topPanel = new JPanel();
-            topPanel.setLayout(new BorderLayout());
-            topPanel.setOpaque(false);
-
-            // Box Layout to add space on the left of the back button
-
-            JPanel spaceAndBackButton = new JPanel();
-                spaceAndBackButton.setOpaque(false);
-                spaceAndBackButton.setLayout(new BoxLayout(spaceAndBackButton, BoxLayout.X_AXIS));
-
-                // Back Button Image
-
-                JImagePanel backButton = new JImagePanel(SpritePath.BACK_BUTTON);
-                    backButton.setPreferredSize(new Dimension(75, 0));
-                    backButton.setOpaque(false);
-
-            // Window Title
-
-            JLabel jLabel = new JLabel();
-                jLabel.setLayout(new BorderLayout());
-                jLabel.setFont(font);
-                jLabel.setOpaque(false);
-                jLabel.setText("Settings");
-                jLabel.setForeground(Color.white);
-                jLabel.setBorder(BorderFactory.createEmptyBorder());
-                jLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                jLabel.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
-
-
-        spaceAndBackButton.add(addSeparator(75,0));
-        spaceAndBackButton.add(backButton);
-
-        jLabel.add(spaceAndBackButton, BorderLayout.WEST);
-        topPanel.add(jLabel, BorderLayout.CENTER);
 
         // ------------------------ Initializing Buttons ------------------------ //
 
@@ -80,7 +40,7 @@ public class SettingsView extends JPanel {
             deleteAccountButton.setPreferredSize(new Dimension(250,75));
             deleteAccountButton.setOpaque(false);
 
-            logoutButton = new JImagePanel(SpritePath.LOGOUT_BUTTON);
+        logoutButton = new JImagePanel(SpritePath.LOGOUT_BUTTON);
             logoutButton.setPreferredSize(new Dimension(250,75));
             logoutButton.setOpaque(false);
             logoutButton.setName("logout");
@@ -110,12 +70,61 @@ public class SettingsView extends JPanel {
             gbc.gridx = 2; gbc.gridy = 0;
             grid.add(logoutButton, gbc);
 
-        backgroundPanel.add(topPanel, BorderLayout.NORTH);
+        backgroundPanel.add(setTopPanel(), BorderLayout.NORTH);
         backgroundPanel.add(grid, BorderLayout.CENTER);
 
         add(backgroundPanel);
 
         setVisible(true);
+    }
+
+    /**
+     *
+     * Method to set the top panel:
+     *      - The back button.
+     *      - The title text of the window.
+     *      - Some separators.
+     *
+     * @return the top panel.
+     *
+     */
+
+    public JPanel setTopPanel () {
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+        topPanel.setOpaque(false);
+
+        // Box Layout to add space on the left of the back button
+
+        JPanel spaceAndBackButton = new JPanel();
+        spaceAndBackButton.setOpaque(false);
+        spaceAndBackButton.setLayout(new BoxLayout(spaceAndBackButton, BoxLayout.X_AXIS));
+
+        // Back Button Image
+
+        JImagePanel backButton = new JImagePanel(SpritePath.BACK_BUTTON);
+        backButton.setPreferredSize(new Dimension(75, 0));
+        backButton.setOpaque(false);
+
+        // Window Title
+
+        JLabel jLabel = new JLabel();
+        jLabel.setLayout(new BorderLayout());
+        jLabel.setFont(font);
+        jLabel.setOpaque(false);
+        jLabel.setText("Settings");
+        jLabel.setForeground(Color.white);
+        jLabel.setBorder(BorderFactory.createEmptyBorder());
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
+
+
+        spaceAndBackButton.add(addSeparator(75,0));
+        spaceAndBackButton.add(backButton);
+
+        jLabel.add(spaceAndBackButton, BorderLayout.WEST);
+        topPanel.add(jLabel, BorderLayout.CENTER);
+        return topPanel;
     }
 
     /**

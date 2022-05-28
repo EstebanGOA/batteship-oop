@@ -60,7 +60,6 @@ public class SetupStageView extends JPanel implements MouseListener {
      */
 
     public SetupStageView(MainView mainView) {
-
         this.mainView = mainView;
         this.numberOfEnemies = 1;
 
@@ -76,7 +75,7 @@ public class SetupStageView extends JPanel implements MouseListener {
         backgroundPanel.setLayout(new GridBagLayout());
 
         // Display all the panels in the background.
-
+        JPanel backgroundPanel = createBackgroundPanel();
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
@@ -101,8 +100,17 @@ public class SetupStageView extends JPanel implements MouseListener {
         backgroundPanel.add(rightPanel(), gbc);
 
         add(backgroundPanel);
-
         initializeListeners();
+    }
+
+    // ------------------------ Background Image ------------------------ //
+
+    public JPanel createBackgroundPanel () {
+        JPanel backgroundPanel = new JPanel();
+        backgroundPanel.setPreferredSize(new Dimension(1280, 720));
+        backgroundPanel.setBackground(BACKGROUND_COLOR);
+        backgroundPanel.setLayout(new GridBagLayout());
+        return backgroundPanel;
     }
 
     /**
@@ -170,33 +178,16 @@ public class SetupStageView extends JPanel implements MouseListener {
         leftPanel.setPreferredSize(new Dimension(300, 670));
         leftPanel.setOpaque(false);
 
-        // Label with the title of the panel
-
-        JLabel yourShipsText = new JLabel();
-        yourShipsText.setText("Your Ships");
-        yourShipsText.setForeground(Color.white);
-        yourShipsText.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
-        yourShipsText.setFont(fontPanelTitle);
-
         // All the ships buttons to locate the ships in the table
 
-        boatPanel = new ShipPanel("Boat", SpritePath.BOAT, SpritePath.SHIP_PANEL_BACKGROUND, 60, 25, 250);
-        boatPanel.setName("boat");
-        submarinePanel1 = new ShipPanel("Submarine 1", SpritePath.SUBMARINE, SpritePath.SHIP_PANEL_BACKGROUND, 80, 25, 250);
-        submarinePanel1.setName("submarine1");
-        submarinePanel2 = new ShipPanel("Submarine 2", SpritePath.SUBMARINE, SpritePath.SHIP_PANEL_BACKGROUND, 80, 25, 250);
-        submarinePanel2.setName("submarine2");
-        destructorPanel = new ShipPanel("Destructor", SpritePath.DESTRUCTOR, SpritePath.SHIP_PANEL_BACKGROUND, 100, 25, 250);
-        destructorPanel.setName("destructor");
-        aircraftPanel = new ShipPanel("Aircraft", SpritePath.AIRCRAFT, SpritePath.SHIP_PANEL_BACKGROUND, 120, 25, 250);
-        aircraftPanel.setName("aircraft");
+        setShipsPanels();
 
         // Display all the things inside the left panel.
 
         GridBagConstraints gbc_left = new GridBagConstraints();
         gbc_left.gridx = 0;
         gbc_left.gridy = 0;
-        leftPanel.add(yourShipsText, gbc_left);
+        leftPanel.add(createYourShipsTitleLabel(), gbc_left);
 
         gbc_left.gridx = 0;
         gbc_left.gridy = 1;
@@ -226,6 +217,42 @@ public class SetupStageView extends JPanel implements MouseListener {
     }
 
     /**
+     *
+     * Label with the title of the panel
+     *
+     * @return the ship panel text.
+     *
+     */
+
+    public JLabel createYourShipsTitleLabel () {
+        JLabel yourShipsText = new JLabel();
+        yourShipsText.setText("Your Ships");
+        yourShipsText.setForeground(Color.white);
+        yourShipsText.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
+        yourShipsText.setFont(fontPanelTitle);
+        return yourShipsText;
+    }
+
+    /**
+     *
+     * Method to create the ships panels that we have to show in the setup view.
+     *
+     */
+
+    public void setShipsPanels () {
+        boatPanel = new ShipPanel("Boat", SpritePath.BOAT, SpritePath.SHIP_PANEL_BACKGROUND, 60, 25, 250);
+        boatPanel.setName("boat");
+        submarinePanel1 = new ShipPanel("Submarine 1", SpritePath.SUBMARINE, SpritePath.SHIP_PANEL_BACKGROUND, 80, 25, 250);
+        submarinePanel1.setName("submarine1");
+        submarinePanel2 = new ShipPanel("Submarine 2", SpritePath.SUBMARINE, SpritePath.SHIP_PANEL_BACKGROUND, 80, 25, 250);
+        submarinePanel2.setName("submarine2");
+        destructorPanel = new ShipPanel("Destructor", SpritePath.DESTRUCTOR, SpritePath.SHIP_PANEL_BACKGROUND, 100, 25, 250);
+        destructorPanel.setName("destructor");
+        aircraftPanel = new ShipPanel("Aircraft", SpritePath.AIRCRAFT, SpritePath.SHIP_PANEL_BACKGROUND, 120, 25, 250);
+        aircraftPanel.setName("aircraft");
+    }
+
+    /**
      * Method to create the grid table (15x15) to locate the ships.
      * <p>
      * Is a loop for where we instantiate the cell class.
@@ -233,6 +260,7 @@ public class SetupStageView extends JPanel implements MouseListener {
      *
      * @return The JPanel with all the grid created.
      */
+
     public JPanel table() {
         JPanel tableGrid = new JPanel();
         tableGrid.setLayout(new GridLayout(15, 15));
@@ -269,22 +297,78 @@ public class SetupStageView extends JPanel implements MouseListener {
         shipPreviewPanel.setLayout(new GridBagLayout());
         shipPreviewPanel.setOpaque(false);
 
-        // Label with the title of the panel.
-
-        JLabel shipPreviewText = new JLabel();
-        shipPreviewText.setText(LABEL_SHIP_PREVIEW);
-        shipPreviewText.setForeground(Color.white);
-        shipPreviewText.setBorder(BorderFactory.createEmptyBorder(10, 35, 35, 0));
-        shipPreviewText.setFont(fontPanelTitle);
-
         // Image of the ship that is selected.
 
         shipImage = new JImagePanel(SpritePath.BOAT, 0.2F, true);
         shipImage.setPreferredSize(new Dimension(180, 80));
         shipImage.setOpaque(false);
 
-        // Button to rotate the selected ship.
+        rotateButton = createRotateButton();
 
+        // Display all the preview panel.
+
+        GridBagConstraints gbc_shipPreview = new GridBagConstraints();
+        gbc_shipPreview.fill = GridBagConstraints.HORIZONTAL;
+
+        gbc_shipPreview.gridx = 0;
+        gbc_shipPreview.gridy = 0;
+        gbc_shipPreview.gridwidth = 3;
+        shipPreviewPanel.add(createShipPreviewText(), gbc_shipPreview);
+
+        gbc_shipPreview.gridx = 0;
+        gbc_shipPreview.gridy = 1;
+        gbc_shipPreview.gridwidth = 1;
+        shipPreviewPanel.add(addSeparator(0, 0), gbc_shipPreview);
+
+
+        gbc_shipPreview.gridx = 1;
+        gbc_shipPreview.gridy = 1;
+        gbc_shipPreview.gridwidth = 1;
+        shipPreviewPanel.add(shipImage, gbc_shipPreview);
+
+        gbc_shipPreview.gridx = 0;
+        gbc_shipPreview.gridy = 2;
+        gbc_shipPreview.gridwidth = 3;
+        shipPreviewPanel.add(addSeparator(0, 20), gbc_shipPreview);
+
+        gbc_shipPreview.gridx = 0;
+        gbc_shipPreview.gridy = 3;
+        gbc_shipPreview.gridwidth = 3;
+        shipPreviewPanel.add(rotateButton, gbc_shipPreview);
+
+        return shipPreviewPanel;
+    }
+
+    // Label with the title of the panel.
+
+    /**
+     *
+     * Method to create the JLabel title for the ship preview text.
+     *
+     * @return the ship preview title text.
+     *
+     */
+
+    public JLabel createShipPreviewText () {
+        JLabel shipPreviewText = new JLabel();
+        shipPreviewText.setText(LABEL_SHIP_PREVIEW);
+        shipPreviewText.setForeground(Color.white);
+        shipPreviewText.setBorder(BorderFactory.createEmptyBorder(10, 35, 35, 0));
+        shipPreviewText.setFont(fontPanelTitle);
+        return shipPreviewText;
+    }
+
+    // Button to rotate the selected ship.
+
+    /**
+     *
+     * Method to create the rotate button for the ships preview.
+     *
+     * @return the JImagePanel with the rotate button.
+     *
+     */
+
+    public JImagePanel createRotateButton () {
         rotateButton = new JImagePanel(SpritePath.ROTATE_BUTTON);
         rotateButton.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
         rotateButton.setPreferredSize(new Dimension(200, 45));
@@ -320,37 +404,7 @@ public class SetupStageView extends JPanel implements MouseListener {
         gbc_rotateBtn.gridwidth = 1;
         rotateButton.add(rotateIcon, gbc_rotateBtn);
 
-        // Display all the preview panel.
-
-        GridBagConstraints gbc_shipPreview = new GridBagConstraints();
-        gbc_shipPreview.fill = GridBagConstraints.HORIZONTAL;
-
-        gbc_shipPreview.gridx = 0;
-        gbc_shipPreview.gridy = 0;
-        gbc_shipPreview.gridwidth = 3;
-        shipPreviewPanel.add(shipPreviewText, gbc_shipPreview);
-
-        gbc_shipPreview.gridx = 0;
-        gbc_shipPreview.gridy = 1;
-        gbc_shipPreview.gridwidth = 1;
-        shipPreviewPanel.add(addSeparator(0, 0), gbc_shipPreview);
-
-        gbc_shipPreview.gridx = 1;
-        gbc_shipPreview.gridy = 1;
-        gbc_shipPreview.gridwidth = 1;
-        shipPreviewPanel.add(shipImage, gbc_shipPreview);
-
-        gbc_shipPreview.gridx = 0;
-        gbc_shipPreview.gridy = 2;
-        gbc_shipPreview.gridwidth = 3;
-        shipPreviewPanel.add(addSeparator(0, 20), gbc_shipPreview);
-
-        gbc_shipPreview.gridx = 0;
-        gbc_shipPreview.gridy = 3;
-        gbc_shipPreview.gridwidth = 3;
-        shipPreviewPanel.add(rotateButton, gbc_shipPreview);
-
-        return shipPreviewPanel;
+        return rotateButton;
     }
 
     /**
@@ -380,37 +434,42 @@ public class SetupStageView extends JPanel implements MouseListener {
 
         // GridBagLayout with all the enemies icons.
 
+        setEnemiesIcons();
+        JPanel numberOfEnemiesGrid = displayEnemiesIcons();
+
+        // Display all the things inside the number of enemies panel.
+
+        GridBagConstraints gbc_numberOfEnemiesPanel = new GridBagConstraints();
+        gbc_numberOfEnemiesPanel.gridx = 0;
+        gbc_numberOfEnemiesPanel.gridy = 0;
+        numberOfEnemiesPanel.add(numberOfEnemiesText, gbc_numberOfEnemiesPanel);
+
+        gbc_numberOfEnemiesPanel.gridx = 0;
+        gbc_numberOfEnemiesPanel.gridy = 1;
+        numberOfEnemiesPanel.add(numberOfEnemiesGrid, gbc_numberOfEnemiesPanel);
+
+        gbc_numberOfEnemiesPanel.gridx = 0;
+        gbc_numberOfEnemiesPanel.gridy = 2;
+        numberOfEnemiesPanel.add(addSeparator(0, 70), gbc_numberOfEnemiesPanel);
+
+        return numberOfEnemiesPanel;
+    }
+
+    /**
+     *
+     * Method to display the enemies icons which the user use to select
+     * against how many enemies he wants to play.
+     *
+     * @return the GridBagLayout with the enemies.
+     *
+     */
+
+    public JPanel displayEnemiesIcons () {
+        // GridBagLayout with all the enemies icons.
+
         JPanel numberOfEnemiesGrid = new JPanel();
         numberOfEnemiesGrid.setLayout(new GridBagLayout());
         numberOfEnemiesGrid.setOpaque(false);
-
-        // Enemy icon number 1. (Is always selected because the minimum number of enemies is 1).
-
-        one_enemies = new JImagePanel(SpritePath.USER_SELECTED_ICON);
-        one_enemies.setPreferredSize(new Dimension(30, 30));
-        one_enemies.setOpaque(false);
-        one_enemies.setName("one_enemies");
-
-        // Enemy icon number 2. (Is empty, can be selected).
-
-        two_enemies = new JImagePanel(SpritePath.USER_EMPTY_ICON);
-        two_enemies.setPreferredSize(new Dimension(30, 30));
-        two_enemies.setOpaque(false);
-        two_enemies.setName("two_enemies");
-
-        // Enemy icon number 3. (Is empty, can be selected).
-
-        three_enemies = new JImagePanel(SpritePath.USER_EMPTY_ICON);
-        three_enemies.setPreferredSize(new Dimension(30, 30));
-        three_enemies.setOpaque(false);
-        three_enemies.setName("three_enemies");
-
-        // Enemy icon number 4. (Is empty, can be selected).
-
-        four_enemies = new JImagePanel(SpritePath.USER_EMPTY_ICON);
-        four_enemies.setPreferredSize(new Dimension(30, 30));
-        four_enemies.setOpaque(false);
-        four_enemies.setName("four_enemies");
 
         // Display all the enemies icons with separators panels between them.
 
@@ -443,22 +502,43 @@ public class SetupStageView extends JPanel implements MouseListener {
         gbc_numberOfEnemiesGrid.gridy = 0;
         numberOfEnemiesGrid.add(four_enemies, gbc_numberOfEnemiesGrid);
 
-        // Display all the things inside the number of enemies panel.
+        return numberOfEnemiesGrid;
+    }
 
-        GridBagConstraints gbc_numberOfEnemiesPanel = new GridBagConstraints();
-        gbc_numberOfEnemiesPanel.gridx = 0;
-        gbc_numberOfEnemiesPanel.gridy = 0;
-        numberOfEnemiesPanel.add(numberOfEnemiesText, gbc_numberOfEnemiesPanel);
+    /**
+     *
+     * Method to set the enemies icons, which the
+     *
+     */
 
-        gbc_numberOfEnemiesPanel.gridx = 0;
-        gbc_numberOfEnemiesPanel.gridy = 1;
-        numberOfEnemiesPanel.add(numberOfEnemiesGrid, gbc_numberOfEnemiesPanel);
+    public void setEnemiesIcons () {
+        // Enemy icon number 1. (Is always selected because the minimum number of enemies is 1).
 
-        gbc_numberOfEnemiesPanel.gridx = 0;
-        gbc_numberOfEnemiesPanel.gridy = 2;
-        numberOfEnemiesPanel.add(addSeparator(0, 70), gbc_numberOfEnemiesPanel);
+        one_enemies = new JImagePanel(SpritePath.USER_SELECTED_ICON);
+        one_enemies.setPreferredSize(new Dimension(30, 30));
+        one_enemies.setOpaque(false);
+        one_enemies.setName("one_enemies");
 
-        return numberOfEnemiesPanel;
+        // Enemy icon number 2. (Is empty, can be selected).
+
+        two_enemies = new JImagePanel(SpritePath.USER_EMPTY_ICON);
+        two_enemies.setPreferredSize(new Dimension(30, 30));
+        two_enemies.setOpaque(false);
+        two_enemies.setName("two_enemies");
+
+        // Enemy icon number 3. (Is empty, can be selected).
+
+        three_enemies = new JImagePanel(SpritePath.USER_EMPTY_ICON);
+        three_enemies.setPreferredSize(new Dimension(30, 30));
+        three_enemies.setOpaque(false);
+        three_enemies.setName("three_enemies");
+
+        // Enemy icon number 4. (Is empty, can be selected).
+
+        four_enemies = new JImagePanel(SpritePath.USER_EMPTY_ICON);
+        four_enemies.setPreferredSize(new Dimension(30, 30));
+        four_enemies.setOpaque(false);
+        four_enemies.setName("four_enemies");
     }
 
     /**

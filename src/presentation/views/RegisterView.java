@@ -24,6 +24,7 @@ public class RegisterView extends JPanel {
     private JTextField jUserField;
     private JImagePanel jImageButton;
     private JLabel jLoginLabel;
+    private final Font font = initializeFont();
 
     /**
      *
@@ -42,8 +43,6 @@ public class RegisterView extends JPanel {
         this.jVerifyPasswordField = new JPasswordField();
         this.jUserField = new JTextField();
 
-        Font font = initializeFont();
-
         // ------------------------ Background Image ------------------------ //
 
         JImagePanel backgroundPanel = new JImagePanel(SpritePath.LOGIN_BACKGROUND);
@@ -53,10 +52,8 @@ public class RegisterView extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        displayObjects(backgroundPanel, gbc, font);
+        displayObjects(backgroundPanel, gbc);
         add(backgroundPanel);
-
-        // setVisible(true);
     }
 
     // ------------------------ Display Objects ------------------------ //
@@ -67,11 +64,10 @@ public class RegisterView extends JPanel {
      *
      * @param backgroundPanel background panel.
      * @param gbc GridBagConstraints of the register view.
-     * @param font font of the view.
      *
      */
 
-    public void displayObjects (JPanel backgroundPanel, GridBagConstraints gbc, Font font) {
+    public void displayObjects (JPanel backgroundPanel, GridBagConstraints gbc) {
         gbc.gridx = 0; gbc.gridy = 0;
         backgroundPanel.add(addSeparator(0,150), gbc);
 
