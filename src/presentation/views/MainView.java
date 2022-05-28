@@ -4,8 +4,6 @@ import business.entities.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -34,7 +32,6 @@ public class MainView extends JFrame implements MouseListener {
     private final String SETUP_STAGE_WINDOW = "setup";
     private final String SETTINGS_WINDOW = "settings";
     private final String STATISTICS_WINDOW = "statistics";
-
     private final String GAME_STAGE_WINDOW = "game";
 
     /**
@@ -59,13 +56,12 @@ public class MainView extends JFrame implements MouseListener {
      *
      */
 
-    public void asigneViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, StatisticsView statisticsView, SetupStageView setupStageView, GameStageView gameStageView) {
+    public void assignViews(LoginView loginView, RegisterView registerView, MenuView menuView, SettingsView settingsView, StatisticsView statisticsView, SetupStageView setupStageView, GameStageView gameStageView) {
         this.loginView = loginView;
         this.registerView = registerView;
         this.menuView = menuView;
         this.settingsView = settingsView;
         this.statisticsView = statisticsView;
-
         this.setupStageView = setupStageView;
         this.gameStageView = gameStageView;
     }
@@ -140,6 +136,14 @@ public class MainView extends JFrame implements MouseListener {
             }
         }
     }
+
+    /**
+     *
+     * Method to check if the mouse is pressed on a view object.
+     *
+     * @param e MouseEvent of an object of the view.
+     *
+     */
 
     @Override
     public void mousePressed(MouseEvent e) {

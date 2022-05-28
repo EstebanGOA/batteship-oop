@@ -1,7 +1,5 @@
 package business.entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -16,7 +14,7 @@ abstract public class Player implements Runnable {
     private Ship[] ships;
 
     private AtomicBoolean recharging;
-    private AtomicBoolean isAlive;
+    private AtomicBoolean alive;
     private AtomicInteger numberOfAttacks;
 
     /**
@@ -27,8 +25,17 @@ abstract public class Player implements Runnable {
         this.board = board;
         this.ships = new Ship[5];
         this.recharging = new AtomicBoolean(false);
-        this.isAlive = new AtomicBoolean(true);
+        this.alive = new AtomicBoolean(true);
         this.numberOfAttacks = new AtomicInteger(0);
+        this.attacked = new boolean[15][15];
+    }
+
+    public Player(Board board, boolean recharging, boolean alive, int numberOfAttacks) {
+        this.board = board;
+        this.ships = new Ship[5];
+        this.recharging = new AtomicBoolean(recharging);
+        this.alive = new AtomicBoolean(alive);
+        this.numberOfAttacks = new AtomicInteger(numberOfAttacks);
         this.attacked = new boolean[15][15];
     }
 
@@ -38,6 +45,10 @@ abstract public class Player implements Runnable {
      */
     public Board getBoard() {
         return board;
+    }
+
+    public boolean[][] getAttacked() {
+        return attacked;
     }
 
     /**
@@ -135,11 +146,11 @@ abstract public class Player implements Runnable {
     }
 
     public boolean isAlive() {
-        return isAlive.get();
+        return alive.get();
     }
 
     public void setAlive(boolean alive) {
-        isAlive.set(alive);
+        this.alive.set(alive);
     }
 
     /**

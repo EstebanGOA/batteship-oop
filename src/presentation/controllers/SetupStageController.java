@@ -44,20 +44,20 @@ public class SetupStageController implements MouseListener {
 
     private void isSetupStageReady() {
         int numberOfEnemies = setupStageView.getNumberOfEnemies();
+
         if (gameManager.isSetupStageReady()) {
             gameManager.createIA(numberOfEnemies);
             gameStageView.paintLayout(numberOfEnemies);
             ArrayList<Player> players = gameManager.getPlayers();
             gameStageView.updateGame(players);
-            gameManager.startTimer();
             gameManager.startGame();
             setupStageView.switchWindow();
             setupStageView.reset();
-            // setupStageView.switchWindow();
-            // gameManager.playGame();
+
         } else {
             new JPopup("Error, all ships must be placed");
         }
+
     }
 
     private void processShipPlacement(Cell cell) {

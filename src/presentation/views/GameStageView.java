@@ -54,7 +54,6 @@ public class GameStageView extends JPanel implements MouseListener {
         backgound.add(tableAndEndBattlePanel(), gbc);
 
         initializeListeners();
-
     }
 
     /**
@@ -100,14 +99,6 @@ public class GameStageView extends JPanel implements MouseListener {
         leftPanel.setPreferredSize(new Dimension(300, 670));
         leftPanel.setOpaque(false);
 
-        // Label with the title of the panel
-
-        JLabel yourShipsText = new JLabel();
-        yourShipsText.setText("Your Ships Status");
-        yourShipsText.setForeground(Color.white);
-        yourShipsText.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
-        yourShipsText.setFont(fontPanelTitle);
-
         // Setting the ArrayList with all the status ships
 
         ArrayList<ShipPanel> ships = new ArrayList<>();
@@ -126,23 +117,14 @@ public class GameStageView extends JPanel implements MouseListener {
 
         // Insert the arraylist in the JTable
 
-        shipsStatusTable = new JTable(new YourShipsTableModel());
-        shipsStatusTable.setDefaultRenderer(ShipPanel.class, new YourShipsTableRenderer(ships, shipsStatus));
-        shipsStatusTable.setDefaultRenderer(JShipStatus.class, new YourShipsTableRenderer(ships, shipsStatus));
-        shipsStatusTable.setRowHeight(100);
-        shipsStatusTable.getColumnModel().getColumn(0).setPreferredWidth(115);
-        shipsStatusTable.getColumnModel().getColumn(1).setPreferredWidth(115);
-        shipsStatusTable.setOpaque(false);
-        shipsStatusTable.setShowGrid(false);
-        shipsStatusTable.setShowHorizontalLines(false);
-        shipsStatusTable.setShowVerticalLines(false);
+        setShipStatusTable (ships);
 
         // Display all the things inside the left panel.
 
         GridBagConstraints gbc_left = new GridBagConstraints();
         gbc_left.gridx = 0;
         gbc_left.gridy = 0;
-        leftPanel.add(yourShipsText, gbc_left);
+        leftPanel.add(createYourShipsTitleText(), gbc_left);
 
         gbc_left.gridx = 0;
         gbc_left.gridy = 1;
@@ -153,6 +135,44 @@ public class GameStageView extends JPanel implements MouseListener {
         leftPanel.add(new JSeparator(0, 25), gbc_left);
 
         return leftPanel;
+    }
+
+    /**
+     *
+     * Method to set the status of the ships table.
+     *
+     */
+
+    public void setShipStatusTable (ArrayList<ShipPanel> ships) {
+        shipsStatusTable = new JTable(new YourShipsTableModel());
+        shipsStatusTable.setDefaultRenderer(ShipPanel.class, new YourShipsTableRenderer(ships, shipsStatus));
+        shipsStatusTable.setDefaultRenderer(JShipStatus.class, new YourShipsTableRenderer(ships, shipsStatus));
+        shipsStatusTable.setRowHeight(100);
+        shipsStatusTable.getColumnModel().getColumn(0).setPreferredWidth(115);
+        shipsStatusTable.getColumnModel().getColumn(1).setPreferredWidth(115);
+        shipsStatusTable.setOpaque(false);
+        shipsStatusTable.setShowGrid(false);
+        shipsStatusTable.setShowHorizontalLines(false);
+        shipsStatusTable.setShowVerticalLines(false);
+    }
+
+    /**
+     *
+     * Method to create the title of your ships status panel.
+     *
+     * @return the label text.
+     *
+     */
+
+    public JLabel createYourShipsTitleText () {
+        // Label with the title of the panel
+
+        JLabel yourShipsText = new JLabel();
+        yourShipsText.setText("Your Ships Status");
+        yourShipsText.setForeground(Color.white);
+        yourShipsText.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
+        yourShipsText.setFont(fontPanelTitle);
+        return yourShipsText;
     }
 
     /**
@@ -193,7 +213,7 @@ public class GameStageView extends JPanel implements MouseListener {
      * - The duration time of the game.
      * - The status of the game (If you can attack, or you have to wait...).
      *
-     * @return
+     * @return the endBattlePanel.
      */
 
     public JPanel endBattlePanel() {
@@ -202,32 +222,9 @@ public class GameStageView extends JPanel implements MouseListener {
         endBattlePanel.setLayout(new GridBagLayout());
         endBattlePanel.setPreferredSize(new Dimension(480, 170));
 
-        statusAttack = new JLabel();
-        statusAttack.setText("Attack");
-        statusAttack.setForeground(Color.white);
-        statusAttack.setFont(fontEndBattleTexts);
-        statusAttack.setBorder(BorderFactory.createEmptyBorder(0, 25, 15, 0));
-
-        gameTime = new JLabel();
-        gameTime.setText("00:00");
-        gameTime.setForeground(Color.white);
-        gameTime.setFont(fontEndBattleTexts);
-        gameTime.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 25));
-
-        endBattleBtn = new JImagePanel(SpritePath.END_BATTLE_BUTTON);
-        endBattleBtn.setPreferredSize(new Dimension(380, 70));
-        endBattleBtn.setLayout(new BorderLayout());
-        endBattleBtn.setOpaque(false);
-        endBattleBtn.setName("endBattleBtn");
-
-        JLabel endBattleText = new JLabel();
-        endBattleText.setText("End Battle");
-        endBattleText.setForeground(Color.white);
-        endBattleText.setFont(fontPanelTitle);
-        endBattleText.setHorizontalAlignment(SwingConstants.CENTER);
-        endBattleText.setVerticalAlignment(SwingConstants.CENTER);
-
-        endBattleBtn.add(endBattleText, BorderLayout.CENTER);
+        createStatusAttackLabel ();
+        createGameTimeLabel();
+        createEndBattleButton();
 
         GridBagConstraints gbc_endBattle = new GridBagConstraints();
         gbc_endBattle.gridx = 0;
@@ -255,6 +252,58 @@ public class GameStageView extends JPanel implements MouseListener {
         endBattlePanel.add(endBattleBtn, gbc_endBattle);
 
         return endBattlePanel;
+    }
+
+    /**
+     *
+     * Method to create the label for the status of the player attack.
+     * (If he can attack, or he has to wait).
+     *
+     */
+
+    public void createStatusAttackLabel () {
+        statusAttack = new JLabel();
+        statusAttack.setText("Attack");
+        statusAttack.setForeground(Color.white);
+        statusAttack.setFont(fontEndBattleTexts);
+        statusAttack.setBorder(BorderFactory.createEmptyBorder(0, 25, 15, 0));
+    }
+
+    /**
+     *
+     * Method to create the game time label
+     *
+     */
+
+    public void createGameTimeLabel () {
+        gameTime = new JLabel();
+        gameTime.setText("00:00");
+        gameTime.setForeground(Color.white);
+        gameTime.setFont(fontEndBattleTexts);
+        gameTime.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 25));
+    }
+
+    /**
+     *
+     * Method to create the end battle button.
+     *
+     */
+
+    public void createEndBattleButton () {
+        endBattleBtn = new JImagePanel(SpritePath.END_BATTLE_BUTTON);
+        endBattleBtn.setPreferredSize(new Dimension(380, 70));
+        endBattleBtn.setLayout(new BorderLayout());
+        endBattleBtn.setOpaque(false);
+        endBattleBtn.setName("endBattleBtn");
+
+        JLabel endBattleText = new JLabel();
+        endBattleText.setText("End Battle");
+        endBattleText.setForeground(Color.white);
+        endBattleText.setFont(fontPanelTitle);
+        endBattleText.setHorizontalAlignment(SwingConstants.CENTER);
+        endBattleText.setVerticalAlignment(SwingConstants.CENTER);
+
+        endBattleBtn.add(endBattleText, BorderLayout.CENTER);
     }
 
     /**
@@ -588,6 +637,12 @@ public class GameStageView extends JPanel implements MouseListener {
         statusAttack.setText(recharging);
     }
 
+    /**
+     *
+     * Method to reset the table replacing all the cells with water.
+     *
+     */
+
     public void reset() {
 
         for (int i = 0; i < table.length; i++) {
@@ -598,8 +653,18 @@ public class GameStageView extends JPanel implements MouseListener {
 
     }
 
-    public void returnMenu(String menu) {
-        mainView.switchPanel(menu);
+    /**
+     *
+     * Method to return to the menu if the player end the battle.
+     *
+     */
+
+    public void returnMenu() {
+        mainView.switchPanel("menu");
+    }
+
+    public String getGameName() {
+        return "Kevin";
     }
 }
 

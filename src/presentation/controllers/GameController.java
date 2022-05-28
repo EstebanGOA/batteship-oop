@@ -64,17 +64,20 @@ public class GameController implements MouseListener {
                         ex.printStackTrace();
                     }
                     gameStageView.updateGame(gameManager.getPlayers());
-                } else {
-                    new JPopup("Error, no es tu turno");
                 }
             }
             case "endBattleBtn" -> {
-                try {
-                    gameManager.stopGame();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                gameManager.stopGame();
+                String gameName = JOptionPane.showInputDialog("Enter a name to save the game: ");
+                if (gameName == null || gameName.isEmpty()) {
+                    new JPopup("The game has not been stopped, it is necessary to enter a name");
+                    gameManager.startGame();
+                } else {
+                    gameManager.saveUnfinishedGame(gameName);
+                    new JPopup("The game has been saved successfully!");
+                    gameStageView.returnMenu();
+                    gameStageView.reset();
                 }
-                new JSaveGame();
             }
         }
     }
@@ -116,7 +119,7 @@ public class GameController implements MouseListener {
         else
             new JPopup("You have lost.");
 
-        gameStageView.returnMenu("menu");
+        gameStageView.returnMenu();
         gameStageView.reset();
 
     }

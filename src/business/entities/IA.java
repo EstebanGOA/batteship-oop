@@ -4,26 +4,39 @@ import business.GameManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class IA extends Player {
 
     private GameManager gameManager;
+
+    /* Auxiliar variables to manage IA intelligence */
     private int checkHit;
     private int[] coords = new int[2];
     private int[] coordsAux = new int[2];
-    private boolean[][] hits = new boolean[15][15];
     private boolean orientation;
 
     public IA(Board board, GameManager gameManager) {
         super(board);
         this.gameManager = gameManager;
-        for (boolean[] bol : hits ) {
-            Arrays.fill(bol, false);
-        }
         orientation = false;
         checkHit = 0;
     }
+
+    /**
+     * Constructor of IA.
+     *
+     * Mostly used when  reading a file to load the player status.
+     *
+     * @param alive Boolean with the player status .
+     * @param board Board where the ships are placed.
+     * @param gameManager GameManager which controls the game status.
+     */
+    public  IA(boolean alive, Board board, GameManager gameManager) {
+        super(board, false, alive, 0);
+        this.gameManager = gameManager;
+    }
+
+
 
     private boolean isInsideBoard(int[] cords) {
         return cords[1] < 15 && cords[1] >= 0 && cords[0] < 15 && cords[0] >= 0;
@@ -31,11 +44,12 @@ public class IA extends Player {
 
     private int[] generateAttack() {
 
+
         if (checkHit == 0) {
             do {
                 coords[0] = (int) (Math.random() * 15);
                 coords[1] = (int) (Math.random() * 15);
-            } while (hits[coords[1]][coords[0]]);
+            } while (getAttacked()[coords[1]][coords[0]]);
             coordsAux = new int[] {coords[0], coords[1]};
         } else if (checkHit == 1) {
             coords[1]++;
@@ -62,7 +76,7 @@ public class IA extends Player {
                 checkHit = 0;
             }
         }
-        hits[coords[1]][coords[0]] = true;
+        getAttacked()[coords[1]][coords[0]] = true;
 
         return coords;
     }
@@ -84,11 +98,10 @@ public class IA extends Player {
                 }
                 this.setCheckHit(check);
                 gameManager.updateGame();
-
             }
-            System.out.println("RIP IA");
+
         } catch (InterruptedException | IOException e) {
-            throw new RuntimeException(e);
+            /* We catch the interrupted exception but don't show any kind of message. */
         }
     }
 

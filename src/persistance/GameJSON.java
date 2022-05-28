@@ -10,32 +10,43 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Class SaveAndLoadGameSON.
+ * Class GameJSON.
  * This class is used to save and load games when a user wants to end or start the game respectively.
  */
-public class SaveAndLoadGameSON {
-    private static String path;
-    private final Path p;
+public class GameJSON {
+
     private final Gson gson;
-    GameManager gameManager = new GameManager();
+    private GameManager gameManager;
 
-    public SaveAndLoadGameSON(String nameGame) throws IOException {
-        path = nameGame + ".json";
-        p = Paths.get(path);
-        gson = new GsonBuilder().setPrettyPrinting().create();
+    public GameJSON(GameManager gameManager) {
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
+        this.gameManager = gameManager;
+    }
 
+    public void create(String nameGame) throws IOException {
+        Path p = getPath(nameGame);
         //Si no existe lo crea sino lo sobrescribe.
         if (!Files.exists(p)) {
             Files.createFile(p);
         }
     }
 
-    public void addUnfinishedGame(Timer timer, String date, ArrayList<Player> players) throws IOException {
+    public Path getPath(String path) {
+        String format = path + ".json";
+        return Paths.get(format);
+    }
+
+    public boolean exist(String name) {
+        Path path = getPath(name);
+        return Files.exists(path);
+    }
+
+    public void addUnfinishedGame(Timer timer, String date, ArrayList<Player> players, String path) throws IOException {
+
         ArrayList<Player> play = players;
-        FileWriter writer = new FileWriter(path);
+        FileWriter writer = new FileWriter(path + ".json");
         JsonObject jsonObjectGame = new JsonObject();
 
         jsonObjectGame.addProperty("date", date);
@@ -93,31 +104,52 @@ public class SaveAndLoadGameSON {
     }
 
     public void deleteFile(String gameName) {
-        File file = new File(gameName + ".json");
-        if (file.exists()) {
-            file.delete();
+        if (exist(gameName)) {
+            new File(gameName + ".json").delete();
         }
     }
 
-    public ArrayList<Player> loadGame() throws IOException {
-        ArrayList<Player> play = new ArrayList<>();
+    public ArrayList<Player> loadGame(String gameName) throws IOException {
 
-        if (Files.exists(p)) {
-            JsonObject jsonObjectGame = JsonParser.parseString(Files.readString(Paths.get(path))).getAsJsonObject();
+        ArrayList<Player> players = new ArrayList<>();
+        Path path = getPath(gameName);
+
+        if (Files.exists(path)) {
+            JsonObject jsonObjectGame = JsonParser.parseString(Files.readString(path)).getAsJsonObject();
             String time = jsonObjectGame.get("date").getAsString();
             gameManager.updateTimer(time);
 
             JsonArray jsonArrayPlayers = jsonObjectGame.getAsJsonArray("players").getAsJsonArray();
             for (int i = 0; i < jsonArrayPlayers.size(); i++) {
-                play.add(playerFromJson(jsonArrayPlayers.get(i).getAsJsonObject(), i));
+                players.add(playerFromJson(jsonArrayPlayers.get(i).getAsJsonObject(), i));
             }
         }
-        return play;
+        return players;
     }
 
 
     private Player playerFromJson(JsonObject player, int i) {
-        boolean isAlive = player.get("is_alive").getAsBoolean();
+
+        // Auxiliar Player where all data is going to be stored.
+        Player p = null;
+
+        JsonArray jsonArrayBoard = player.get("board").getAsJsonArray();
+
+        Board board = new Board();
+        Tile[][] tiles = board.getTiles();
+
+        boolean alive = player.get("is_alive").getAsBoolean();
+
+        if (i == 0) {
+            //Cargamos al Human
+            boolean recharging = player.get("recharging").getAsBoolean();
+            int numberAttacks = player.get("number_attacks").getAsInt();
+            p = new Human(alive, recharging, numberAttacks, board, gameManager);
+
+        } else {
+            //Cargamos al IA
+            p = new IA(alive, board, gameManager);
+        }
 
         JsonArray jsonArrayShips = player.get("ships").getAsJsonArray();
 
@@ -135,69 +167,46 @@ public class SaveAndLoadGameSON {
 
             switch (type) {
                 case 2:
-                    gameManager.insertShip(initialPosition, "Boat" ,orientation);
+                    p.insertShip(initialPosition, "Boat" ,orientation);
                     break;
                 case 3:
                     if (flag) {
-                        gameManager.insertShip(initialPosition, "Submarine2" ,orientation);
+                        p.insertShip(initialPosition, "Submarine2" ,orientation);
                     } else {
-                        gameManager.insertShip(initialPosition, "Submarine1" ,orientation);
+                        p.insertShip(initialPosition, "Submarine1" ,orientation);
                         flag = true;
                     }
                     break;
                 case 4:
-                    gameManager.insertShip(initialPosition, "Destructor" ,orientation);
+                    p.insertShip(initialPosition, "Destructor" ,orientation);
                     break;
                 case 5:
-                    gameManager.insertShip(initialPosition,"Aircraft" ,orientation);
+                    p.insertShip(initialPosition,"Aircraft" ,orientation);
                     break;
             }
          }
 
-        JsonArray jsonArrayBoard = new JsonArray();
-        Board board = new Board();
-        Tile[][] tiles = board.getTiles();
-
-        int x = 0;
-        while (x < 15) {
-            int y = 0;
-            while (y < 15) {
-                switch (jsonArrayBoard.get(y).getAsString()) {
+        int counter = 0;
+        for (int x = 0; x < 15; x++) {
+            for (int y = 0; y < 15; y++) {
+                switch (jsonArrayBoard.get(counter++).getAsString()) {
                     case "WATER":
-                        tiles[x][y].setTileType(TileType.WATER);
+                        tiles[y][x].setTileType(TileType.WATER);
                         break;
                     case "SHIP":
-                        tiles[x][y].setTileType(TileType.SHIP);
+                        tiles[y][x].setTileType(TileType.SHIP);
                         break;
                     case "HIT":
-                        tiles[x][y].setTileType(TileType.HIT);
+                        tiles[y][x].setTileType(TileType.HIT);
                         break;
                     case "MISS":
-                        tiles[x][y].setTileType(TileType.MISS);
+                        tiles[y][x].setTileType(TileType.MISS);
                         break;
                 }
-                y++;
             }
         }
 
-        if (i == 0) {
-            //Cargamos al Human
-            boolean recharging = player.get("recharging").getAsBoolean();
-            AtomicInteger numberAttacks = new AtomicInteger(player.get("number_attacks").getAsInt());
-
-            Human human = new Human(board, gameManager);
-
-            human.setAlive(isAlive);
-            human.setRecharging(recharging);
-            human.setNumberOfAttacks(numberAttacks);
-
-            return human;
-        } else {
-            //Cargamos al IA
-            IA ia = new IA(board, gameManager);
-
-            ia.setAlive(isAlive);
-            return ia;
-        }
+        return p;
     }
+
 }

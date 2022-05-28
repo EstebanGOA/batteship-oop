@@ -10,9 +10,9 @@ import java.awt.event.MouseListener;
 
 
 public class SettingsController implements MouseListener {
+
     private UserManager userManager;
     private SettingsView settingsView;
-
 
     public SettingsController(UserManager userManager, SettingsView settingsView) {
         this.userManager = userManager;
@@ -26,11 +26,16 @@ public class SettingsController implements MouseListener {
                 settingsView.viewLogin();
                 userManager.logout();
                 new JPopup("Logout successfully");
-
+            }
+            case "delete" -> {
+                settingsView.viewLogin();
+                if (userManager.delete())
+                    new JPopup("User account deleted successfully");
+                else
+                    new JPopup("Error, user cannot be deleted.");
 
 
             }
-
             case "back" -> settingsView.viewMenu();
 
         }

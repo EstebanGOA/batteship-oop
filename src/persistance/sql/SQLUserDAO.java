@@ -3,12 +3,17 @@ package persistance.sql;
 import persistance.UserDAO;
 import business.entities.User;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SQLUserDAO implements UserDAO {
+
+    private final SQLConnector sqlConnector;
+
+    public SQLUserDAO() {
+        this.sqlConnector = SQLConnector.getInstance();
+    }
 
     @Override
     public boolean addUser(User user) {
@@ -18,14 +23,16 @@ public class SQLUserDAO implements UserDAO {
                 user.getPassword() +
                 "');";
 
-        return SQLConnector.getInstance().insertQuery(query);
+        return sqlConnector.insertQuery(query);
     }
 
     @Override
     public boolean deleteUser(String code) {
         String query = "DELETE FROM User WHERE name = '" + code + "';";
-        return SQLConnector.getInstance().deleteQuery(query);
+
+        return sqlConnector.deleteQuery(query);
     }
+
     public User getUser(String string) {
         String query;
 
@@ -35,7 +42,7 @@ public class SQLUserDAO implements UserDAO {
             query = "SELECT * FROM User WHERE name = '" + string + "';";
         }
 
-        ResultSet result = SQLConnector.getInstance().selectQuery(query);
+        ResultSet result = sqlConnector.selectQuery(query);
 
         try {
             //Comprobamos si el usuario existe.

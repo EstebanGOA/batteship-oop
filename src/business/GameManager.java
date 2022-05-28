@@ -2,7 +2,7 @@ package business;
 
 import business.entities.*;
 import persistance.GameDAO;
-import persistance.SaveAndLoadGameSON;
+import persistance.GameJSON;
 import persistance.sql.SQLGameDAO;
 import presentation.controllers.GameController;
 
@@ -12,21 +12,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class GameManager {
-    private String gameName = "Kevin";
-    private SaveAndLoadGameSON saveAndLoadGameJSON;
-    private GameDAO gameDao;
-    private ArrayList<Player> players;
+
+    private String gameName;
+    private GameJSON gameJSON;
+
     private GameController gameController;
-    private Timer timer;
+    private GameDAO gameDao;
+
+    private ArrayList<Player> players;
     private ArrayList<Thread> threads;
 
-    public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
-        this.gameDao = sqlGameDAO;
-        this.players = new ArrayList<>();
-        this.threads = new ArrayList<>();
-    }
+    private Timer timer;
+    private Thread timerThread;
 
-    public GameManager() throws IOException {
+    public GameManager(SQLGameDAO sqlGameDAO) {
+        this.gameDao = sqlGameDAO;
+        this.gameJSON = new GameJSON(this);
         this.players = new ArrayList<>();
         this.threads = new ArrayList<>();
     }
@@ -44,31 +45,39 @@ public class GameManager {
         gameController.updateTimer(time);
     }
 
-    public void stopGame() throws IOException {
-        this.timer.stop();
+    public void stopGame() {
         for (Thread thread : threads) {
             thread.interrupt();
         }
-
-        this.saveAndLoadGameJSON = new SaveAndLoadGameSON(gameName);
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        saveAndLoadGameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players);
-        //saveAndLoadGameJSON.loadGame();
+        timerThread.interrupt();
     }
 
     public void startTimer() {
-        this.timer = new Timer(this);
-        Thread thread = new Thread(timer);
-        this.timer.resume();
-        thread.start();
+        if (timer == null) {
+            timer = new Timer(this);
+        }
+        timerThread = new Thread(timer);
+        timerThread.start();
     }
 
+    /**
+     * Method that will insert a ship inside the player (Human) board.
+     *
+     * NOTE: This function only will be called from controller when user inputs data through the window that's why we get
+     * the first player from the array always.
+     *
+     * @param cords Selected coordinates.
+     * @param shipSelected Ship selected.
+     * @param orientation Orientation of the ship.
+     * @return Board with the new updated data, if the ship cannot be placed board will be null.
+     */
     public Board insertShip(int[] cords, String shipSelected, String orientation) {
 
         if (players.isEmpty()) {
             createPlayer();
         }
 
+        /* We always pick the first player because this function will be only called when the user clics on the view */
         Player player = players.get(0);
 
         return player.insertShip(cords, shipSelected, orientation);
@@ -91,6 +100,8 @@ public class GameManager {
             threads.add(thread);
             thread.start();
         }
+        /* In some cases this call is redundant but NOT ALWAYS! */
+        startTimer();
     }
 
     public void createIA(int numberOfEnemies) {
@@ -119,8 +130,16 @@ public class GameManager {
         }
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
+    public int loadGame(String gameName){
+        try {
+            reset();
+            this.players = gameJSON.loadGame(gameName);
+            this.gameName = gameName;
+            /* It will return the array length because we need it to paint the boards for the enemies, so we make the size minus 1 */
+            return players.size() - 1;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void attack(Player player, int x, int y) throws IOException {
@@ -145,6 +164,7 @@ public class GameManager {
     }
 
     public void updateGame() throws IOException {
+
         int count = 0, winner = 0;
         for (int i = 0; i < players.size(); i++) {
             Player p = players.get(i);
@@ -159,24 +179,53 @@ public class GameManager {
         gameController.updateGame(players);
 
         if (count == players.size()-1) {
+
             stopGame();
             Player p = players.get(winner);
             saveGame(p);
             gameController.returnMenu(p);
-            players = new ArrayList<>();
-            threads = new ArrayList<>();
+            reset();
 
-            //En el caso de haber terminado una partida previamente guardada, esta debe ser eliminada del programa.
-            saveAndLoadGameJSON.deleteFile(gameName);
+            /* In some cases we will be playing a saved game so, if gameName is not null it means that the game was loaded so, we need to delete the file
+            * associated with it. */
+            if (gameName != null) {
+                gameJSON.deleteFile(gameName);
+            }
         }
+
     }
 
-    public void asigneController(GameController gameController) {
+    public void assignController(GameController gameController) {
         this.gameController = gameController;
     }
 
     private void saveGame(Player winner) {
         boolean isWinner = winner instanceof Human;
         gameDao.addFinishedGame(isWinner, winner.getNumberOfAttacks().get());
+    }
+
+    public void saveUnfinishedGame(String gameName) {
+        try {
+            gameJSON.create(gameName);
+            DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            gameJSON.addUnfinishedGame(timer, date.format(LocalDateTime.now()), players, gameName);
+            reset();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void reset() {
+        players = new ArrayList<>();
+        threads = new ArrayList<>();
+        timer = new Timer(this);
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public boolean fileExist(String name) {
+        return gameJSON.exist(name);
     }
 }
