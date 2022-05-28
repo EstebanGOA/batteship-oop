@@ -4,6 +4,9 @@ import persistance.ConfigDAO;
 
 import java.sql.*;
 
+/**
+ * Class SQLConnector used to connect the java with the SQL database
+ */
 public class SQLConnector {
 
     private static persistance.sql.SQLConnector instance = null;
@@ -14,6 +17,10 @@ public class SQLConnector {
     private final String url;
     private Connection conn;
 
+    /**
+     * Function that gets the instance of the SQLConnector and returns it, if the instance is null then we created.
+     * @return Returns the instance of the SQLConnector.
+     */
     public static SQLConnector getInstance() {
         if (instance == null) {
             ConfigDAO configDAO = new ConfigDAO();
@@ -23,7 +30,10 @@ public class SQLConnector {
         return instance;
     }
 
-    // Parametrized constructor
+    /**
+     * Constructor of SQLConnector.
+     * @param configDAO The configDAO where we get all the information related with the database.
+     */
     public SQLConnector(ConfigDAO configDAO) {
         this.username = configDAO.getUsername();
         this.password = configDAO.getPassword();
@@ -60,20 +70,7 @@ public class SQLConnector {
         }
     }
 
-    /**
-     * Method that executes an update query to the connected database.
-     *
-     * @param query String representation of the query to execute.
-     */
-    public void updateQuery(String query) {
-        try {
-            Statement s = conn.createStatement();
-            s.executeUpdate(query);
-        } catch (SQLException e) {
-            System.err.println(query);
-            System.err.println("Problema when updating --> " + e.getSQLState() + " (" + e.getMessage() + ")");
-        }
-    }
+
 
     /**
      * Method that executes a deletion query to the connected database.
@@ -110,16 +107,6 @@ public class SQLConnector {
         return rs;
     }
 
-    /**
-     * Method that closes the inner connection to the database. Ideally, users would disconnect after
-     * using the shared instance.
-     */
-    public void disconnect() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            System.err.println("Problem when closing the connection --> " + e.getSQLState() + " (" + e.getMessage() + ")");
-        }
-    }
+
 
 }

@@ -12,6 +12,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Class GameJSON.
+ * This class is responsible for saving and loading games in a JSON format. *
+ */
 public class GameJSON {
 
     private final Gson gson;
@@ -19,12 +23,21 @@ public class GameJSON {
     private ConfigDAO configDAO;
     private String PATH = "saves/";
 
+    /**
+     * Constructor of GameJSON
+     * @param gameManager A GameManager to get all the information regarding the game.
+     */
     public GameJSON(GameManager gameManager) {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.gameManager = gameManager;
         this.configDAO = new ConfigDAO();
     }
 
+    /**
+     * Function that creates a file a name, if the name is not taken.
+     * @param filename A string with the filename.
+     * @throws IOException An IOException.
+     */
     public void create(String filename) throws IOException {
         Path p = getPath(filename);
         //Si no existe lo crea sino lo sobrescribe.
@@ -33,16 +46,34 @@ public class GameJSON {
         }
     }
 
+    /**
+     * Function that gets the path of the file with the name we search.
+     * @param filename A string with the file name.
+     * @return Returns the path of the file.
+     */
     public Path getPath(String filename) {
         String format = PATH + filename + ".json";
         return Paths.get(format);
     }
 
+    /**
+     * Functions that checks if a file exists.
+     * @param name A string with the name of the file.
+     * @return A boolean regarding if the file exists.
+     */
     public boolean exist(String name) {
         Path path = getPath(name);
         return Files.exists(path);
     }
 
+    /**
+     * Function that writes the game information.
+     * @param timer The timer of the game.
+     * @param date A string with the date when the game was last played.
+     * @param players An array of all the players playing the game.
+     * @param filename A string with the filename.
+     * @throws IOException An IOException.
+     */
     public void addUnfinishedGame(Timer timer, String date, ArrayList<Player> players, String filename) throws IOException {
 
         ArrayList<Player> play = players;
@@ -125,12 +156,22 @@ public class GameJSON {
         writer.close();
     }
 
+    /**
+     * Function that deletes a file.
+     * @param filename A string with the filename.
+     */
     public void deleteFile(String filename) {
         if (exist(filename)) {
             new File(PATH + filename + ".json").delete();
         }
     }
 
+    /**
+     * Function that reads all the information of the game we are searching.
+     * @param filename A string with the filename we want to load.
+     * @return An array of players we reed in the JSON file.
+     * @throws IOException An IOException to check the process is correct.
+     */
     public ArrayList<Player> loadGame(String filename) throws IOException {
 
         ArrayList<Player> players = new ArrayList<>();
@@ -149,7 +190,12 @@ public class GameJSON {
         return players;
     }
 
-
+    /**
+     * Function that passes from a JsonObject to a player.
+     * @param player A JsonObject with the information of the player.
+     * @param i An integer indicating if the player is a user or the ia.
+     * @return The Player that we created with the JsonObject
+     */
     private Player playerFromJson(JsonObject player, int i) {
 
         // Auxiliar Player where all data is going to be stored.

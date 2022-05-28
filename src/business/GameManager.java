@@ -13,6 +13,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Class GameManager
+ * This class manages all the logic related with the game.
+ */
 public class GameManager {
 
     private String gameName;
@@ -28,6 +32,11 @@ public class GameManager {
     private Timer timer;
     private Thread timerThread;
 
+    /**
+     * Constructor of GameManager.
+     * @param sqlGameDAO A SQLGameDAO to persist the information or read it.
+     * @throws IOException An IOException
+     */
     public GameManager(SQLGameDAO sqlGameDAO) throws IOException {
         this.gameDao = sqlGameDAO;
         this.gameJSON = new GameJSON(this);
@@ -46,10 +55,17 @@ public class GameManager {
         players.add(player);
     }
 
+    /**
+     * Function that updates the timer.
+     * @param time A string with the time.
+     */
     public void updateTimer(String time) {
         gameController.updateTimer(time);
     }
 
+    /**
+     * Function that stops the game, all the threats are interrupt.
+     */
     public void stopGame() {
         for (Thread thread : threads) {
             thread.interrupt();
@@ -57,6 +73,9 @@ public class GameManager {
         timerThread.interrupt();
     }
 
+    /**
+     * Function that starts the timer, if the timer is null it creates one.
+     */
     public void startTimer() {
         if (timer == null) {
             timer = new Timer(this);
@@ -89,6 +108,10 @@ public class GameManager {
 
     }
 
+    /**
+     * Function that checks if the setupStage is ready, and it can proceed to the gameStage.
+     * @return A boolean regarding the state of the setup stage.
+     */
     public boolean isSetupStageReady() {
 
         if (players.isEmpty()) {
@@ -99,6 +122,10 @@ public class GameManager {
 
     }
 
+    /**
+     * Function that starts the game.
+     * This function creates threads for all the players and starts them alongside the timer .
+     */
     public void startGame() {
         for (Player p : players) {
             Thread thread = new Thread(p);
@@ -109,6 +136,12 @@ public class GameManager {
         startTimer();
     }
 
+    /**
+     * Function that creates the IA.
+     * This function creates all the IA necessary depending on the number of enemies the player has chosen.
+     * For each IA the ships will be randomly created.
+     * @param numberOfEnemies An integer of the number of enemies.
+     */
     public void createIA(int numberOfEnemies) {
         String[] shipSelected = {"Boat", "Submarine1", "Submarine2", "Destructor", "Aircraft"};
         int x = 0;
@@ -136,6 +169,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * Function that loads the game.
+     * @param gameName A String with the name we want to load.
+     * @return Returns the array length of the players that are IA.
+     */
     public int loadGame(String gameName){
         try {
             reset();
@@ -148,6 +186,12 @@ public class GameManager {
         }
     }
 
+    /**
+     * Function used to attack, with this function the user attacks the IA.
+     * @param player The player who attacks.
+     * @param x An integer of the x coordinate.
+     * @param y An integer of the y coordinate.
+     */
     public void attack(Player player, int x, int y) {
         if (!player.isAttackedAlready(x, y)) {
 
@@ -164,10 +208,17 @@ public class GameManager {
         }
     }
 
+    /**
+     * Function that update the phase of the game.
+     * @param status A String with the status.
+     */
     public void updatePhase(String status) {
         gameController.updatePhase(status);
     }
 
+    /**
+     * Function that updates the game
+     */
     public void updateGame()  {
 
         int count = 0, winner = 0;
@@ -200,15 +251,27 @@ public class GameManager {
 
     }
 
+    /**
+     * This function assigns the GameController.
+     * @param gameController The GameController that is assigned.
+     */
     public void assignController(GameController gameController) {
         this.gameController = gameController;
     }
 
+    /**
+     * Function that persists the finished game in the database.
+     * @param winner The player that has won the game.
+     */
     private void saveGame(Player winner) {
         boolean isWinner = winner instanceof Human;
         gameDao.addFinishedGame(isWinner, winner.getNumberOfAttacks().get());
     }
 
+    /**
+     * Function that persists an unfinished game.
+     * @param filename A string with the name of the game.
+     */
     public void saveUnfinishedGame(String filename) {
         try {
             gameJSON.create(filename);
@@ -220,16 +283,29 @@ public class GameManager {
         }
     }
 
+    /**
+     * Function that resets the game.
+     * This includes the players, threads and the timer.
+     */
     public void reset() {
         players = new ArrayList<>();
         threads = new ArrayList<>();
         timer = new Timer(this);
     }
 
+    /**
+     * Function that gets all the players.
+     * @return Returns an array of all the players.
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Function that check if a file exists.
+     * @param name A string of the name of the file.
+     * @return Returns a boolean whether the file exists.
+     */
     public boolean fileExist(String name) {
         return gameJSON.exist(name);
     }
