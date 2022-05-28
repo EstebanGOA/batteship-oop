@@ -48,8 +48,27 @@ public class GameManager {
         return players.get(0).allShipPlaced();
     }
 
-    public void createIA() {
+    public void createIA(int numberOfEnemies) {
+        String[] shipSelected = {"Boat", "Submarine1", "Submarine2", "Destructor", "Aircraft"};
+        int X = 0;
+        int Y = 0;
+        int[] cords = {X, Y};
+        int orient = 0;
+        String[] orientation = {"horitzontal", "vertical"};
+        for(int currentEnemy = 0; currentEnemy < numberOfEnemies; currentEnemy++){
+            Board board = new Board();
+            Player IA = new IA(board);
 
+            for(int currentBoat = 0; currentBoat < 5; currentBoat++){
+                X = (int) (Math.random() * 15);
+                Y = (int) (Math.random() * 15);
+                orient = (int) (Math.random() * 1);
+                cords[0] = X;
+                cords[1] = Y;
+                IA.insertShip(cords, shipSelected[currentBoat], orientation[orient]);
+            }
+            players.add(IA);
+        }
     }
 
 }
