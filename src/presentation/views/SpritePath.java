@@ -2,51 +2,12 @@ package presentation.views;
 
 public enum SpritePath {
 
-    // *************************  SHIP PIECES *************************
-
-    /**
-     *  Boat pieces paths.
-     */
-    BOAT_PIECES(new String[]{ "sprites/GameViews/Separated Ships/Boat/1.png", "sprites/GameViews/Separated Ships/Boat/2.png" }),
-
-    /**
-     * Submarine pieces paths.
-     */
-    SUBMARINE_PIECES(new String[]{ "sprites/GameViews/Separated Ships/Submarine/1.png", "sprites/GameViews/Separated Ships/Submarine/2.png", "sprites/GameViews/Separated Ships/Submarine/3.png" }),
-
-    /**
-     * Destructor pieces paths.
-     */
-    DESTRUCTOR_PIECES (new String[]{"sprites/GameViews/Separated Ships/Destructor/1.png", "sprites/GameViews/Separated Ships/Destructor/2.png", "sprites/GameViews/Separated Ships/Destructor/3.png", "sprites/GameViews/Separated Ships/Destructor/4.png" }),
-
-    /**
-     * Aircraft pieces paths.
-     */
-    AIRCRAFT_PIECES (new String[]{"sprites/GameViews/Separated Ships/Aircraft/1.png", "sprites/GameViews/Separated Ships/Aircraft/2.png", "sprites/GameViews/Separated Ships/Aircraft/3.png", "sprites/GameViews/Separated Ships/Aircraft/4.png", "sprites/GameViews/Separated Ships/Aircraft/5.png" }),
-
     // ************************* BOARD SPRITES *************************
 
     /**
      * Water sprite path.
      */
     WATER("sprites/GameViews/water.png"),
-
-    /**
-     * Explosion sprite path.
-     */
-    HIT("sprites/GameViews/explosion.png"),
-
-    /**
-     * Miss sprite path.
-     */
-    MISS("sprites/GameViews/miss.png"),
-
-    /**
-     * Water hover path.
-     */
-    WATER_HOVER("sprites/GameViews/water_hover.png"),
-
-    // ************************* SHIPS SPRITES *************************
 
     /**
      * Boat ship path.
