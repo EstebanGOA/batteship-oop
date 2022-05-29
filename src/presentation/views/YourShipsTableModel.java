@@ -2,6 +2,10 @@ package presentation.views;
 
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Class YourShipsTableModel that extends DefaultTableModel.
+ * Thi class is used to create the user table.
+ */
 public class YourShipsTableModel extends DefaultTableModel {
 
     /**

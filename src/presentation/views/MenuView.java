@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class MenuView that extends JPanel.
+ * This class is used to display the menu.
+ */
 public class MenuView extends JPanel {
 
     private final MainView mainView;

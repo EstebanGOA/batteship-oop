@@ -45,11 +45,19 @@ public class IA extends Player implements Runnable {
     }
 
 
-
+    /**
+     * Function that checks if it is inside the board.
+     * @param cords The coordinates we want to check.
+     * @return Returns a boolean depending on the outcome.
+     */
     private boolean isInsideBoard(int[] cords) {
         return cords[1] < 15 && cords[1] >= 0 && cords[0] < 15 && cords[0] >= 0;
     }
 
+    /**
+     * Function that generates the ia attack.
+     * @return Returns the coordinates of the attack.
+     */
     private int[] generateAttack() {
         if (checkHit == 0) {
             do {
@@ -87,6 +95,10 @@ public class IA extends Player implements Runnable {
         return coords;
     }
 
+    /**
+     * Function that runs endlessly when the game starts and doesn't stop until the ia wins or loses.
+     * This function controls when the ia can attack.
+     */
     @Override
     public void run() {
 
@@ -113,6 +125,10 @@ public class IA extends Player implements Runnable {
 
     }
 
+    /**
+     * Function used to move the state of the ia intelligence depending on the outcome of the previous move
+     * @param hit A boolean with the outcome of the previous move.
+     */
     public void setCheckHit(boolean hit) {
 
         switch (checkHit) {

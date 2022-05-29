@@ -2,6 +2,9 @@ package business.entities;
 
 import java.awt.*;
 
+/**
+ * Class Tile.
+ */
 public class Tile {
 
     private TileType tileType;
@@ -31,10 +34,18 @@ public class Tile {
         this.tileType = tileType;
     }
 
+    /**
+     * Function that changes the color of the tile.
+     * @param color The new color.
+     */
     public void changeColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Function that gets the color of the tile
+     * @return Returns the color.
+     */
     public Color getColor() {
         return color;
     }

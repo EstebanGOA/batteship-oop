@@ -54,6 +54,12 @@ public class Board {
 
     }
 
+    /**
+     * Function that gets a tile type
+     * @param x An integer with the coordinate x.
+     * @param y An integer with the coordinate y.
+     * @return Returns the type of tile
+     */
     public TileType getTile(int x, int y) {
         if (x >= BOARD_START && x < BOARD_FINISH && y >= BOARD_START && y < BOARD_FINISH) {
             return tiles[y][x].getTileType();
@@ -61,6 +67,12 @@ public class Board {
         return null;
     }
 
+    /**
+     * FUnction that checks if is adjacent.
+     * @param dx An integer with the coordinate x.
+     * @param dy An integer with the coordinate y.
+     * @return Returns a boolean regarding if is adjacent.
+     */
     public boolean checkAdjacent(int dx, int dy) {
 
         if (getTile(dx, dy) != TileType.WATER && getTile(dx, dy) != null ) return false;
@@ -76,6 +88,14 @@ public class Board {
 
     }
 
+    /**
+     * Function that inserts vertical.
+     * @param boardLimit An integer with the board limit.
+     * @param ship The ship.
+     * @param x An integer with the x coordinate.
+     * @param y An integer with the y coordinate.
+     * @return Returns a boolean regarding the outcome.
+     */
     public boolean verticalInsert(int boardLimit, Ship ship, int x, int y) {
 
         boolean result = true;
@@ -106,6 +126,14 @@ public class Board {
         }
     }
 
+    /**
+     * Function that inserts horizontal.
+     * @param boardLimit An integer with the board limit.
+     * @param ship The ship.
+     * @param x An integer with the x coordinate.
+     * @param y An integer with the y coordinate.
+     * @return Returns a boolean regarding the outcome.
+     */
     public boolean horizontalInsert(int boardLimit, Ship ship, int x, int y) {
 
         boolean result = true;
@@ -154,6 +182,13 @@ public class Board {
         }
     }
 
+    /**
+     * Function that sends an attack.
+     * @param attacker The player who attacks.
+     * @param x The coordinate x of the attack.
+     * @param y The coordinate y of the attack.
+     * @return Returns a boolean regarding the outcome.
+     */
     public boolean sendAttack(Player attacker, int x, int y) {
 
         TileType tileType = tiles[y][x].getTileType();

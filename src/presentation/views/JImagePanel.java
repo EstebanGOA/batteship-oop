@@ -8,7 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-// Custom JPanel that renders an image in the background
+/**
+ * Class that customizes JPanel that renders an image in the background.
+  */
 public class JImagePanel extends JPanel {
 
     // The image to render
@@ -42,39 +44,7 @@ public class JImagePanel extends JPanel {
         }
     }
 
-    /**
-     *
-     * Method to switch image for the table with the ships parts.
-     *
-     * @param boatPieces path of the boat piece.
-     * @param piece number of pieces.
-     * @param scale scale of the piece.
-     * @param orientation orientation of boat piece.
-     *
-     */
 
-    public void switchImage(SpritePath boatPieces, int piece, float scale, String orientation) {
-        try {
-
-            if (orientation.equals("horizontal")) {
-                this.angle = 0;
-                isRotated = false;
-            } else {
-                this.angle = 90;
-                this.scale = scale;
-                isRotated = true;
-            }
-
-            if (!this.path.equals(boatPieces.getPath(piece))) {
-                image = ImageIO.read(new File(boatPieces.getPath(piece)));
-                this.path = boatPieces.getPath(piece);
-            }
-            repaint();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      *
@@ -99,6 +69,10 @@ public class JImagePanel extends JPanel {
         }
     }
 
+    /**
+     * Constructor of the JImagePanel, to show an image
+     * @param path The path of the image that you want to load.
+     */
     public JImagePanel(SpritePath path) {
         try {
             image = ImageIO.read(new File(path.toString()));
@@ -112,6 +86,9 @@ public class JImagePanel extends JPanel {
         }
     }
 
+    /**
+     * Function that rotates an image.
+     */
     public void rotateImage() {
         if (angle != 0) {
             angle = 0;
@@ -141,5 +118,9 @@ public class JImagePanel extends JPanel {
         }
     }
 
+    /**
+     * Function that sets the scale,
+     * @param scale A float with the new scale.
+     */
     public void setScale(float scale) { this.scale = scale; }
 }

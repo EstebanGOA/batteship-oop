@@ -5,6 +5,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class ShipPanel that extends JPanel.
+ */
 public class ShipPanel extends JPanel {
 
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";

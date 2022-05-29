@@ -1,5 +1,8 @@
 package presentation.views;
 
+/**
+ * Enumeration SpritePath used to get all the images needed.
+ */
 public enum SpritePath {
 
     // ************************* BOARD SPRITES *************************
@@ -207,7 +210,6 @@ public enum SpritePath {
 
     private final String path;
     
-    private final String[] paths;
 
     /**
      *
@@ -219,21 +221,10 @@ public enum SpritePath {
 
     SpritePath(String path) {
         this.path = path;
-        this.paths = null;
+
     }
 
-    /**
-     *
-     * Constructor of the sprite path.
-     *
-     * @param paths paths of the images.
-     *
-     */
 
-    SpritePath(String[] paths) {
-        this.paths = paths;
-        this.path = null;
-    }
 
     /**
      *
@@ -248,17 +239,6 @@ public enum SpritePath {
         return path;
     }
 
-    /**
-     *
-     * Method to get the path of an image.
-     *
-     * @param i is the index of the boat that we want to load.
-     *
-     * @return the path of the ship image we want to load.
-     *
-     */
 
-    public String getPath(int i) {
-        return paths[i];
-    }
+
 }

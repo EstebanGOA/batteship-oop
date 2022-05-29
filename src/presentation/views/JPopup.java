@@ -2,6 +2,10 @@ package presentation.views;
 
 import javax.swing.*;
 
+/**
+ * Class JPopup.
+ * This class is used to create popups.
+ */
 public class JPopup {
 
     /**

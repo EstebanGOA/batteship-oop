@@ -86,6 +86,10 @@ public class GameManager {
         timerThread.start();
     }
 
+    /**
+     * Function that set the timer.
+     * @param timer The new timer.
+     */
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
@@ -311,14 +315,7 @@ public class GameManager {
         return players;
     }
 
-    /**
-     * Function that check if a file exists.
-     * @param name A string of the name of the file.
-     * @return Returns a boolean whether the file exists.
-     */
-    public boolean fileExist(String name) {
-        return gameJSON.exist(name);
-    }
+
 
     /**
      * Functions that get all files from the directory "saves"

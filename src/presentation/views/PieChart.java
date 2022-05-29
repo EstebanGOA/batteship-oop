@@ -3,6 +3,10 @@ package presentation.views;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class PieChart that extends JPanel.
+ * This class is used to display a pie chart.
+ */
 public class PieChart extends JPanel {
 
     private final int totalDegrees = 360;

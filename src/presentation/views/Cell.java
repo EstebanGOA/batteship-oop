@@ -3,6 +3,9 @@ package presentation.views;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class Cell extends JPanel.
+ */
 public class Cell extends JPanel {
 
     private final int x;
@@ -26,6 +29,10 @@ public class Cell extends JPanel {
         this.y = y;
     }
 
+    /**
+     * Function that updates the text.
+     * @param text A string with the new text.
+     */
     public void updateText(String text) {
         this.text.setText(text);
     }

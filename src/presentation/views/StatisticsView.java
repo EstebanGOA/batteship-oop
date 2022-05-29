@@ -30,31 +30,24 @@ public class StatisticsView extends JPanel {
         this.mainView = mainView;
 
         initializeWindow();
-
-
         Font font = initializeFont();
-
 
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
         topPanel.setOpaque(false);
 
         // Box Layout to add space on the left of the back button
-
         JPanel spaceAndBackButton = new JPanel();
         spaceAndBackButton.setOpaque(false);
         spaceAndBackButton.setLayout(new BoxLayout(spaceAndBackButton, BoxLayout.X_AXIS));
 
         // Back Button Image
-
         backButton = new JImagePanel(SpritePath.BACK_BUTTON);
         backButton.setPreferredSize(new Dimension(75, 0));
         backButton.setOpaque(false);
         backButton.setName("back");
 
-
         // Window Title
-
         JLabel jLabel = new JLabel();
         jLabel.setLayout(new BorderLayout());
         jLabel.setFont(font);
@@ -64,7 +57,6 @@ public class StatisticsView extends JPanel {
         jLabel.setBorder(BorderFactory.createEmptyBorder());
         jLabel.setHorizontalAlignment(SwingConstants.CENTER);
         jLabel.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
-
 
         spaceAndBackButton.add(addSeparator(75,0));
         spaceAndBackButton.add(backButton);
@@ -83,9 +75,6 @@ public class StatisticsView extends JPanel {
         barChart = new BarChart();
         barChart.setPreferredSize(new Dimension(400, 300));
 
-
-
-
         JPanel nameBackgroundPanel = new JPanel();
         nameBackgroundPanel.setOpaque(false);
         nameBackgroundPanel.setLayout(new BorderLayout());
@@ -98,11 +87,8 @@ public class StatisticsView extends JPanel {
 
         nameBackgroundPanel.add(usernameLabel);
 
-
-
         userList = new JComboBox();
         userList.setName("users");
-
 
         JPanel grid = new JPanel();
         grid.setLayout(new GridBagLayout());
@@ -111,7 +97,7 @@ public class StatisticsView extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-         gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0; gbc.gridy = 2;
         grid.add(pieChart, gbc);
 
         gbc.gridx = 1; gbc.gridy = 2;
@@ -131,18 +117,19 @@ public class StatisticsView extends JPanel {
         gbc.gridx = 1; gbc.gridy =0;
         grid.add(userList, gbc);
 
-
-
         backgroundPanel.add(topPanel, BorderLayout.NORTH);
         backgroundPanel.add(grid, BorderLayout.CENTER);
 
         add(backgroundPanel);
 
         setVisible(true);
-
-
-
     }
+
+    /**
+     * Method to initialize the font of the settings view.
+     *
+     * @return the initialized font.
+     */
     public Font initializeFont () {
         Font font = null;
 
@@ -156,6 +143,13 @@ public class StatisticsView extends JPanel {
 
         return font;
     }
+    /**
+     * Method to create a separator between two panels.
+     *
+     * @param width  width of the separator panel.
+     * @param height height of the separator panel.
+     * @return the separator panel.
+     */
     public JPanel addSeparator (int width, int height) {
         JPanel space = new JPanel();
         space.setLayout(new BoxLayout(space, BoxLayout.Y_AXIS));
@@ -167,23 +161,41 @@ public class StatisticsView extends JPanel {
         return space;
     }
 
+    /**
+     * Method to initialize the window of the settings view.
+     */
     public void initializeWindow () {
         setSize(1280, 720);
     }
 
+    /**
+     * Method to add a StatisticsController as a listener.
+     * @param statisticsController The statistics controller.
+     */
     public void menuController(StatisticsController statisticsController) {
         backButton.addMouseListener(statisticsController);
         userList.addActionListener(statisticsController);
     }
 
+    /**
+     * Function used to return to the menu.
+     */
     public void menuView() {
         mainView.switchPanel("menu");
     }
 
+    /**
+     * Function that add a name to the JComboBox.
+     * @param s The string with the name.
+     */
     public void addItem(String s) {
         userList.addItem(s);
     }
 
+    /**
+     * Function that adds all the bars to create the bar chart.
+     * @param num_attacks
+     */
     public void addBars(ArrayList<Integer> num_attacks) {
         barChart.clearBars();
         for (int i : num_attacks) {
@@ -191,11 +203,19 @@ public class StatisticsView extends JPanel {
         }
     }
 
+    /**
+     * Function that updates the pie chart.
+     * @param stats The new stats.
+     */
     public void updatePieChart(int[] stats) {
         pieChart.setWinrate(stats);
         pieChart.repaint();
     }
 
+    /**
+     * Function that returns the item selected of the JComboBox
+     * @return A string with the name.
+     */
     public String getStringSelected() {
         return userList.getItemAt(userList.getSelectedIndex()).toString();
     }

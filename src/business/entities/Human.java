@@ -40,6 +40,10 @@ public class Human extends Player implements Runnable {
 
     }
 
+    /**
+     * Function that runs endlessly when the games start and stops when the player loses or wins.
+     * This function is used to attack.
+     */
     @Override
     public void run() {
         while (!isStop() && isAlive()) {

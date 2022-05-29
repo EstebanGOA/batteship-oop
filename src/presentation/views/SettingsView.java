@@ -6,6 +6,10 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class SettingsView that extends Jpanel.
+ * This class is used to display the settings.
+ */
 public class SettingsView extends JPanel {
 
     private MainView mainView;

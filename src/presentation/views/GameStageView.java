@@ -11,6 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class GameStageView that extends a JPanel and implements a MouseListener.
+ * This class is used to visualize the game.
+ */
 public class GameStageView extends JPanel implements MouseListener {
 
     private final MainView mainView;

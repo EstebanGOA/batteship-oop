@@ -5,6 +5,10 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class JShipsStatus that extends a JPanel.
+ * This class is used the display the ship status.
+ */
 public class JShipStatus extends JPanel {
 
     private final String FONT_BOLD = "fonts/Poppins-Bold.ttf";

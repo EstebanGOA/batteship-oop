@@ -5,6 +5,10 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Class YourShipsTableRenderer that implements a TableCellRenderer.
+ * This class is used to display your board and the status of your ships.
+ */
 public class YourShipsTableRenderer implements TableCellRenderer {
     private List<ShipPanel> ships;
     private JShipStatus[] shipsStatus;

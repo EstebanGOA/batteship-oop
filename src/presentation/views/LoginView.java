@@ -7,6 +7,10 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class LoginView that extends JPanel and implements a MouseListener.
+ * This classed is used to display de login.
+ */
 public class LoginView extends JPanel implements MouseListener {
 
     /**

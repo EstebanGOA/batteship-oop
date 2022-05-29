@@ -25,7 +25,12 @@ public class Timer implements Runnable {
         stop = false;
     }
 
-
+    /**
+     * Constructor of Timer.
+     * @param minutes An integer with the minutes.
+     * @param seconds An integer with the seconds.
+     * @param gameManager The GameManager.
+     */
     public Timer(int minutes, int seconds, GameManager gameManager) {
         this.minutes = minutes;
         this.seconds = seconds;
@@ -55,10 +60,18 @@ public class Timer implements Runnable {
         }
     }
 
+    /**
+     * Function that checks if the timer is stopped.
+     * @return Returns a boolean regarding the outcome.
+     */
     public boolean isStop() {
         return stop;
     }
 
+    /**
+     * Function that sets if the timer is stop.
+     * @param stop A boolean that updates the new state of the timer.
+     */
     public void setStop(boolean stop) {
         this.stop = stop;
     }

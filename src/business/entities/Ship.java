@@ -51,13 +51,7 @@ public abstract class Ship {
         return size;
     }
 
-    /**
-     * Function that gets all the ship segments
-     * @return Returns the ship fragments of the ship
-     */
-    public ShipSegment[] getShipSegments() {
-        return shipSegments;
-    }
+
 
     /**
      * Function that checks if the ships is sunk.

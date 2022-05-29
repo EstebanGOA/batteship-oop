@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
+/**
+ * Class EnemyShipsTableRenderer implements TableCellRenderer.
+ */
 public class EnemyShipsTableRenderer implements TableCellRenderer {
     private EnemyText[] shipsNames;
     private EnemyText[] shipsStatus;

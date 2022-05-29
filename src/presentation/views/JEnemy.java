@@ -8,6 +8,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * Class JEnemy that extends a JPanel and displays the enemy board and status.
+ */
 public class JEnemy extends JPanel {
 
     private final JPanel enemyShipsStatusAndTablePanel;

@@ -10,6 +10,10 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class SetupStageView that extends JPanel and implements a MouseListener.
+ * This class is used to display the setup stage of the game.
+ */
 public class SetupStageView extends JPanel implements MouseListener {
 
     private final MainView mainView;

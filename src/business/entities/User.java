@@ -1,5 +1,9 @@
 package business.entities;
 
+/**
+ * Class User.
+ * This class is used to store all the information regarding the user.
+ */
 public class User {
 
     private final int id;
@@ -39,7 +43,10 @@ public class User {
         this.password = password;
     }
 
-
+    /**
+     * Function that get the id.
+     * @return Returns an integer with the id.
+     */
     public int getId() {
         return id;
     }

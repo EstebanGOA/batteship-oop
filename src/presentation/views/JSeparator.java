@@ -3,6 +3,10 @@ package presentation.views;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class JSeparator that extends a JPanel.
+ * Is used to create separations.
+ */
 public class JSeparator extends JPanel {
 
     private final JPanel space;

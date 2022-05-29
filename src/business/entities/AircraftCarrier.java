@@ -1,7 +1,7 @@
 package business.entities;
 
 /**
- * Class AircraftCarrier that extends and is a type of ship,
+ * Class AircraftCarrier that extends and is a type of ship.
  */
 public class AircraftCarrier extends Ship {
 

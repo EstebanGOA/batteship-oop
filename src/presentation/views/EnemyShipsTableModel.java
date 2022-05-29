@@ -2,6 +2,9 @@ package presentation.views;
 
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Class EnemyShipsTableModel that extends DefaultTable
+ */
 public class EnemyShipsTableModel extends DefaultTableModel {
 
     /**

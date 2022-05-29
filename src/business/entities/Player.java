@@ -37,6 +37,16 @@ abstract public class Player implements Runnable {
         this.stop = false;
     }
 
+    /**
+     * Constructor of player
+     * @param board The board of the player.
+     * @param recharging A boolean regarding if the player is recharging.
+     * @param alive A boolean regarding if the player is alive.
+     * @param numberOfAttacks An integer with teh number of attacks.
+     * @param attacked A matrix of booleans where the player has already attacked.
+     * @param color The color.
+     * @param delay An integer with the delay.
+     */
     public Player(Board board, boolean recharging, boolean alive, int numberOfAttacks, boolean[][] attacked, Color color, int delay) {
         this.board = board;
         this.ships = new Ship[5];
@@ -57,34 +67,61 @@ abstract public class Player implements Runnable {
         return board;
     }
 
+    /**
+     * Function that gets the matrix of where the player has attacked.
+     * @return Returns the matrix of booleans.
+     */
     public boolean[][] getAttacked() {
         return attacked;
     }
 
+    /**
+     * Function that gets the color.
+     * @return Returns the color.
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Function that get the delay.
+     * @return Returns an integer with the delay.
+     */
     public int getDelay() {
         return delay;
     }
 
+    /**
+     * Function that gets if the player is stopped.
+     * @return Returns a boolean with the outcome.
+     */
     public boolean isStop() {
         return stop;
     }
 
+    /**
+     * Function that set the stop.
+     * @param stop A boolean with the new stop.
+     */
     public void setStop(boolean stop) {
         this.stop = stop;
     }
 
     /**
-     *
-     * @return
+     * Function that gets all the ships.
+     * @return Returns all the ships.
      */
     public Ship[] getShips() {
         return ships;
     }
 
+    /**
+     * Function that inserts ships.
+     * @param cords An array with the coordinates.
+     * @param shipSelected A string with the name of the ship.
+     * @param orientation A string with the orientation of the ship.
+     * @return Returns the board.
+     */
     public Board insertShip(int[] cords, String shipSelected, String orientation) {
 
         Ship ship = null;
@@ -152,10 +189,23 @@ abstract public class Player implements Runnable {
         return flag;
     }
 
+    /**
+     * Function that attacks the ia.
+     * @param player The player.
+     * @param x The coordinate x of the attack.
+     * @param y The coordinate y of the attack
+     * @return Returns a boolean regarding the outcome.
+     */
     public boolean attack(Player player, int x, int y) {
         return player.getBoard().sendAttack(this, x, y);
     }
 
+    /**
+     * Function that checks if a position is attacked already.
+     * @param x An integer with the coordinate x.
+     * @param y An integer with the coordinate y.
+     * @return Returns a boolean depending on the outcome.
+     */
     public boolean isAttackedAlready(int x, int y) {
         if (!attacked[x][y]) {
             attacked[x][y] = true;
@@ -166,18 +216,34 @@ abstract public class Player implements Runnable {
         }
     }
 
+    /**
+     * Function that sets the recharging.
+     * @param recharging A boolean with the new reacharging.
+     */
     public void setRecharging(boolean recharging) {
         this.recharging = recharging;
     }
 
+    /**
+     * Function that gets recharging.
+     * @return Returns a boolean regarding if the player is recharging.
+     */
     public boolean isRecharging() {
         return recharging;
     }
 
+    /**
+     * Function that check if the player is alive.
+     * @return Returns a boolean regarding the outcome.
+     */
     public boolean isAlive() {
         return alive;
     }
 
+    /**
+     * Function that sets if the player is alive.
+     * @param alive A boolean with the new status of the player.
+     */
     public void setAlive(boolean alive) {
         this.alive = alive;
     }

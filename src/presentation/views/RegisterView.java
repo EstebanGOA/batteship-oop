@@ -8,6 +8,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * Class RegisterView that extends JPanel.
+ * This class is used to display the menu.
+ */
 public class RegisterView extends JPanel {
 
     /**
