@@ -9,6 +9,12 @@ public class Game {
     private final boolean win;
     private final String path;
 
+    /**
+     * Constructor of Game, used to
+     * @param playerId
+     * @param numberOfAttacks
+     * @param win
+     */
     public Game(int playerId, int numberOfAttacks, boolean win, String path) {
         this.playerId = playerId;
         this.numberOfAttacks = numberOfAttacks;

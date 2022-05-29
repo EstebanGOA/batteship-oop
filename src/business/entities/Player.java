@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Clase abstracta con las variables comunes entre los jugadores.
+ * Abstract class with the common variables of the players.
  */
 abstract public class Player implements Runnable {
 
@@ -24,8 +24,8 @@ abstract public class Player implements Runnable {
     private Color color;
 
     /**
-     * Constructor de Player.
-     * @param board Board donde estarán los barcos del jugador.
+     * Constructor of Player.
+     * @param board A board with the ships of the player.
      */
     public Player(Board board, Color color, int delay) {
         this.board = board;
@@ -52,13 +52,20 @@ abstract public class Player implements Runnable {
     }
 
     /**
-     * Devuelve el tablero del jugador.
-     * @return Board donde tiene colocado los barcos el jugador.
+     * Return the board of the player.
+     * @return Returns a board where the user has placed the ships
      */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Function that inserts a ships.
+     * @param cords X and Y coordinates of the start of the ship.
+     * @param shipSelected The ships that are going to be placed.
+     * @param orientation  A string of the orientation of the ships, vertical or horizontal.
+     * @return Returns the board with the ships placed.
+     */
     public boolean[][] getAttacked() {
         return attacked;
     }
@@ -139,6 +146,10 @@ abstract public class Player implements Runnable {
         return null;
     }
 
+    /**
+     * Function that checks if all the ships are placed, if true all ships are placed, else all ships aren't placed
+     * @return Return the boolean regarding if all the ships are placed
+     */
     public boolean allShipPlaced() {
         boolean flag = true;
         for (Ship ship : ships) {
@@ -197,7 +208,7 @@ abstract public class Player implements Runnable {
 
     /**
      * Method that will return the number of attacks.
-     * @return It will return an integer with the number of attacks. 
+     * @return It will return an integer with the number of attacks.
      */
     public int getNumberOfAttacks() {
         return numberOfAttacks;
