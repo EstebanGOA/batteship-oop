@@ -95,6 +95,14 @@ public class GameController implements MouseListener {
 
     }
 
+    /**
+     *
+     * Method to update the phase of attack
+     *
+     * @param recharging recharging String
+     *
+     */
+
     public void updatePhase(String recharging) {
         gameStageView.updatePhase(recharging);
     }

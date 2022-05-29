@@ -6,6 +6,11 @@ import presentation.controllers.*;
 import presentation.views.*;
 
 public class Main {
+    /**
+     *
+     * Main method where we instantiate all the classes.
+     * @param args arguments.
+     */
     public static void main(String[] args) {
         MainView mainView = new MainView();
 

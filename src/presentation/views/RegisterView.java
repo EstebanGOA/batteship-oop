@@ -385,9 +385,17 @@ public class RegisterView extends JPanel {
         jPasswordField.setText("");
     }
 
+    /**
+     * Method to clean the email input.
+     */
+
     public void cleanEmail() {
         jEmailField.setText("");
     }
+
+    /**
+     * Method to clean the name input.
+     */
 
     public void cleanName() {
         jUserField.setText("");

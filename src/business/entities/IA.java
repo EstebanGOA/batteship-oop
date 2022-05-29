@@ -22,6 +22,9 @@ public class IA extends Player implements Runnable {
     /**
      * Constructor of IA.
      * @param board A board with the ships of the IA.
+     * @param color color of the cell IA
+     * @param gameManager manager for the game.
+     * @param delay delay of the IA attacks
      */
     public IA(Board board, Color color, GameManager gameManager, int delay) {
         super(board, color, delay);

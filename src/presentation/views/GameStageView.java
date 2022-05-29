@@ -144,9 +144,9 @@ public class GameStageView extends JPanel implements MouseListener {
     }
 
     /**
-     *
      * Method to set the status of the ships table.
      *
+     * @param ships array with all the ships.
      */
 
     public void setShipStatusTable (ArrayList<ShipPanel> ships) {

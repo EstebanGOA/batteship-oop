@@ -23,6 +23,14 @@ public class SetupStageController implements MouseListener {
     private GameStageView gameStageView;
     private GameManager gameManager;
 
+    /**
+     * Constructor of the setup stage controller.
+     *
+     * @param setupStageView setup stage view.
+     * @param gameStageView game stage view.
+     * @param gameManager game manager.
+     */
+
     public SetupStageController(SetupStageView setupStageView, GameStageView gameStageView, GameManager gameManager) {
         this.setupStageView = setupStageView;
         this.gameStageView = gameStageView;

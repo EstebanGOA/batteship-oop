@@ -9,12 +9,17 @@ public class ShipSegment extends Tile {
 
     /**
      * Constructor of ShipSegment.
-     * @param ship
+     * @param ship fragment ship
      */
     public ShipSegment(Ship ship) {
         super();
         this.ship = ship;
     }
+
+    /**
+     * return the ship
+     * @return the ship.
+     */
 
     public Ship getShip() {
         return ship;

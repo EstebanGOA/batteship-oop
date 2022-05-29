@@ -251,9 +251,8 @@ public class LoginView extends JPanel implements MouseListener {
     }
 
     /**
-     *
      * Method to switch to the menu view panel.
-     *
+     * @param username name of the user.
      */
 
     public void menuView(String username) {
@@ -419,6 +418,10 @@ public class LoginView extends JPanel implements MouseListener {
                 break;
         }
     }
+
+    /**
+     * Method to reset the email and the passwords placeholders.
+     */
 
     public void reset() {
         jEmailInput.setText("Username or Email");

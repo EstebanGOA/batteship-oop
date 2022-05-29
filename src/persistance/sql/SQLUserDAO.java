@@ -15,6 +15,10 @@ public class SQLUserDAO implements UserDAO {
 
     private final SQLConnector sqlConnector;
 
+    /**
+     * Constructor of the SQL user DAO
+     */
+
     public SQLUserDAO() {
         this.sqlConnector = SQLConnector.getInstance();
     }

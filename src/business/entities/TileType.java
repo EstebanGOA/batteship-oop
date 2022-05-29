@@ -38,7 +38,7 @@ public enum TileType {
 
     /**
      * Function that returns the value.
-     * @return
+     * @return the value
      */
     public int getValue() {
         return value;

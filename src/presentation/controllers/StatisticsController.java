@@ -18,6 +18,12 @@ public class StatisticsController implements MouseListener, ActionListener {
     private UserManager userManager;
     private StatisticsView statisticsView;
 
+    /**
+     * Constructor of the statistics controller.
+     * @param userManager user manager.
+     * @param statisticsView statistics view.
+     */
+
     public StatisticsController(UserManager userManager, StatisticsView statisticsView) {
         this.userManager = userManager;
         this.statisticsView = statisticsView;

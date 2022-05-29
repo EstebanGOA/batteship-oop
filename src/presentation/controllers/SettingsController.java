@@ -17,6 +17,14 @@ public class SettingsController implements MouseListener {
     private UserManager userManager;
     private SettingsView settingsView;
 
+    /**
+     *
+     * Constructor of the settings controller.
+     *
+     * @param userManager user manager.
+     * @param settingsView settings view.
+     */
+
     public SettingsController(UserManager userManager, SettingsView settingsView) {
         this.userManager = userManager;
         this.settingsView = settingsView;

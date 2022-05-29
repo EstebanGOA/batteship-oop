@@ -17,6 +17,14 @@ public class RegisterController implements MouseListener {
     private final UserManager userManager;
     private RegisterView registerView;
 
+    /**
+     *
+     * Constructor of the register controller.
+     *
+     * @param userManager user manager
+     * @param registerView register view.
+     */
+
     public RegisterController(UserManager userManager, RegisterView registerView) {
         this.userManager = userManager;
         this.registerView = registerView;
@@ -25,6 +33,7 @@ public class RegisterController implements MouseListener {
     /**
      * Function that takes care of validating the email.
      * @param email A string with the email.
+     * @return the true if the email is valid.
      */
     public boolean isValidEmailAddress(String email) {
         String emailPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -34,6 +43,7 @@ public class RegisterController implements MouseListener {
     /**
      * Function that takes care of validating the password.
      * @param password A string with the password.
+     * @return true if the password is valid.
      */
     public boolean isValidPassword(String password) {
         boolean isValid = true;
@@ -67,6 +77,7 @@ public class RegisterController implements MouseListener {
     /**
      * Function that takes care of validating the username.
      * @param name A string with the username.
+     * @return true if the name is valid.
      */
     public boolean isValidName(String name) {
         String namePattern = "[a-zA-Z]+";

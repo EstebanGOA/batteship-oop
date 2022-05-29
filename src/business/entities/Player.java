@@ -24,6 +24,8 @@ abstract public class Player implements Runnable {
     /**
      * Constructor of Player.
      * @param board A board with the ships of the player.
+     * @param color color of the cell.
+     * @param delay delay of the enemy.
      */
     public Player(Board board, Color color, int delay) {
         this.board = board;

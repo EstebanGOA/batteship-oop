@@ -55,8 +55,8 @@ public class SQLConnector {
 
     /**
      * Method that executes an insertion query to the connected database.
-     *
      * @param query String representation of the query to execute.
+     * @return true if the query insert is valid.
      */
     public boolean insertQuery(String query) {
         try {
@@ -76,6 +76,7 @@ public class SQLConnector {
      * Method that executes a deletion query to the connected database.
      *
      * @param query String representation of the query to execute.
+     * @return return true if the deletion query is valid.
      */
     public boolean deleteQuery(String query) {
         try {

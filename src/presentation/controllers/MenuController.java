@@ -24,6 +24,16 @@ public class MenuController implements MouseListener {
     private MenuView menuView;
     private GameStageView gameStageView;
 
+    /**
+     *
+     * MenuController constructor.
+     *
+     * @param userManager user manager
+     * @param gameManager game manager
+     * @param menuView menu view
+     * @param gameStageView game stage view
+     */
+
     public MenuController(UserManager userManager, GameManager gameManager, MenuView menuView, GameStageView gameStageView) {
         this.userManager = userManager;
         this.gameManager = gameManager;

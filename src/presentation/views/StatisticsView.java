@@ -12,7 +12,6 @@ public class StatisticsView extends JPanel {
 
     private MainView mainView;
 
-
     private final Color BACKGROUND_COLOR = new Color(39,152,213);
 
     // Change this
@@ -24,6 +23,11 @@ public class StatisticsView extends JPanel {
 
     private PieChart pieChart;
     private BarChart barChart;
+
+    /**
+     * Constructor of the statistics view.
+     * @param mainView the main view
+     */
 
     public StatisticsView(MainView mainView) {
 
@@ -195,7 +199,7 @@ public class StatisticsView extends JPanel {
 
     /**
      * Function that adds all the bars to create the bar chart.
-     * @param num_attacks
+     * @param num_attacks array with all the number of attacks
      */
     public void addBars(ArrayList<Integer> num_attacks) {
         barChart.clearBars();

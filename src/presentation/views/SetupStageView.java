@@ -110,6 +110,11 @@ public class SetupStageView extends JPanel implements MouseListener {
 
     // ------------------------ Background Image ------------------------ //
 
+    /**
+     * Method to create the background panel.
+     * @return the background panel.
+     */
+
     public JPanel createBackgroundPanel () {
         JPanel backgroundPanel = new JPanel();
         backgroundPanel.setPreferredSize(new Dimension(1280, 720));
@@ -964,6 +969,9 @@ public class SetupStageView extends JPanel implements MouseListener {
         mainView.switchPanel("game");
     }
 
+    /**
+     * method to reset the board of the stage view.
+     */
 
     public void reset() {
         for (Cell[] cells : table)

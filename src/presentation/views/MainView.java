@@ -50,6 +50,7 @@ public class MainView extends JFrame implements MouseListener {
      * @param menuView the menuView
      * @param settingsView the settingsView
      * @param setupStageView the setupView
+     * @param statisticsView the statisticsView
      * @param gameStageView the gameView
      *
      */
@@ -85,6 +86,11 @@ public class MainView extends JFrame implements MouseListener {
         pack();
         this.setVisible(true);
     }
+
+    /**
+     * Method to switch view.
+     * @param windowName name of the view we want to switch.
+     */
 
     public void switchPanel(String windowName) {
         cardLayout.show(rootPanel, windowName);
