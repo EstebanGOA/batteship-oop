@@ -16,6 +16,7 @@ public class Game {
      * @param playerId The player id.
      * @param numberOfAttacks The number of attacks.
      * @param win A boolean with the outcome of the game.
+     * @param path the path in not used.
      */
     public Game(int playerId, int numberOfAttacks, boolean win, String path) {
         this.playerId = playerId;

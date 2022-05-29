@@ -41,6 +41,9 @@ public class IA extends Player implements Runnable {
      * @param alive Boolean with the player status .
      * @param board Board where the ships are placed.
      * @param gameManager GameManager which controls the game status.
+     * @param attacked boolean list to check where the IA attacked.
+     * @param delay delay of the IA attacks
+     * @param color color of the IA attacks.
      */
     public IA(boolean alive, Board board, boolean[][]attacked, Color color, GameManager gameManager, int delay) {
         super(board, false, alive, 0, attacked, color, delay);

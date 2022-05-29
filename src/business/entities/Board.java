@@ -35,6 +35,7 @@ public class Board {
     /**
      * Function that places a ship in the board.
      * @param ship The ship we want to place.
+     * @param owner the owner of the where the ship is placed.
      * @return Returns a boolean indicating if the ship was placed successfully.
      */
     public boolean placeShip(Ship ship, Player owner) {
@@ -95,7 +96,7 @@ public class Board {
      * @param ship       The ship.
      * @param x          An integer with the x coordinate.
      * @param y          An integer with the y coordinate.
-     * @param owner
+     * @param owner      the owner of where the ship is placed.
      * @return Returns a boolean regarding the outcome.
      */
     public boolean verticalInsert(int boardLimit, Ship ship, int x, int y, Player owner) {
@@ -137,7 +138,7 @@ public class Board {
      * @param ship       The ship.
      * @param x          An integer with the x coordinate.
      * @param y          An integer with the y coordinate.
-     * @param owner
+     * @param owner      the owner of where the ship is placed.
      * @return Returns a boolean regarding the outcome.
      */
     public boolean horizontalInsert(int boardLimit, Ship ship, int x, int y, Player owner) {

@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Statistics View
+ */
 public class StatisticsView extends JPanel {
 
     private MainView mainView;

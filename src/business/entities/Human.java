@@ -34,6 +34,7 @@ public class Human extends Player implements Runnable {
      * @param board Board where the ships are placed.
      * @param attacked list of booleans to check if the player has already attack to that cell.
      * @param gameManager GameManger which controls the game status.
+     * @param delay the delay of the player.
      */
     public Human(boolean alive, boolean recharging, int numberOfAttacks, Board board, boolean[][] attacked, GameManager gameManager, int delay){
         super(board, recharging, alive, numberOfAttacks, attacked, Color.WHITE, delay);

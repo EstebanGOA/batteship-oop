@@ -23,7 +23,7 @@ public class BarChart extends JPanel {
 
     /**
      * Function that paints the bar chart
-     * @param g
+     * @param g graphics component.
      */
     @Override
     protected void paintComponent(Graphics g) {

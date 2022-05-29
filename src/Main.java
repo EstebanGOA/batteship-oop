@@ -5,6 +5,9 @@ import persistance.sql.SQLUserDAO;
 import presentation.controllers.*;
 import presentation.views.*;
 
+/**
+ * Main Class
+ */
 public class Main {
     /**
      *

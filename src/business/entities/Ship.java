@@ -15,6 +15,7 @@ public abstract class Ship {
      *
      * @param orientation Orientation of the ship.
      * @param position Position of the ship.
+     * @param size size of the ship.
      */
     public Ship(String orientation, int[] position, int size) {
         this.orientation = orientation;

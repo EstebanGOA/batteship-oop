@@ -230,6 +230,7 @@ public class GameManager {
 
     /**
      * Function that updates the game
+     * @param player the player we want to update the board.
      */
     public void updateGame(Player player)  {
 
