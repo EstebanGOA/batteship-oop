@@ -4,39 +4,64 @@ import business.entities.User;
 import persistance.UserDAO;
 import persistance.sql.SQLUserDAO;
 
+import java.util.ArrayList;
+
 public class UserManager {
 
-    private final UserDAO userDao;
+    private SQLUserDAO userDAO;
     private User user;
 
-    private String username;
-
-    public UserManager() {
-        userDao = new SQLUserDAO();
+    public UserManager(SQLUserDAO sqlUserDAO) {
+        this.userDAO = sqlUserDAO;
     }
 
     public boolean addUser(String username, String email, String password) {
         this.user = new User(username, email, password);
-        return userDao.addUser(user);
+        return userDAO.addUser(user);
     }
 
-    public void deleteUser(String code) {
-        userDao.deleteUser(code);
-    }
-
-    public boolean checkLogin(String login, String password) {
-        if (password.equals(userDao.getPassword(login))) {
-         username = login;
-
-         return true;
+    public boolean delete() {
+        if (user != null) {
+            userDAO.deleteUser(user.getName());
+            return true;
         }
         return false;
     }
-    public void logoutUser() {
+
+    public boolean isLogin(String login, String password) {
+        User user = userDAO.getUser(login);
+
+        if (user == null) {
+            return false;
+        }
+
+        if (user.getPassword().equals(password)) {
+            this.user = user;
+            return true;
+        }
+        return false;
+    }
+
+    public void logout() {
         user = null;
     }
 
-    public String getUsername() {
-        return username;
+    public ArrayList<String> getUsersName(){
+        return userDAO.getUsersName();
     }
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public int[] getWinrate(String name) {
+        int[] stats = userDAO.getStats(name);
+
+        return stats;
+    }
+    public ArrayList<Integer> getAttacks(String name) {
+        return userDAO.getNumAttacks(name);
+    }
+
 }

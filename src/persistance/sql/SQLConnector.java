@@ -1,12 +1,11 @@
 package persistance.sql;
 
 import persistance.DatabaseConfigDAO;
-
 import java.sql.*;
 
 public class SQLConnector {
 
-    private static persistance.sql.SQLConnector instance = null;
+    private static SQLConnector instance = null;
 
     // Attributes to connect to the database.
     private final String username;
@@ -14,21 +13,21 @@ public class SQLConnector {
     private final String url;
     private Connection conn;
 
-    public static persistance.sql.SQLConnector getInstance() {
+    public static SQLConnector getInstance() {
         if (instance == null) {
-            instance = new persistance.sql.SQLConnector(DatabaseConfigDAO.getUsername(), DatabaseConfigDAO.getPassword(), DatabaseConfigDAO.getIp(), DatabaseConfigDAO.getPort(), DatabaseConfigDAO.getDatabaseName());
+            DatabaseConfigDAO databaseConfigDAO = new DatabaseConfigDAO();
+            instance = new SQLConnector(databaseConfigDAO);
             instance.connect();
         }
         return instance;
     }
 
     // Parametrized constructor
-    public SQLConnector(String username, String password, String ip, int port, String database) {
-        this.username = username;
-        this.password = password;
-        this.url = "jdbc:mysql://" + ip + ":" + port + "/" + database;
+    public SQLConnector(DatabaseConfigDAO databaseConfigDAO) {
+        this.username = databaseConfigDAO.getUsername();
+        this.password = databaseConfigDAO.getPassword();
+        this.url = "jdbc:mysql://" + databaseConfigDAO.getIp() + ":" + databaseConfigDAO.getPort() + "/" + databaseConfigDAO.getDatabase();
     }
-
 
     /**
      * Method that starts the inner connection to the database. Ideally, users would disconnect after
@@ -70,7 +69,7 @@ public class SQLConnector {
             s.executeUpdate(query);
         } catch (SQLException e) {
             System.err.println(query);
-            System.err.println("Problema when updating --> " + e.getSQLState() + " (" + e.getMessage() + ")");
+            System.err.println("Problem when updating --> " + e.getSQLState() + " (" + e.getMessage() + ")");
         }
     }
 
@@ -120,4 +119,5 @@ public class SQLConnector {
             System.err.println("Problem when closing the connection --> " + e.getSQLState() + " (" + e.getMessage() + ")");
         }
     }
+
 }

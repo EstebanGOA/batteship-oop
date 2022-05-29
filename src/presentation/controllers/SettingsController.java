@@ -1,7 +1,6 @@
 package presentation.controllers;
 
 import business.UserManager;
-import business.entities.User;
 import presentation.views.JPopup;
 import presentation.views.SettingsView;
 
@@ -11,9 +10,9 @@ import java.awt.event.MouseListener;
 
 
 public class SettingsController implements MouseListener {
+
     private UserManager userManager;
     private SettingsView settingsView;
-
 
     public SettingsController(UserManager userManager, SettingsView settingsView) {
         this.userManager = userManager;
@@ -25,10 +24,19 @@ public class SettingsController implements MouseListener {
         switch (((JComponent) e.getSource()).getName()) {
             case "logout" ->  {
                 settingsView.viewLogin();
-                userManager.logoutUser();
+                userManager.logout();
                 new JPopup("Logout successfully");
+            }
+            case "delete" -> {
+                settingsView.viewLogin();
+                if (userManager.delete())
+                    new JPopup("User account deleted successfully");
+                else
+                    new JPopup("Error, user cannot be deleted.");
+
 
             }
+            case "back" -> settingsView.viewMenu();
 
         }
     }

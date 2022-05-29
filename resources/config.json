@@ -3,5 +3,6 @@
   "password": "",
   "ip": "localhost",
   "port": 3306,
-  "database": "battleship"
+  "database": "battleship",
+  "delay":5000
 }

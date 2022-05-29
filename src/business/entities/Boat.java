@@ -11,7 +11,7 @@ public class Boat extends Ship {
      * @param position An array of integers with the coordinates of the boat.
      */
     public Boat(String orientation, int[] position) {
-        super(orientation, position, 3);
+        super(orientation, position, 2);
     }
 
 }

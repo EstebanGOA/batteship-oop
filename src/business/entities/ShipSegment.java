@@ -5,11 +5,19 @@ package business.entities;
  */
 public class ShipSegment extends Tile {
 
+    private Ship ship;
+
     /**
-     * Constructor of ship segment.
+     * Constructor of ShipSegment.
+     * @param ship
      */
-    public ShipSegment() {
+    public ShipSegment(Ship ship) {
         super();
+        this.ship = ship;
+    }
+
+    public Ship getShip() {
+        return ship;
     }
 
     /**

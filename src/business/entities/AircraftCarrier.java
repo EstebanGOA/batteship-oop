@@ -11,7 +11,7 @@ public class AircraftCarrier extends Ship {
      * @param position An array of integers with the coordinates of the boat.
      */
     public AircraftCarrier(String orientation, int[] position) {
-        super(orientation, position, 6);
+        super(orientation, position, 5);
     }
 
 }
