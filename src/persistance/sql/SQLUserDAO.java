@@ -171,8 +171,7 @@ public class SQLUserDAO implements UserDAO {
                 "FROM user AS u " +
                 "JOIN game AS g ON u.id = g.player_id " +
                 "WHERE u.name LIKE '%" + string +"%' " +
-                "ORDER BY g.id DESC " +
-                "LIMIT 5;";
+                "ORDER BY g.id DESC;";
 
         ArrayList<Integer> num_attacks = new ArrayList<>();
         ResultSet result = SQLConnector.getInstance().selectQuery(query);
