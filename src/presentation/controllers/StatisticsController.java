@@ -25,7 +25,7 @@ public class StatisticsController implements MouseListener, ActionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         switch (((JComponent) e.getSource()).getName()) {
-            case "back" -> statisticsView.menuView();
+            case "back" ->  statisticsView.menuView();
         }
     }
 

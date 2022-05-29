@@ -181,6 +181,7 @@ public class StatisticsView extends JPanel {
      * Function used to return to the menu.
      */
     public void menuView() {
+        userList.removeAllItems();
         mainView.switchPanel("menu");
     }
 
@@ -217,7 +218,11 @@ public class StatisticsView extends JPanel {
      * @return A string with the name.
      */
     public String getStringSelected() {
+        if(userList.getItemCount() == 0) {
+            return null;
+        }
         return userList.getItemAt(userList.getSelectedIndex()).toString();
     }
+
 
 }
