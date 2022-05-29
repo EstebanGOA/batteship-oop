@@ -1,6 +1,5 @@
 package business.entities;
 
-import netscape.javascript.JSObject;
 
 public class Game {
 
@@ -31,9 +30,4 @@ public class Game {
     public boolean isWin() {
         return win;
     }
-
-    public String getPath() {
-        return path;
-    }
-
 }

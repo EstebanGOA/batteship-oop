@@ -106,17 +106,4 @@ public class SQLConnector {
         }
         return rs;
     }
-
-    /**
-     * Method that closes the inner connection to the database. Ideally, users would disconnect after
-     * using the shared instance.
-     */
-    public void disconnect() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            System.err.println("Problem when closing the connection --> " + e.getSQLState() + " (" + e.getMessage() + ")");
-        }
-    }
-
 }

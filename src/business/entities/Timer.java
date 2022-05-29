@@ -79,5 +79,4 @@ public class Timer implements Runnable {
     private String formatTime (int n) {
         return (n < 10) ? "0" + n : String.valueOf(n);
     }
-
 }

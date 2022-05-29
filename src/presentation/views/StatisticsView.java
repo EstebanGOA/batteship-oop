@@ -1,16 +1,11 @@
 package presentation.views;
 
-
-
 import presentation.controllers.StatisticsController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class StatisticsView extends JPanel {
@@ -196,14 +191,10 @@ public class StatisticsView extends JPanel {
         }
     }
 
-
-
     public void updatePieChart(int[] stats) {
         pieChart.setWinrate(stats);
         pieChart.repaint();
     }
-
-
 
     public String getStringSelected() {
         return userList.getItemAt(userList.getSelectedIndex()).toString();

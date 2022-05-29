@@ -1,7 +1,6 @@
 package presentation.controllers;
 
 import business.UserManager;
-import presentation.views.MenuView;
 import presentation.views.StatisticsView;
 
 import javax.swing.*;
@@ -10,6 +9,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * StatisticsController class that implements a MouseListener and a ActionListener.
+ * The StatisticsController is responsible for displaying the view with user statistics.
+ */
 public class StatisticsController implements MouseListener, ActionListener {
 
     private UserManager userManager;

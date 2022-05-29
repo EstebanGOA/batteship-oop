@@ -1,6 +1,5 @@
 package business.entities;
 
-import presentation.views.JPopup;
 import java.awt.*;
 
 /**

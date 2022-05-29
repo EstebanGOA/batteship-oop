@@ -1,7 +1,5 @@
 package presentation.views;
 
-import business.entities.User;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -188,5 +186,4 @@ public class MainView extends JFrame implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
 }

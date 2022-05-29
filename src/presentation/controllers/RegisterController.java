@@ -1,7 +1,6 @@
 package presentation.controllers;
 
 import business.UserManager;
-import business.entities.User;
 import presentation.views.RegisterView;
 
 import javax.swing.*;
@@ -10,7 +9,8 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 /**
- * Controlador que se encargará de la gestión para el registro de usuario.
+ * RegisterController class that implements a MouseListener.
+ * The RegisterController handles user registration
  */
 public class RegisterController implements MouseListener {
 
@@ -22,12 +22,19 @@ public class RegisterController implements MouseListener {
         this.registerView = registerView;
     }
 
-
+    /**
+     * Function that takes care of validating the email.
+     * @param email A string with the email.
+     */
     public boolean isValidEmailAddress(String email) {
         String emailPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         return (email.trim().matches(emailPattern));
     }
 
+    /**
+     * Function that takes care of validating the password.
+     * @param password A string with the password.
+     */
     public boolean isValidPassword(String password) {
         boolean isValid = true;
         if (password.length() > 15 || password.length() < 8) {
@@ -57,6 +64,10 @@ public class RegisterController implements MouseListener {
         return isValid;
     }
 
+    /**
+     * Function that takes care of validating the username.
+     * @param name A string with the username.
+     */
     public boolean isValidName(String name) {
         String namePattern = "[a-zA-Z]+";
         return (name.trim().matches(namePattern));
@@ -143,9 +154,5 @@ public class RegisterController implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
-    }
-
-    public void asigneView(RegisterView registerView) {
-        this.registerView = registerView;
     }
 }

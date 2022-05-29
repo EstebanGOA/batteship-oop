@@ -141,9 +141,5 @@ public class JImagePanel extends JPanel {
         }
     }
 
-    public void setScale(float scale) {
-        this.scale = scale;
-    }
-
-
+    public void setScale(float scale) { this.scale = scale; }
 }

@@ -8,7 +8,10 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
+/**
+ * SettingsController class that implements a MouseListener.
+ * The SettingsController takes care of the basic settings of the program.
+ */
 public class SettingsController implements MouseListener {
 
     private UserManager userManager;

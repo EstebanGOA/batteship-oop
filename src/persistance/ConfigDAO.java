@@ -88,5 +88,4 @@ public class ConfigDAO {
     public int getDelay() {
         return delay;
     }
-
 }

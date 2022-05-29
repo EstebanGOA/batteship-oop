@@ -1,7 +1,5 @@
 package business.entities;
 
-import com.google.gson.JsonElement;
-
 import java.awt.*;
 
 public class Tile {
@@ -40,5 +38,4 @@ public class Tile {
     public Color getColor() {
         return color;
     }
-
 }

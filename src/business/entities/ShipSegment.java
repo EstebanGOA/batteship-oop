@@ -27,13 +27,4 @@ public class ShipSegment extends Tile {
     public boolean isHit() {
         return getTileType() == TileType.HIT;
     }
-
-    /**
-     * Function that marks the ship segment as hit,
-     * indicating that the ship segment has been sunk.
-     */
-    public void hit() {
-        super.setTileType(TileType.HIT);
-    }
-
 }

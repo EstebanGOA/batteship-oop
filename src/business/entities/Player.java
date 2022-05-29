@@ -1,8 +1,6 @@
 package business.entities;
 
 import java.awt.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Abstract class with the common variables of the players.
@@ -59,13 +57,6 @@ abstract public class Player implements Runnable {
         return board;
     }
 
-    /**
-     * Function that inserts a ships.
-     * @param cords X and Y coordinates of the start of the ship.
-     * @param shipSelected The ships that are going to be placed.
-     * @param orientation  A string of the orientation of the ships, vertical or horizontal.
-     * @return Returns the board with the ships placed.
-     */
     public boolean[][] getAttacked() {
         return attacked;
     }
@@ -162,7 +153,6 @@ abstract public class Player implements Runnable {
     }
 
     public boolean attack(Player player, int x, int y) {
-        // recharging.set(true);
         return player.getBoard().sendAttack(this, x, y);
     }
 
@@ -213,5 +203,4 @@ abstract public class Player implements Runnable {
     public int getNumberOfAttacks() {
         return numberOfAttacks;
     }
-
 }

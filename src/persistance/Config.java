@@ -14,16 +14,4 @@ public class Config {
     public String getPassword() {
         return password;
     }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public String getDatabase() {
-        return database;
-    }
 }

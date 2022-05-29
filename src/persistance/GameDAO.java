@@ -1,7 +1,5 @@
 package persistance;
 
-import business.GameManager;
-import business.UserManager;
 import business.entities.Game;
 
 /**

@@ -13,6 +13,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+/**
+ * SettingsController class that implements a MouseListener.
+ * The SettingsController it is in charge of managing the correct functioning of the gameStageView.
+ */
 public class SetupStageController implements MouseListener {
 
     private SetupStageView setupStageView;
@@ -42,6 +46,9 @@ public class SetupStageController implements MouseListener {
 
     }
 
+    /**
+     * Function check that all the ships are positioned on the board to be able to start with the gameStageView.
+     */
     private void isSetupStageReady() {
         int numberOfEnemies = setupStageView.getNumberOfEnemies();
 
@@ -60,6 +67,10 @@ public class SetupStageController implements MouseListener {
 
     }
 
+    /**
+     * Function check that the placement of the ships on the board is valid.
+     * @param cell A Cell object with the user board information.
+     */
     private void processShipPlacement(Cell cell) {
 
         int[] coords = cell.getCoordinates();

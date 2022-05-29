@@ -3,14 +3,10 @@ import business.UserManager;
 import persistance.sql.SQLGameDAO;
 import persistance.sql.SQLUserDAO;
 import presentation.controllers.*;
-import presentation.controllers.*;
 import presentation.views.*;
-
-import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-
         MainView mainView = new MainView();
 
         LoginView loginView = new LoginView(mainView);
@@ -19,7 +15,6 @@ public class Main {
         SettingsView settingsView = new SettingsView(mainView);
         SetupStageView setupStageView = new SetupStageView(mainView);
         GameStageView gameStageView = new GameStageView(mainView);
-
 
         SQLUserDAO sqlUserDAO = new SQLUserDAO();
         UserManager userManager = new UserManager(sqlUserDAO);
@@ -50,6 +45,5 @@ public class Main {
         statisticsView.menuController(statisticsController);
 
         mainView.run();
-
     }
 }

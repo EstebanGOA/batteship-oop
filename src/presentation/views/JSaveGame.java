@@ -1,7 +1,5 @@
 package presentation.views;
 
-import presentation.controllers.GameController;
-
 import javax.swing.*;
 
 import java.awt.*;

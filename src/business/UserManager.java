@@ -1,7 +1,6 @@
 package business;
 
 import business.entities.User;
-import persistance.UserDAO;
 import persistance.sql.SQLUserDAO;
 
 import java.util.ArrayList;
@@ -63,5 +62,4 @@ public class UserManager {
     public ArrayList<Integer> getAttacks(String name) {
         return userDAO.getNumAttacks(name);
     }
-
 }

@@ -10,12 +10,11 @@ public enum TileType {
 
     private int value;
 
-    private TileType(int value) {
+    TileType(int value) {
         this.value = value;
     }
 
     public int getValue() {
         return value;
     }
-
 }

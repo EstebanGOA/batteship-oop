@@ -1,17 +1,14 @@
 package presentation.controllers;
 
 import business.GameManager;
-import business.entities.Human;
 import business.entities.Player;
 import presentation.views.Cell;
 import presentation.views.GameStageView;
 import presentation.views.JPopup;
-import presentation.views.JSaveGame;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**

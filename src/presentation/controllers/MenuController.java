@@ -11,9 +11,12 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * MenuController class that implements a MouseListener.
+ * The MenuController is responsible to communicate between the GameManager and the MenuView.
+ */
 public class MenuController implements MouseListener {
 
     private UserManager userManager;
@@ -28,6 +31,9 @@ public class MenuController implements MouseListener {
         this.gameStageView = gameStageView;
     }
 
+    /**
+     * Function that allows to obtain the file of the game that the user wants to load
+     */
     private void getFilename() {
         File[] files = gameManager.getFiles();
 
@@ -45,6 +51,10 @@ public class MenuController implements MouseListener {
         }
     }
 
+    /**
+     * Function that allows you to load the saved game to the state in which it was
+     * @param gameName A string with the game name.
+     */
     private void loadSavedGame(String gameName) {
 
         gameStageView.reset();
@@ -86,10 +96,5 @@ public class MenuController implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
-    public void showUsername() {
-        menuView.setUsername(userManager.getUser().getName());
-    }
-
 }
 

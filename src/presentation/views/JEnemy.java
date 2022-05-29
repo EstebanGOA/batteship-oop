@@ -3,12 +3,10 @@ package presentation.views;
 import business.entities.Board;
 import business.entities.Ship;
 import business.entities.Tile;
-import business.entities.TileType;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class JEnemy extends JPanel {
 

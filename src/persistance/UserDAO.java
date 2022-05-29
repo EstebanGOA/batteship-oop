@@ -49,5 +49,4 @@ public interface UserDAO {
      * @return Array that it will contain statistics from the user.
      */
     ArrayList<Integer> getNumAttacks(String string);
-
 }
