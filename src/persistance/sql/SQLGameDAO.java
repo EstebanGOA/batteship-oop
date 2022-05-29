@@ -3,7 +3,6 @@ package persistance.sql;
 import business.UserManager;
 import business.entities.User;
 import persistance.GameDAO;
-import business.entities.Game;
 
 /**
  * Class SQLGameDAO that implements GameDAO.

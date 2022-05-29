@@ -166,7 +166,7 @@ abstract public class Player implements Runnable {
         }
 
         if (ship != null) {
-            if (board.placeShip(ship)) {
+            if (board.placeShip(ship, this)) {
                 ships[index] = ship;
                 return board;
             }

@@ -37,7 +37,7 @@ public class Board {
      * @param ship The ship we want to place.
      * @return Returns a boolean indicating if the ship was placed successfully.
      */
-    public boolean placeShip(Ship ship) {
+    public boolean placeShip(Ship ship, Player owner) {
 
         int boardLimit = BOARD_FINISH - ship.getSize();
 
@@ -45,9 +45,9 @@ public class Board {
         int y = ship.getPosition()[1];
 
         if (ship.getOrientation().equals("horizontal")) {
-            return horizontalInsert(boardLimit, ship, x, y);
+            return horizontalInsert(boardLimit, ship, x, y, owner);
         } else if (ship.getOrientation().equals("vertical")) {
-            return verticalInsert(boardLimit, ship, x, y);
+            return verticalInsert(boardLimit, ship, x, y, owner);
         } else {
             return false;
         }
@@ -90,13 +90,15 @@ public class Board {
 
     /**
      * Function that inserts vertical.
+     *
      * @param boardLimit An integer with the board limit.
-     * @param ship The ship.
-     * @param x An integer with the x coordinate.
-     * @param y An integer with the y coordinate.
+     * @param ship       The ship.
+     * @param x          An integer with the x coordinate.
+     * @param y          An integer with the y coordinate.
+     * @param owner
      * @return Returns a boolean regarding the outcome.
      */
-    public boolean verticalInsert(int boardLimit, Ship ship, int x, int y) {
+    public boolean verticalInsert(int boardLimit, Ship ship, int x, int y, Player owner) {
 
         boolean result = true;
 
@@ -114,7 +116,9 @@ public class Board {
                 tiles[y+i][x] = new ShipSegment(ship);
                 ship.addSegment((ShipSegment) tiles[y+i][x]);
                 tiles[y+i][x].setTileType(TileType.SHIP);
-                tiles[y+i][x].changeColor(Color.GREEN);
+                if (owner instanceof Human) {
+                    tiles[y + i][x].changeColor(Color.GREEN);
+                }
             }
 
             return result;
@@ -128,13 +132,15 @@ public class Board {
 
     /**
      * Function that inserts horizontal.
+     *
      * @param boardLimit An integer with the board limit.
-     * @param ship The ship.
-     * @param x An integer with the x coordinate.
-     * @param y An integer with the y coordinate.
+     * @param ship       The ship.
+     * @param x          An integer with the x coordinate.
+     * @param y          An integer with the y coordinate.
+     * @param owner
      * @return Returns a boolean regarding the outcome.
      */
-    public boolean horizontalInsert(int boardLimit, Ship ship, int x, int y) {
+    public boolean horizontalInsert(int boardLimit, Ship ship, int x, int y, Player owner) {
 
         boolean result = true;
 
@@ -152,7 +158,9 @@ public class Board {
                 tiles[y][x+i] = new ShipSegment(ship);
                 ship.addSegment((ShipSegment) tiles[y][x+i]);
                 tiles[y][x+i].setTileType(TileType.SHIP);
-                tiles[y][x+i].changeColor(Color.GREEN);
+                if (owner instanceof Human) {
+                    tiles[y][x + i].changeColor(Color.GREEN);
+                }
             }
 
             return result;

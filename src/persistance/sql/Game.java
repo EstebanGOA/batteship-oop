@@ -1,4 +1,4 @@
-package business.entities;
+package persistance.sql;
 
 /**
  * Class Game.

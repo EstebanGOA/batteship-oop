@@ -1,6 +1,6 @@
 package persistance;
 
-import business.entities.Game;
+import persistance.sql.Game;
 
 /**
  * Interface GameDAO.
