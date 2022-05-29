@@ -5,7 +5,7 @@ import business.GameManager;
 import java.awt.*;
 
 /**
- * Clase que se encargará de manejar toda la lógica referente al jugador y sus movimientos.
+ * Class that will control all the logic of the player and his movements.
  */
 public class Human extends Player implements Runnable {
 

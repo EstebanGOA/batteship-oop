@@ -1,7 +1,7 @@
 package business.entities;
 
 /**
- * Clase abstracta con las variables comunes entre todos los barcos.
+ * Abstract class with the common variables of the ships.
  */
 public abstract class Ship {
 
@@ -13,8 +13,8 @@ public abstract class Ship {
     /**
      * Constructor of Ship
      *
-     * @param orientation Orientación del barco.
-     * @param position Posición del barco.
+     * @param orientation Orientation of the ship.
+     * @param position Position of the ship.
      */
     public Ship(String orientation, int[] position, int size) {
         this.orientation = orientation;
@@ -24,40 +24,45 @@ public abstract class Ship {
     }
 
     /**
-     * Función que devuelve la orientación del barco.
+     * Function that returns the orientation of the ship.
      *
-     * @return String con la orientación del barco.
+     * @return Returns a string with the orientation of the ship.
      */
     public String getOrientation() {
         return orientation;
     }
 
     /**
-     * Función que devuelve las coordenadas en la que está colocado el barco.
-     * Las coordenadas donde está esta el barco, la primera posición pertenece a la X, y la segunda a la Y.
+     * Functions that returns the coordinates where the ship is located/placed.
+     * The coordinates where the ship is located, in the first position we have the coordinate regarding the X
+     * and the second coordinate regarding the Y.
      *
-     * @return int[] con las posiciones del barco.
+     * @return Returns an int[] with the position of the ship.
      */
     public int[] getPosition() {
         return position;
     }
 
+    /**
+     * Function that gets the size of the ship
+     * @return An integer with the size of the ship
+     */
     public int getSize() {
         return size;
     }
 
     /**
-     * Method that will return the ship fragments.
-     *
-     * @return Array of ship fragments.
+     * Function that gets all the ship segments
+     * @return Returns the ship fragments of the ship
      */
     public ShipSegment[] getShipSegments() {
         return shipSegments;
     }
 
     /**
-     * Method that will check if the boat is sunk, if so it will return true, otherwise it will return false.
-     * @return It will return true if the boat is sunk, otherwise it will return false.
+     * Function that checks if the ships is sunk.
+     * A ship is sunk when all its fragments are hit.
+     * @return Returns a boolean regarding if the ship is sunk.
      */
     public boolean isSunk() {
         int counter = 0;
@@ -70,8 +75,8 @@ public abstract class Ship {
     }
 
     /**
-     * Method that will assign a mew ship segment to the array.
-     * @param shipSegment ShipSegment that will be added to the array.
+     * Function that add a segment to the ship
+     * @param shipSegment The ships segment added to the ship
      */
     public void addSegment(ShipSegment shipSegment) {
         for (int i = 0; i < this.shipSegments.length; i++) {

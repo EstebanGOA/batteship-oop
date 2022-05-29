@@ -5,6 +5,9 @@ import business.GameManager;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * IA Class that extends a Player.
+ */
 public class IA extends Player implements Runnable {
 
     private GameManager gameManager;
@@ -16,6 +19,10 @@ public class IA extends Player implements Runnable {
     private volatile int[] coordsAux = new int[2];
     private volatile boolean orientation;
 
+    /**
+     * Constructor of IA.
+     * @param board A board with the ships of the IA.
+     */
     public IA(Board board, Color color, GameManager gameManager, int delay) {
         super(board, color, delay);
         this.gameManager = gameManager;
