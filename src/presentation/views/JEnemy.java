@@ -129,16 +129,7 @@ public class JEnemy extends JPanel {
 
     public void updateBoard(Board board) {
 
-        Tile[][] tiles = board.getTiles();
-
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles.length; j++) {
-
-                Tile tile = tiles[i][j];
-                table[i][j].setBackground(tile.getColor());
-
-            }
-        }
+        SetupStageView.updateBoard(board, table);
 
     }
 

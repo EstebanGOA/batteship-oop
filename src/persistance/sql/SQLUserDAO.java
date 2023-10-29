@@ -1,7 +1,7 @@
 package persistance.sql;
 
-import persistance.UserDAO;
 import business.entities.User;
+import persistance.UserDAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

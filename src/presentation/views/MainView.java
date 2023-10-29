@@ -94,7 +94,6 @@ public class MainView extends JFrame implements MouseListener {
 
     public void switchPanel(String windowName) {
         cardLayout.show(rootPanel, windowName);
-
     }
 
     /**
@@ -129,7 +128,7 @@ public class MainView extends JFrame implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() instanceof JComponent) {
-            /* For each event associated to a component we assign a name, depending on its value we will change the window. */
+            /* For each event associated to a component we assign a name, so the correct view is loaded. */
             switch (((JComponent) e.getSource()).getName()) {
                 case "login" -> switchPanel(MENU_WINDOW);
                 case "create_account" -> switchPanel(REGISTER_WINDOW);

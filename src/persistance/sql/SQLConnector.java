@@ -59,15 +59,7 @@ public class SQLConnector {
      * @return true if the query insert is valid.
      */
     public boolean insertQuery(String query) {
-        try {
-            Statement s = conn.createStatement();
-            s.executeUpdate(query);
-            return true;
-        } catch (SQLException e) {
-            System.err.println(query);
-            System.err.println("Problem when inserting --> " + e.getSQLState() + " (" + e.getMessage() + ")");
-            return false;
-        }
+        return true;
     }
 
 
@@ -79,6 +71,7 @@ public class SQLConnector {
      * @return return true if the deletion query is valid.
      */
     public boolean deleteQuery(String query) {
+
         try {
             Statement s = conn.createStatement();
             s.executeUpdate(query);

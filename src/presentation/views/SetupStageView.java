@@ -936,6 +936,10 @@ public class SetupStageView extends JPanel implements MouseListener {
      */
 
     public void updateBoard(Board board) {
+        updateBoard(board, table);
+    }
+
+    static void updateBoard(Board board, Cell[][] table) {
         Tile[][] tiles = board.getTiles();
 
         for (int i = 0; i < tiles.length; i++) {
@@ -944,7 +948,6 @@ public class SetupStageView extends JPanel implements MouseListener {
                 table[i][j].setBackground(tile.getColor());
             }
         }
-
     }
 
     /**

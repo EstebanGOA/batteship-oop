@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import presentation.controllers.Data;
+
+import static presentation.controllers.Data.CLASS;
 
 /**
  * GameController class that implements a MouseListener.
@@ -48,8 +51,9 @@ public class GameController implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        switch (((JComponent) e.getSource()).getName()) {
-            case "cell" -> {
+        String name = ((JComponent) e.getSource()).getName();
+        switch (CLASS) {
+            case CLASS -> {
                 Cell cell = (Cell) e.getSource();
                 int x = cell.getCoordinates()[0];
                 int y = cell.getCoordinates()[1];
@@ -59,7 +63,7 @@ public class GameController implements MouseListener {
                    gameStageView.updateGame(gameManager.getPlayers());
                 }
             }
-            case "endBattleBtn" -> {
+            case END_BATTLE -> {
                 gameManager.stopGame();
                 String gameName = JOptionPane.showInputDialog("Enter a name to save the game: ");
                 if (gameName == null || gameName.isEmpty()) {
